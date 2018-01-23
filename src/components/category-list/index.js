@@ -4,7 +4,6 @@ import {
     Text,
     FlatList,
     ImageBackground,
-    Dimensions
 } from 'react-native';
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
@@ -12,8 +11,9 @@ import { observer, inject } from 'mobx-react/native';
 import Carousel from 'react-native-snap-carousel';
 
 import styles from './styles';
+import { width } from '../../constants';
 
-const { width } = Dimensions.get('window')
+
 
 @inject('eventStore') @observer
 export default class EventList extends Component {
@@ -23,8 +23,8 @@ export default class EventList extends Component {
                 <Carousel
                     style={{ flex: 1 }}
                     ref={c => { this.carousel = c }}
-                    data={this.props.eventStore.eventList.slice()}
-                    renderItem={({ item, index }) => <CategoryCard item={item} />}
+                    data={this.props.eventStore.allCategories}
+                    renderItem={({ item, index }) => <CategoryCard item={item} index={index} setIndex={this.props.eventStore.setSelectedCategoryIndex} navigate={this.props.navigation.navigate} />}
                     sliderWidth={sliderWidth}
                     itemWidth={width / 1.5}
                 />

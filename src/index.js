@@ -12,6 +12,12 @@ import CategoryList from './components/category-list';
 import EventList from './components/event-list';
 import { StackNavigator } from 'react-navigation';
 
+const MainStack = StackNavigator({
+    CategoryList: { screen: CategoryList },
+    EventList: { screen: EventList }
+}, {
+    headerMode: 'none'
+})
 
 @inject('authStore') @observer
 export default class App extends Component {
@@ -19,8 +25,8 @@ export default class App extends Component {
         // this.props.store.fetchResults();
     }
     render() {
-        return(
-            <EventList />
+        return (
+            <MainStack />
         )
     }
 }

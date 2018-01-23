@@ -12,7 +12,6 @@ import { Provider } from 'mobx-react/native';
 
 export default class Main extends React.Component {
     render() {
-        console.log(stores)
         return (
             <Provider authStore={stores.AuthStore} eventStore={stores.EventStore} store={store}>
                 <App />

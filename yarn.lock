@@ -3724,6 +3724,12 @@ react-native-elements@^0.19.0:
     opencollective "^1.0.3"
     prop-types "^15.5.8"
 
+react-native-fast-image@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-2.0.1.tgz#210fe23a8ed5ae4a68977b555167eb7440ad7374"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-indicators@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/react-native-indicators/-/react-native-indicators-0.10.0.tgz#714c4e9955c73c3b5d2bbd6c021d6b7aab1a8072"
