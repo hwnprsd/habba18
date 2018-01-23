@@ -14,8 +14,8 @@ import Timeline from './components/timeline';
 import { StackNavigator } from 'react-navigation';
 
 const MainStack = StackNavigator({
-    Timeline: { screen: Timeline },
     CategoryList: { screen: CategoryList },
+    Timeline: { screen: Timeline },
     EventList: { screen: EventList }
 }, {
         headerMode: 'none'

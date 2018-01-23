@@ -27,8 +27,9 @@ export default StyleSheet.create({
     color: '#0f0f0f',
   },
   toolBarText: {
-    fontSize: 20,
+    fontSize: 24,
     textAlign: 'center',
-    fontFamily: fonts.ubuntuMedium,
+    fontFamily: fonts.latoLight,
+    color: "#fff"
   }
 });

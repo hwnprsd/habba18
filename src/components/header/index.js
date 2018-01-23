@@ -45,7 +45,7 @@ export default class Navbar extends Component {
 
     render() {
         return (
-            <View style={styles.layout}>
+            <View style={{backgroundColor: this.props.color | colors.primaryDark}}>
                 <View style={styles.container}>
                     <View style={styles.left}>
                         {this._renderLeft("#fff")}

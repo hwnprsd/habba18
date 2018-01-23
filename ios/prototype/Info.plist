@@ -51,6 +51,7 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSAppTransportSecurity</key> <dict> <key>NSAllowsArbitraryLoads</key> <true/> </dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lato-Light.ttf</string>

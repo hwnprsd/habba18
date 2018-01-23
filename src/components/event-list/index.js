@@ -4,28 +4,27 @@ import GridView from 'react-native-super-grid';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import { observer, inject } from 'mobx-react/native';
 import FastImage from 'react-native-fast-image';
+import Header from '../header'
 
 import styles from './styles';
-import { height } from '../../constants';
+import { height, colors } from '../../constants';
 
 
 @inject('eventStore') @observer
 export default class EventList extends Component {
     _onEventPress = index => {
         this.props.eventStore.setSelectedEventIndex(index);
-        console.log(this.props.eventStore.eventDetails)
     }
     _renderContent = () => {
         const { allEvents, setSelectedEventIndex } = this.props.eventStore;
-        const items = allEvents.map((_, index) => ({ ..._, index }))
         return (
             <GridView
                 itemDimension={130}
-                items={items}
-                style={[styles.gridView, { height }]}
+                items={allEvents}
+                style={[styles.gridView, { height, marginBottom: 50 }]}
                 renderItem={(item) => (
-                    <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item.index)}>
-                        <FastImage source={{ uri: 'https://lorempixel.com/200/300/' }} style={{ width: 200, height: 200 }} resizeMod="cover" />
+                    <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item.eid)}>
+                        <FastImage source={{ uri: item.url }} style={{ width: 200, height: 200 }} resizeMod="cover" />
                         <View style={{ justifyContent: 'center' }}>
                             <Text style={styles.itemName}>{item.name}</Text>
                         </View>
@@ -37,15 +36,22 @@ export default class EventList extends Component {
     }
     render() {
         const { eventList, selectedCategoryIndex } = this.props.eventStore;
-        const toolBarText = eventList.slice()[selectedCategoryIndex].name;
+        const toolBarText = this.props.navigation.state.params.categoryName;
+        if(this.props.eventStore.isEventListFetching) {
+            return <View />
+        }
         return (
             <CollapsibleToolbar
                 renderContent={this._renderContent}
-                renderNavBar={() => <View style={{ height: 50, flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={styles.toolBarText}>{toolBarText}</Text></View>}
+                renderNavBar={() => <Header title={toolBarText} color={"rgba(0,0,0,0)"}/>}
                 imageSource='https://lorempixel.com/400/600/'
-                collapsedNavBarBackgroundColor='#009688'
+                collapsedNavBarBackgroundColor={colors.primaryDark}
                 toolBarHeight={200}
-            />
-        )
+                />
+            )
+        }
+        componentWillMount() {
+            this.props.eventStore.fetchEvents();
+        }
     }
-}
+    // {/*renderNavBar={() => <View style={{ height: 50, flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={styles.toolBarText}>{toolBarText}</Text></View>}*/}
