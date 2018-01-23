@@ -10,3 +10,8 @@ export const fonts = {
     latoLight: "Lato-Light"
 }
 
+export const colors = {
+    primaryDark: "#512da8",
+    primary: "#7e57c2"
+}
+
