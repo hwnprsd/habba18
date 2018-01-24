@@ -1,9 +1,11 @@
-import AuthStore from './auth-store';
-import EventStore from './event-store';
-import TimelineStore from './temeline-store';
+import authStore from './auth-store';
+import eventStore from './event-store';
+import timelineStore from './temeline-store';
+import memeStore from './meme-store';
 
 export default {
-    AuthStore,
-    EventStore,
-    TimelineStore
+    authStore,
+    eventStore,
+    timelineStore,
+    memeStore
 }

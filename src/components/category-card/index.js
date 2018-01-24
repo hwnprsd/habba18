@@ -17,7 +17,9 @@ export default class EventCard extends Component {
                     <View style={{}}>
                         <FastImage
                             source={{ uri: this.props.item.url || "http://www.nelsonvenues.co.nz/uploads/1/0/1/2/101257066/event-placeholder_1_orig.jpg" }}
-                            style={{ width: width / 1.4, height: 250 }}
+                            // style={{ width: width / 1.4, height: 250 }}
+                            style={{width: 250, height: 300}}
+                            resizeMode={'cover'}
                         />
                     </View>
                     <Text style={styles.cardText}>

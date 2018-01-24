@@ -11,12 +11,14 @@ import Auth from './components/auth';
 import CategoryList from './components/category-list';
 import EventList from './components/event-list';
 import Timeline from './components/timeline';
+import Meme from './components/meme'
 import { StackNavigator } from 'react-navigation';
 
 const MainStack = StackNavigator({
+    Meme: {screen: Meme},
     CategoryList: { screen: CategoryList },
     Timeline: { screen: Timeline },
-    EventList: { screen: EventList }
+    EventList: { screen: EventList },
 }, {
         headerMode: 'none'
     })

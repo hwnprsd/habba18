@@ -13,7 +13,8 @@ import { Provider } from 'mobx-react/native';
 export default class Main extends React.Component {
     render() {
         return (
-            <Provider authStore={stores.AuthStore} eventStore={stores.EventStore} timelineStore={stores.TimelineStore}>
+            <Provider {...stores}>
+            {/* <Provider authStore={stores.AuthStore} eventStore={stores.EventStore} timelineStore={stores.TimelineStore} > */}
                 <App />
             </Provider>
         )

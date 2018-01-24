@@ -1,22 +1,34 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, runInAction } from 'mobx';
 import { persist, create } from 'mobx-persist';
 import { AsyncStorage as storage } from 'react-native';
+import axios from 'axios';
+
+const TIMELINE_API = "http://acharyahabba.in/habba18/timeline.php";
 
 class TimelineStore {
     @persist('list') @observable timelineList = [];
+    @observable isFetching = false;
+    @observable errorPresent = false;
+    @observable errorMessage = "";
     @computed get timelineListGet () {
         return this.timelineList.slice();
     }
-    @action fetchList = () => {
-
+    @action fetchList = async () => {
+        try{
+            this.timelineList = [];
+            this.isFetching = true;
+            const P1 = axios.get(TIMELINE_API);
+            const res = await Promise.resolve(P1);
+            runInAction(() => {
+                // this.timelineList = res.data.result;
+                this.isFetching = false;
+            }) 
+        } catch(e) {
+            this.errorMessage = e.message;
+            this.errorPresent = true;
+            this.isFetching = false;
+        }
     }
-    @action.bound fetchSuccess() {
-
-    }
-    @action.bound fetchFailure() {
-
-    }
-
     constructor() {
         this.timelineList = [
             { time: '14:00', title: 'Event 4', description: 'Event 4 Description' },

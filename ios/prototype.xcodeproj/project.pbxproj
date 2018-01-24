@@ -39,7 +39,6 @@
 		BA8CECAF295245AE93B38868 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2D2AFC33F4E4B95A0F69646 /* Lato-Light.ttf */; };
 		C248013A97F440229918ABF0 /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD5B9C97BB2D47FCB5D2C170 /* Ubuntu-Light.ttf */; };
 		45C8DE8A8C014A3087DC2D70 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC5A0CB652F4DF38A8704F8 /* Ubuntu-Medium.ttf */; };
-		F88C058B958B4122B516897A /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97D075A301C34ED5AA13E692 /* libAirMaps.a */; };
 		A55005B1859C4646A6C8F357 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA57D31B26B4CCFBCCC57FA /* libRNVectorIcons.a */; };
 		55FD7B3468214A4FB476757A /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2CC175127D2B4B5FB885617D /* Entypo.ttf */; };
 		C358F41E30A244B985A7310C /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2ADC2A6BDD3A4B13805B17DD /* EvilIcons.ttf */; };
@@ -305,8 +304,6 @@
 		E2D2AFC33F4E4B95A0F69646 /* Lato-Light.ttf */ = {isa = PBXFileReference; name = "Lato-Light.ttf"; path = "../assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		CD5B9C97BB2D47FCB5D2C170 /* Ubuntu-Light.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Light.ttf"; path = "../assets/fonts/Ubuntu-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		3DC5A0CB652F4DF38A8704F8 /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; name = "Ubuntu-Medium.ttf"; path = "../assets/fonts/Ubuntu-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5D46AA1E00964653A5398D12 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; name = "AirMaps.xcodeproj"; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		97D075A301C34ED5AA13E692 /* libAirMaps.a */ = {isa = PBXFileReference; name = "libAirMaps.a"; path = "libAirMaps.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		5E3C981A95FE4A3196118F40 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; name = "RNVectorIcons.xcodeproj"; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		9AA57D31B26B4CCFBCCC57FA /* libRNVectorIcons.a */ = {isa = PBXFileReference; name = "libRNVectorIcons.a"; path = "libRNVectorIcons.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		2CC175127D2B4B5FB885617D /* Entypo.ttf */ = {isa = PBXFileReference; name = "Entypo.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
@@ -350,7 +347,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				F88C058B958B4122B516897A /* libAirMaps.a in Frameworks */,
 				A55005B1859C4646A6C8F357 /* libRNVectorIcons.a in Frameworks */,
 				6D7FA19D978942F3BFDB1DA6 /* libFastImage.a in Frameworks */,
 			);
@@ -530,7 +526,6 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				5D46AA1E00964653A5398D12 /* AirMaps.xcodeproj */,
 				5E3C981A95FE4A3196118F40 /* RNVectorIcons.xcodeproj */,
 				33DD36AABA2B4E038C6F31BE /* FastImage.xcodeproj */,
 			);
@@ -1140,11 +1135,9 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/prototype.app/prototype";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 				);
@@ -1167,11 +1160,9 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/prototype.app/prototype";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 				);
@@ -1195,7 +1186,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 				);
@@ -1218,7 +1208,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 				);
@@ -1250,11 +1239,9 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 				);
@@ -1286,11 +1273,9 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../node_modules/react-native-maps/lib/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 				);
@@ -1317,7 +1302,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1342,7 +1326,6 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;

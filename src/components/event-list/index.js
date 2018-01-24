@@ -19,12 +19,12 @@ export default class EventList extends Component {
         const { allEvents, setSelectedEventIndex } = this.props.eventStore;
         return (
             <GridView
-                itemDimension={130}
+                itemDimension={115}
                 items={allEvents}
                 style={[styles.gridView, { height, marginBottom: 50 }]}
                 renderItem={(item) => (
                     <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item.eid)}>
-                        <FastImage source={{ uri: item.url }} style={{ width: 200, height: 200 }} resizeMod="cover" />
+                        <FastImage source={{ uri: item.url }} style={styles.image} resizeMode="cover" />
                         <View style={{ justifyContent: 'center' }}>
                             <Text style={styles.itemName}>{item.name}</Text>
                         </View>
@@ -43,7 +43,7 @@ export default class EventList extends Component {
         return (
             <CollapsibleToolbar
                 renderContent={this._renderContent}
-                renderNavBar={() => <Header title={toolBarText} color={"rgba(0,0,0,0)"}/>}
+                renderNavBar={() => <Header title={toolBarText} left={{name:"ios-arrow-back", action:this.props.navigation.goBack}} color={"rgba(0,0,0,0)"}/>}
                 imageSource='https://lorempixel.com/400/600/'
                 collapsedNavBarBackgroundColor={colors.primaryDark}
                 toolBarHeight={200}
