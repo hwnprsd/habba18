@@ -25,6 +25,7 @@ class MemeStore {
             this.errorMessage = e.message;
             this.errorPresent = true;
             this.isMemeFetching = false;
+            console.log(e.message);
         }
     }
 

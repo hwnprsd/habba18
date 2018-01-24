@@ -15,9 +15,9 @@ import Meme from './components/meme'
 import { StackNavigator } from 'react-navigation';
 
 const MainStack = StackNavigator({
-    Meme: {screen: Meme},
-    CategoryList: { screen: CategoryList },
     Timeline: { screen: Timeline },
+    CategoryList: { screen: CategoryList },
+    Meme: {screen: Meme},
     EventList: { screen: EventList },
 }, {
         headerMode: 'none'

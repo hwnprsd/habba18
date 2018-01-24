@@ -1,37 +1,42 @@
-import React, {Component} from 'react'
-import {View, Text, FlatList, Image} from 'react-native'
-import {observer, inject} from 'mobx-react/native'
+import React, { Component } from 'react';
+import { View, Text, FlatList, Image } from 'react-native';
+import { observer, inject } from 'mobx-react/native';
+import { UIActivityIndicator } from 'react-native-indicators';
 
 import Header from '../header'
-// import styles from './styles'
+import styles from './styles'
 
-@inject('memeStore')@observer
+@inject('memeStore') @observer
 export default class Meme extends Component {
-    _renderItem = ({item}) => {
-        return(
-            <View style={{flex: 1}}>
-                <Text>{item.name}</Text>
-                <View style={{flex: 1}}>
-            <Image source={{uri: item.image}} style={{width: 654/3, height: 571/4}} />
+    _renderItem = ({ item }) => {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.authorName}>{item.name}</Text>
+                <View style={{ flex: 1 }} style={styles.image}>
+                    <Image source={{ uri: item.image }} style={{ width: 654 / 3, height: 571 / 4 }} />
                 </View>
-            <Text>{item.caption}</Text>
+                <Text style={styles.caption}>{item.caption}</Text>
             </View>
         )
     }
     render() {
         return (
-            <FlatList
-                style={{flex: 1}}
-                ListHeaderComponent={() => <Header
+            <View style={{ flex: 1 }}>
+                <Header
                     title={'Meme'}
-                    color="#000"
                     left={{
-                    name: 'ios-arrow-back'
-                }}/>}
-                data={this.props.memeStore.allMemes}
-                keyExtractor={i => i.id}
-                renderItem={this._renderItem}
-            />
+                        name: 'ios-arrow-back'
+                    }} />
+                {this.props.memeStore.isMemeFetching &&
+                    <UIActivityIndicator animating />
+                }
+                <FlatList
+                    ListHeaderComponent={() => <View style={{ marginTop: 15 }} />}
+                    data={this.props.memeStore.allMemes}
+                    keyExtractor={i => i.id}
+                    renderItem={this._renderItem}
+                />
+            </View>
         )
     }
     componentWillMount() {
