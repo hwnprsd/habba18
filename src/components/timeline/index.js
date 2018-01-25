@@ -20,7 +20,7 @@ export default class Auth extends Component {
         }
         return (
             <View style={{ flex: 1 }}>
-                <Header title="Timeline" left={{ name: "ios-arrow-back" }} />
+                <Header title="Timeline" left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />
                 <Timeline data={this.props.timelineStore.timelineListGet} circleColor={'rgba(0,0,0,0)'} lineColor={colors.primary} innerCircle={'icon'}/>
             </View>
         )

@@ -1,36 +1,23 @@
 import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    Button
-} from 'react-native';
-import { fonts } from './constants';
-import { observer, inject } from 'mobx-react/native';
-import { SkypeIndicator } from 'react-native-indicators';
-import Auth from './components/auth';
 import CategoryList from './components/category-list';
 import EventList from './components/event-list';
 import Timeline from './components/timeline';
-import Meme from './components/meme'
+import Meme from './components/meme';
+import ResideMenu from './components/reside-menu';
 import { StackNavigator } from 'react-navigation';
 
 const MainStack = StackNavigator({
+    ResideMenu: { screen: ResideMenu },
     Timeline: { screen: Timeline },
     CategoryList: { screen: CategoryList },
-    Meme: {screen: Meme},
+    Meme: { screen: Meme },
     EventList: { screen: EventList },
 }, {
         headerMode: 'none'
     })
 
-@inject('authStore') @observer
 export default class App extends Component {
-    componentWillMount() {
-        // this.props.store.fetchResults();
-    }
     render() {
-        return (
-            <MainStack />
-        )
+        return <MainStack />
     }
 }

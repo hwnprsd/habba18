@@ -25,7 +25,8 @@ export default class Meme extends Component {
                 <Header
                     title={'Meme'}
                     left={{
-                        name: 'ios-arrow-back'
+                        name: 'ios-arrow-back',
+                        action: this.props.navigation.goBack
                     }} />
                 {this.props.memeStore.isMemeFetching &&
                     <UIActivityIndicator animating />
