@@ -3724,9 +3724,19 @@ react-native-elements@^0.19.0:
     opencollective "^1.0.3"
     prop-types "^15.5.8"
 
+react-native-elevated-view@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-elevated-view/-/react-native-elevated-view-0.0.6.tgz#560cc9ab16cfd5cb5ea821521558fc711e57e231"
+
 react-native-fast-image@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-2.0.1.tgz#210fe23a8ed5ae4a68977b555167eb7440ad7374"
+  dependencies:
+    prop-types "^15.5.10"
+
+react-native-fit-image@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/react-native-fit-image/-/react-native-fit-image-1.5.4.tgz#73d2fccc7ad902cf2ffcd008a2a74749ad50134a"
   dependencies:
     prop-types "^15.5.10"
 
