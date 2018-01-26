@@ -4,10 +4,12 @@ import EventList from './components/event-list';
 import Timeline from './components/timeline';
 import Meme from './components/meme';
 import ResideMenu from './components/reside-menu';
+import Feed from './components/feed'
 import { StackNavigator } from 'react-navigation';
 
 const MainStack = StackNavigator({
     ResideMenu: { screen: ResideMenu },
+    Feed: { screen: Feed },
     Timeline: { screen: Timeline },
     CategoryList: { screen: CategoryList },
     Meme: { screen: Meme },

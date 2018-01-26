@@ -66,6 +66,7 @@ const List = () => {
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                     <View style={{ justifyContent: 'space-around', paddingLeft: 10 }}>
                         <Item text="Register" />
+                        <Item text="Feed" nav="Feed" />
                         <Item text="Events" nav="CategoryList" />
                         <Item text="Timeline" nav="Timeline" />
                         <Item text="Maps" />
