@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Button, FlatList, WebView, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Button, FlatList, WebView, Image, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import PopupDialog from 'react-native-popup-dialog';
+import FitImage from 'react-native-fit-image';
 import ElevatedView from 'react-native-elevated-view'
 import Header from '../header';
 import { width } from '../../constants';
@@ -16,13 +17,16 @@ export default class Auth extends Component {
     }
     _renderItem = ({ item }) => {
         isImageURL = item.resources.slice(0, 4) === "http";
+        console.log(item.resources, isImageURL)
         uri = isImageURL ? item.resources : `https://i.ytimg.com/vi/${item.resources}/hqdefault.jpg`
         return (
             <ElevatedView style={styles.postContainer} elevation={5}>
-                <Text style={styles.headingText}>{item.heading}</Text>
-                <Text style={styles.captionText}>{item.caption}</Text>
+                <View style={styles.text}>
+                    <Text style={styles.headingText}>{item.heading}</Text>
+                    <Text style={styles.captionText}>{item.caption}</Text>
+                </View>
                 <TouchableWithoutFeedback onPress={() => {
-                    if (isImageURL) {
+                    if (item.resources.slice(0, 4) !== "http") {
                         this.setState({
                             video: item.resources
                         });
@@ -30,12 +34,13 @@ export default class Auth extends Component {
                     }
                 }}>
                     <View>
-                        <Image source={{ uri }} style={{ height: 108 * 2, width: 192 * 2 }} />
-                        {!isImageURL && 
-                        <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
-                        <Image source={require('../../icons/play.png')} style={{  height: 16.7 * 3, width: 24 * 3,}} />
-                        </View>
-                    }
+                        <FitImage source={{ uri }} indicator={true} style={{}} />
+                        {/* <FitImage source={{ uri }} style={{ height: 108 * 2, width: 192 * 2 }} /> */}
+                        {!isImageURL &&
+                            <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
+                                <Image source={require('../../icons/play.png')} style={{ height: 16.7 * 3, width: 24 * 3, }} />
+                            </View>
+                        }
                     </View>
                 </TouchableWithoutFeedback>
             </ElevatedView>
@@ -49,7 +54,7 @@ export default class Auth extends Component {
         }
         return (
             <View style={{ flex: 1 }} >
-            <Header title={'Feed'} left={{name: 'ios-arrow-back', action: this.props.navigation.goBack}} />
+                <Header title={'Feed'} left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                 <FlatList
                     data={this.props.feedStore.allFeed}
                     renderItem={this._renderItem}
