@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CategoryList from './components/category-list';
 import EventList from './components/event-list';
 import Timeline from './components/timeline';
-import Meme from './components/meme';
+import Gallery from './components/gallery';
 import ResideMenu from './components/reside-menu';
 import Feed from './components/feed'
 import { StackNavigator } from 'react-navigation';
@@ -12,7 +12,7 @@ const MainStack = StackNavigator({
     Feed: { screen: Feed },
     Timeline: { screen: Timeline },
     CategoryList: { screen: CategoryList },
-    Meme: { screen: Meme },
+    Gallery: { screen: Gallery },
     EventList: { screen: EventList },
 }, {
         headerMode: 'none'

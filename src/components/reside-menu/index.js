@@ -65,12 +65,11 @@ const List = () => {
                 <View style={{ flex: 1 }}></View>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                     <View style={{ justifyContent: 'space-around', paddingLeft: 10 }}>
-                        <Item text="Register" />
                         <Item text="Feed" nav="Feed" />
                         <Item text="Events" nav="CategoryList" />
-                        <Item text="Timeline" nav="Timeline" />
+                        <Item text="Register" />
                         <Item text="Maps" />
-                        <Item text="Devs" />
+                        <Item text="Timeline" nav="Timeline" />
                     </View>
                 </View>
                 <View style={{ flex: 1 }}></View>
@@ -79,10 +78,10 @@ const List = () => {
                 <View style={{ flex: 1 }}></View>
                 <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
                     <View style={{ justifyContent: 'space-around', paddingRight: 10 }}>
-                        <Item text="Memes" right nav="Meme" />
+                        <Item text="Gallery" right nav="Gallery" />
                         <Item text="Notifications" right />
-                        <Item text="QR Code" right />
                         <Item text="About us" right />
+                        <Item text="Devs" right/>
                         <Item text="Logout" right />
                     </View>
 
