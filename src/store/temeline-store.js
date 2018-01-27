@@ -27,6 +27,7 @@ class TimelineStore {
     @observable isEventsFetching = false;
     @observable errorPresent = false;
     @observable errorMessage = "";
+    @observable selectedDate = "";
     @computed get timelineListGet() {
         return this.timelineList.slice();
     }
@@ -76,6 +77,7 @@ class TimelineStore {
         }
     }
     @action fetchEventsFromDate = async date => {
+        this.selectedDate = date;
         try {
             this.eventList = [];
             this.isEventsFetching = true;
@@ -104,10 +106,15 @@ class TimelineStore {
         return this.eventList.slice();
     }
     @action setDate(date) {
-        if (this.timelineList.indexOf(date) !== -1)
+        if (this.timelineList.indexOf(date) !== -1 && this.selectedDate !== date)
             this.fetchEventsFromDate(date)
-        else 
+        else if (this.selectedDate === date) {
+            return
+        }
+        else {
+            this.selectedDate = date;
             this.eventList = [];
+        }
     }
 }
 
