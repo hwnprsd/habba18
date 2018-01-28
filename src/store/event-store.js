@@ -3,20 +3,21 @@ import { AsyncStorage as storage } from 'react-native';
 import { create, persist } from 'mobx-persist';
 import axios from 'axios';
 
-const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 const CATEGORY_API = "http://acharyahabba.in/habba18/events.php";
-const EVENTS_API = "http://acharyahabba.in/habba18/subcat.php?id="
+const EVENTS_API = "http://acharyahabba.in/habba18/subcat.php?id=";
+const EVENT_DETAILS_API = "http://acharyahabba.in/habba18/subcat.php?eid=";
 
 class EventStore {
-    @persist @observable selectedCategoryIndex = 1;
-    @observable errorPresent = false;
-    @observable errorMessage = "";
-    @persist @observable selectedEventIndex = 0;
-    // @persist('list') @observable eventList = [];
     @persist('list') @observable categoryList = [];
     @observable eventList = [];
+    @observable eventDetails = {};
+    @observable selectedCategoryIndex = 1;
+    @observable errorPresent = false;
+    @observable errorMessage = "";
+    @observable selectedEventIndex = 0;
     @observable isCategoryListFetching = false;
     @observable isEventListFetching = false;
+    @observable isEventFetching = false;
 
     @action fetchCategories = async () => {
         this.categoryList = [];
@@ -41,7 +42,7 @@ class EventStore {
 
     @action fetchEvents = async () => {
         this.eventList = [];
-        this.isEventListFetching = true;
+        this.eventListFetching = true;
         try {
             const P1 = axios.get(EVENTS_API + this.selectedCategoryIndex);
             const res = await Promise.resolve(P1);
@@ -49,7 +50,6 @@ class EventStore {
                 this.eventList = res.data.result;
                 this.isEventListFetching = false;
             })
-            console.log('HERE', res.data.result);
         } catch (e) {
             this.errorMessage = e.message;
             this.errorPresent = true;
@@ -62,16 +62,36 @@ class EventStore {
     @computed get allEvents() {
         return this.eventList.slice();
     }
-    @computed get eventDetails() {
-        return this.allEvents[this.selectedEventIndex]
+
+    @action fetchEventDetails = async () => {
+        this.eventDetails = {};
+        this.isEventFetching = true;
+        try {
+            const P1 = axios.get(EVENT_DETAILS_API + this.selectedEventIndex);
+            const res = await Promise.resolve(P1);
+            runInAction(() => {
+                this.eventDetails = res.data.result[0];
+                this.isEventFetching = false;
+            })
+            console.log(res.data.result[0]);
+        } catch (e) {
+            this.errorMessage = e.message;
+            this.errorPresent = true;
+            this.isEventFetching = false;
+            console.log(e.message);
+        }
     }
+
+    @computed get allEventDetails() {
+        return this.eventDetails;
+    }
+
     // Set the selectedCategoryIndex based on the card click
     @action setSelectedCategoryIndex = i => {
         if (i < this.allCategories.length)
             this.selectedCategoryIndex = i;
     }
     @action setSelectedEventIndex = i => {
-        if (i < this.allEvents.length)
             this.selectedEventIndex = i;
     }
 }

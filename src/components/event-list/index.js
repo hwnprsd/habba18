@@ -14,6 +14,7 @@ import { height, colors } from '../../constants';
 export default class EventList extends Component {
     _onEventPress = index => {
         this.props.eventStore.setSelectedEventIndex(index);
+        this.props.navigation.navigate('EventDetail')
     }
     _renderContent = () => {
         const { allEvents, setSelectedEventIndex } = this.props.eventStore;
