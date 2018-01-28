@@ -16,7 +16,7 @@ export default class EventDetails extends Component {
         const { description, rules, numb, eventhead, amount, pmoney } = this.props.eventStore.allEventDetails;
         return (
             <View style={{ flex: 1, minHeight: height }}>
-                <ElevatedView style={styles.card} elevation={3}>
+                <ElevatedView style={[styles.card, {marginTop: 10}]} elevation={3}>
                     <Text style={styles.titleText}>Description</Text>
                     <Text style={styles.contentText}>{description || ''}</Text>
                 </ElevatedView>

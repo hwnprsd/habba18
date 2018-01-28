@@ -5,11 +5,14 @@ export default StyleSheet.create({
     card: {
         borderRadius: 3,
         padding: 7,
-        margin: 10
+        marginHorizontal: 10,
+        marginTop: 5,
+        marginBottom: 5
     },
     titleText: {
         fontFamily: fonts.latoBold,
-        fontSize: 18
+        fontSize: 18,
+        marginBottom: 7
     },
     contentText: {
         fontFamily: fonts.latoRegular,
