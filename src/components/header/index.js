@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../../constants'
 
 class Constants {
-    static AppbarHeight = Platform.OS === 'ios' ? 38 : 50;
+    static AppbarHeight = Platform.OS === 'ios' ? 43 : 50;
     static StatusbarHeight = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
     static HeaderHeight = this.AppbarHeight + this.StatusbarHeight;
 }
@@ -46,7 +46,7 @@ export default class Navbar extends Component {
     render() {
         return (
             <View style={{backgroundColor: this.props.color || colors.primaryDark}}>
-                <View style={styles.container}>
+                <View style={[styles.container, {marginTop:this.props.collapsable? 0: Constants.StatusbarHeight}]}>
                     <View style={styles.left}>
                         {this._renderLeft("#fff")}
                     </View>

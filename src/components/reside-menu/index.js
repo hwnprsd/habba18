@@ -133,6 +133,12 @@ export default class ResideMenu extends Component {
             </View>
         )
     }
+    _resetReside = () => {
+        Animated.spring(this.animatedValue.x, {
+            toValue: 0,
+            useNativeDriver: true
+        }).start()
+    }
     componentWillMount = () => {
         navigate = this.props.navigation.navigate
         this.animatedValue = new Animated.ValueXY();
@@ -172,7 +178,8 @@ export default class ResideMenu extends Component {
         });
     };
     componentWillUnmount() {
-        this.animatedValue.x.removeListener()
+        this.animatedValue.x.removeListener();
+        this._resetReside();
     } 
 
 

@@ -48,11 +48,22 @@ export default class Auth extends Component {
         return (
             <ScrollView style={{}}>
                 <Header title="Timeline" left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />
-                <Calendar
-                    style={{ margin: 10 }}
-                    onDayPress={this._onDayPress}
-                    markedDates={{ ...this.props.timelineStore.getAllDates, [this.state.selected]: { selected: true } }}
-                />
+                <ElevatedView 
+                    elevation={3}
+                    style={{ margin: 10, borderRadius: 3 }}
+                >
+                    <Calendar
+                        onDayPress={this._onDayPress}
+                        markedDates={{ ...this.props.timelineStore.getAllDates, [this.state.selected]: { selected: true } }}
+                        theme={{
+                            todayTextColor: colors.primary,
+                            selectedDayTextColor: 'white',
+                            selectedDayBackgroundColor: colors.primary,
+                            arrowColor: colors.primary
+                        }}
+                
+                    />
+                </ElevatedView>
                 {this.props.timelineStore.getEvents.length === 0 &&
                     <ElevatedView elevation={3} style={{ margin: 10, borderRadius: 3 }}>
                         {!this.props.timelineStore.isEventsFetching &&

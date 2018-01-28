@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    FlatList,
     ImageBackground,
+    Dimensions
 } from 'react-native';
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
 import { observer, inject } from 'mobx-react/native';
 import Carousel from 'react-native-snap-carousel';
-import { UIActivityIndicator } from 'react-native-indicators'
+import { UIActivityIndicator } from 'react-native-indicators';
+import Header from '../header'
 
 import styles from './styles';
-import { width } from '../../constants';
+// import { width } from '../../constants';
 
+const {width} = Dimensions.get('window')
 
 
 @inject('eventStore') @observer
@@ -31,6 +33,7 @@ export default class EventList extends Component {
                             <UIActivityIndicator animating color={"#fff"} />
                         </View>
                     }
+                    <Header title={''} color="rgba(0,0,0,0)" left={{name: 'ios-arrow-back', action: this.props.navigation.goBack}} />
                     <Carousel
                         style={{ flex: 1 }}
                         ref={c => { this.carousel = c }}

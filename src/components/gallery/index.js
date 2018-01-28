@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { observer, inject } from 'mobx-react/native';
 import Gallery from 'react-native-image-gallery';
 
@@ -40,6 +41,7 @@ export default class Galleryx extends Component {
                 <Gallery
                     style={{ flex: 1, backgroundColor: 'black' }}
                     {...this.props}
+                    imageComponent={FastImage}
                     initialPage={this.props.index}
                     onPageSelected={this.onChangeImage}
                 />

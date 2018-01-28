@@ -1,20 +1,21 @@
 import { StyleSheet } from 'react-native';
-import { width } from '../../constants';
+import { width, fonts } from '../../constants';
 
 export default StyleSheet.create({
     postContainer: {
         flex: 1,
-        paddingTop: 5,
         backgroundColor: 'white',
-        marginBottom: 10
+        marginBottom: 10,
+    },
+    text: {
+        padding: 5
     },
     headingText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginLeft: 5
+        fontFamily: fonts.latoBold,
+        fontSize: 15,
     },
     captionText: {
-        fontSize: 15,
-        marginLeft: 5
+        fontFamily: fonts.latoRegular,
+        fontSize: 13,
     }
 })

@@ -3,6 +3,8 @@ import { persist, create } from 'mobx-persist';
 import { AsyncStorage as storage } from 'react-native';
 import axios from 'axios';
 
+import {colors} from '../constants';
+
 const icon0 = require('../icons/icon0.png');
 const icon1 = require('../icons/icon1.png');
 const icon2 = require('../icons/icon2.png');
@@ -63,7 +65,7 @@ class TimelineStore {
             const res = await Promise.resolve(P1);
             runInAction(() => {
                 for (let i = 0; i < res.data.result.length; i++) {
-                    this.timelineDates[res.data.result[i].timestamp.slice(0, 10)] = { marked: true };
+                    this.timelineDates[res.data.result[i].timestamp.slice(0, 10)] = { marked: true, dotColor: colors.primary };
                     this.timelineList.push(res.data.result[i].timestamp.slice(0, 10));
                 }
                 this.isFetching = false;

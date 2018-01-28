@@ -52,7 +52,7 @@ export default class EventDetails extends Component {
             return (
                 <CollapsibleToolbar
                     renderContent={this._renderContent}
-                    renderNavBar={() => <Header title={name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
+                    renderNavBar={() => <Header collapsable title={name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
                     imageSource={url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg'}
                     collapsedNavBarBackgroundColor={colors.primaryDark}
                     toolBarHeight={300}

@@ -1,31 +1,32 @@
 import { StyleSheet } from 'react-native';
-import { fonts } from '../../constants';
+import { fonts, width, height } from '../../constants';
 
 export default StyleSheet.create({
   gridView: {
     paddingTop: 25,
     flex: 1,
-    backgroundColor: "#e5e5e5"
   },
   itemContainer: {
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    borderRadius: 5,
-    paddingLeft: 0,
+    borderRadius: 3,
+    padding: 0,
     height: 145,
+    flex: 1,
+    width: width/2.2,
     overflow:'hidden',
     backgroundColor: '#fff',
   },
   itemName: {
     fontSize: 15,
     color: '#0f0f0f',
-    marginTop: 3
+    fontFamily: fonts.latoRegular,
+    margin: 5
   },
   image: {
-    width: 170,
+    width: width/2.2,
+    alignSelf: 'center',
     height: 150,
     flex: 1,
-    margin: 0
   },
 
   itemCode: {
