@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CategoryList from './components/category-list';
 import EventList from './components/event-list';
 import Timeline from './components/timeline';
-import Gallery from './components/gallery';
+import Gallery from './components/gallery-grid';
 import ResideMenu from './components/reside-menu';
 import Feed from './components/feed'
 import { StackNavigator } from 'react-navigation';
