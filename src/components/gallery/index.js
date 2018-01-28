@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Gallery from 'react-native-image-gallery';
 
@@ -13,8 +13,11 @@ export default class Galleryx extends Component {
         const { images } = this.props;
         const { index } = this.state;
         return (
-            <View style={{ top: 0, height: 65, backgroundColor: 'rgba(0, 0, 0, 0.7)', width: '100%', position: 'absolute', justifyContent: 'center' }}>
-                <Text style={{ textAlign: 'right', color: 'white', fontSize: 15, fontFamily: 'Lato-Light', paddingRight: '10%' }}>{index + 1} / {images.length}</Text>
+            <View style={{ padding: 13,  top: 0, height: 65, backgroundColor: 'rgba(0, 0, 0, 0.7)', width: '100%', position: 'absolute', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <TouchableWithoutFeedback onPress={this.props.nav}><View>
+                <Text style={{  color: 'white', fontSize: 15, fontFamily: 'Lato-Light' }}>Back</Text>
+                </View></TouchableWithoutFeedback>
+                <Text style={{ color: 'white', fontSize: 15, fontFamily: 'Lato-Light' }}>{ index + 1 } / { images.length }</Text>
             </View>
         );
     }
@@ -31,7 +34,6 @@ export default class Galleryx extends Component {
         this.setState({ index });
     }
     render() {
-        console.log(this.props.index)
         return (
             <View style={{ flex: 1 }}>
 

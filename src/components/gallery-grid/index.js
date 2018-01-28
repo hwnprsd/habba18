@@ -40,7 +40,9 @@ export default class GalleryGrid extends Component {
                     ref={(popupDialog) => { this.popupDialog = popupDialog; }}
                     onDismissed={() => { this.setState({ show: false }) }}
                 >
-                    <Gallery images={allImages} index={this.state.id} />
+                    <Gallery images={allImages} index={this.state.id} nav={() => {
+                        this.setState({show: false})
+                    }} />
                 </PopupDialog>
             </View>
         )
