@@ -171,6 +171,9 @@ export default class ResideMenu extends Component {
             },
         });
     };
+    componentWillUnmount() {
+        this.animatedValue.x.removeListener()
+    } 
 
 
 }
