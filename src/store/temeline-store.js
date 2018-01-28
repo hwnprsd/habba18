@@ -66,7 +66,6 @@ class TimelineStore {
                     this.timelineDates[res.data.result[i].timestamp.slice(0, 10)] = { marked: true };
                     this.timelineList.push(res.data.result[i].timestamp.slice(0, 10));
                 }
-                console.log(this.timelineDates);
                 this.isFetching = false;
             })
         } catch (e) {
@@ -88,6 +87,7 @@ class TimelineStore {
                     time: e.timestamp.toString().slice(-5),
                     description: e.timestamp.toString().slice(0, 11),
                     title: e.name,
+                    id: e.eid,
                     icon: getIcon(e.status)
                 }))
                 this.isEventsFetching = false;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../header';
-import { colors, fonts } from '../../constants';
+import { colors, fonts, height } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
 import Timeline from 'react-native-timeline-listview'
 import ElevatedView from 'react-native-elevated-view';
@@ -10,7 +10,7 @@ import { UIActivityIndicator } from 'react-native-indicators'
 
 import styles from './styles';
 
-@inject('timelineStore') @observer
+@inject('timelineStore', 'eventStore') @observer
 export default class Auth extends Component {
     state = {
         selected: {}
@@ -21,11 +21,19 @@ export default class Auth extends Component {
         })
         this.props.timelineStore.setDate(day.dateString)
     }
+    _onCardPress = i => {
+        this.props.eventStore.setSelectedEventIndex(i);
+        this.props.navigation.navigate('EventDetail');
+    }
     _renderDetail = (rowData) => {
         return (
             <ElevatedView elevation={3} style={{ padding: 7, marginTop: -10, borderRadius: 3 }}>
-                <Text style={{ fontWeight: 'bold', fontSize: 15, marginBottom: 7 }}>{rowData.title}</Text>
-                <Text style={{ fontSize: 12 }}>{rowData.description}</Text>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => this._onCardPress(rowData.id)}>
+                    <View>
+                        <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7 }}>{rowData.title}</Text>
+                        <Text style={{ fontFamily: fonts.latoRegular, fontSize: 12 }}>{rowData.description}</Text>
+                    </View>
+                </TouchableOpacity>
             </ElevatedView>
         )
     }
@@ -48,10 +56,10 @@ export default class Auth extends Component {
                 {this.props.timelineStore.getEvents.length === 0 &&
                     <ElevatedView elevation={3} style={{ margin: 10, borderRadius: 3 }}>
                         {!this.props.timelineStore.isEventsFetching &&
-                            <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoLight, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
                         }
                         {this.props.timelineStore.isEventsFetching &&
-                            <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoLight, margin: 10 }}>Loading Events!</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Loading Events!</Text>
                         }
                     </ElevatedView>
                 }
@@ -63,11 +71,11 @@ export default class Auth extends Component {
                     lineColor={colors.primary}
                     innerCircle={'icon'}
                     timeContainerStyle={{ minWidth: 52, marginTop: -2 }}
-                    timeStyle={{ textAlign: 'center', backgroundColor: '#ff9797', color: 'white', padding: 2, borderRadius: 10 }}
+                    timeStyle={{ textAlign: 'center', backgroundColor: colors.primary, color: 'white', padding: 2, borderRadius: 10 }}
                     renderDetail={this._renderDetail}
                     separator={false}
                     options={{
-                        style: { padding: 10 },
+                        style: { padding: 10, minHeight: height },
                         renderHeader: () => <View style={{ height: 20 }} />
                     }}
                 />
