@@ -3,6 +3,8 @@ import { View, Text, Button, FlatList, WebView, Image, TouchableWithoutFeedback,
 import PopupDialog from 'react-native-popup-dialog';
 import FitImage from 'react-native-fit-image';
 import ElevatedView from 'react-native-elevated-view'
+import { UIActivityIndicator } from 'react-native-indicators';
+
 import Header from '../header';
 import { width } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
@@ -52,6 +54,8 @@ export default class Auth extends Component {
             return false;
 
         }
+        if(this.props.feedStore.isFeedFetching)
+            return <UIActivityIndicator animating />
         return (
             <View style={{ flex: 1 }} >
                 <Header title={'Feed'} left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />

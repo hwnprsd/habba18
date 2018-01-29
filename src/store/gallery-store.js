@@ -21,10 +21,8 @@ class GalleryStore {
             runInAction(() => {
                 this.galleryList = res.data.map(i => {
                     return ({
-                        source: { uri: i.url.medium },
-                        title: i.name,
-                        time: i.timestamp,
-                        index: idx ++
+                        photo: i.url.medium ,
+                        caption: i.name + ' | ' + i.timestamp,
                     })
                 });
                 this.isFetching = false;
@@ -44,6 +42,5 @@ class GalleryStore {
 const hydrate = create({ storage });
 
 export default galleryStore = new GalleryStore();
-galleryStore.fetchImages();
 
 hydrate('GalleryStore', galleryStore).then(() => { console.log('Gallery store hydrated!') })
