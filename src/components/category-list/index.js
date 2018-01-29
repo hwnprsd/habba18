@@ -26,7 +26,7 @@ export default class EventList extends Component {
     render() {
         const { allCategories, isCategoryListFetching } = this.props.eventStore;
         return (
-            <ImageBackground source={{ uri: "http://www.nelsonvenues.co.nz/uploads/1/0/1/2/101257066/event-placeholder_1_orig.jpg" }} style={{ width: sliderWidth, flex: 1 }}>
+            <ImageBackground source={{ uri: "https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg" }} style={{ width: sliderWidth, flex: 1 }}>
                 <View style={{ flex: 1 }} >
                     {isCategoryListFetching &&
                         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

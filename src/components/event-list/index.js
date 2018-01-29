@@ -27,13 +27,13 @@ export default class EventList extends Component {
             <GridView
                 itemDimension={width/3}
                 items={allEvents}
-                style={[styles.gridView, { height, paddingBottom: 50 }]}
+                style={[styles.gridView, { minHeight: height, paddingBottom: 50 }]}
                 renderItem={(item) => (
                     <ElevatedView elevation={3} style={{borderRadius: 3}}>
                         <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item.eid)}>
                                 <FastImage source={{ uri: item.url }} style={styles.image} resizeMode="cover" />
                                 <View style={{ justifyContent: 'center' }}>
-                                    <Text style={styles.itemName}>{item.name}</Text>
+                                    <Text style={styles.itemName}>{item.name || ''}</Text>
                                 </View>
                                 {/* <Text style={styles.itemCode}>{item.code}</Text> */}
                         </TouchableOpacity>

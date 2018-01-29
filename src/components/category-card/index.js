@@ -18,14 +18,14 @@ export default class EventCard extends Component {
                 <ElevatedView elevation={10} style={styles.cardContainer}>
                     <View style={{}}>
                         <FastImage
-                            source={{ uri: this.props.item.url || "http://www.nelsonvenues.co.nz/uploads/1/0/1/2/101257066/event-placeholder_1_orig.jpg" }}
+                            source={{ uri: this.props.item.url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }}
                             style={{ width: width / 1.5, height: height/3.4 }}
                             // style={{width: 250, height: 300, overflow: 'hidden'}}
                             resizeMode={'cover'}
                         />
                     </View>
                     <Text style={styles.cardText}>
-                        {this.props.item.name}
+                        {this.props.item.name || ''}
                     </Text>
                 </ElevatedView>
             </TouchableOpacity>

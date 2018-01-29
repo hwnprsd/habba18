@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, FlatList, WebView, Image, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
+import { View, Text, Button, FlatList, WebView, Image, TouchableWithoutFeedback } from 'react-native';
 import PopupDialog from 'react-native-popup-dialog';
 import FitImage from 'react-native-fit-image';
 import ElevatedView from 'react-native-elevated-view'
@@ -24,8 +24,8 @@ export default class Auth extends Component {
         return (
             <ElevatedView style={styles.postContainer} elevation={5}>
                 <View style={styles.text}>
-                    <Text style={styles.headingText}>{item.heading}</Text>
-                    <Text style={styles.captionText}>{item.caption}</Text>
+                    <Text style={styles.headingText}>{item.heading || ''}</Text>
+                    <Text style={styles.captionText}>{item.caption || ''}</Text>
                 </View>
                 <TouchableWithoutFeedback onPress={() => {
                     if (item.resources.slice(0, 4) !== "http") {
@@ -36,7 +36,7 @@ export default class Auth extends Component {
                     }
                 }}>
                     <View>
-                        <FitImage source={{ uri }} indicator={true} style={{}} />
+                        <FitImage source={{ uri: uri || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }} indicator={true} style={{}} />
                         {/* <FitImage source={{ uri }} style={{ height: 108 * 2, width: 192 * 2 }} /> */}
                         {!isImageURL &&
                             <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>

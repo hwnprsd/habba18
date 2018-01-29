@@ -123,5 +123,4 @@ class TimelineStore {
 
 const hydrate = create({ storage });
 export default timelineStore = new TimelineStore();
-timelineStore.fetchAllDates();
 hydrate('TimelineStore', timelineStore).then(() => { console.log('Hydrated timeline-store') });

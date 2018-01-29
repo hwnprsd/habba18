@@ -47,6 +47,7 @@ export default class Auth extends Component {
         }
         return (
             <ScrollView style={{}}>
+        
                 <Header title="Timeline" left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />
                 <ElevatedView 
                     elevation={3}
@@ -93,7 +94,10 @@ export default class Auth extends Component {
             </ScrollView>
         )
     }
+    componentWillUnmount() {
+        this.props.timelineStore.setDate('0000-00-00'); 
+    }
     componentWillMount() {
-        // this.props.timelineStore.fetchList()
+        this.props.timelineStore.fetchAllDates()
     }
 }

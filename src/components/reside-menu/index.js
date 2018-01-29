@@ -5,7 +5,9 @@ import {
     Button,
     Animated,
     PanResponder,
-    TouchableOpacity
+    TouchableOpacity,
+    ImageBackground,
+    TouchableWithoutFeedback
 } from 'react-native';
 import { fonts, height, width } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
@@ -14,33 +16,6 @@ import ElevatedView from 'react-native-elevated-view'
 import styles from './styles';
 
 let navigate
-
-
-const helper = (x, v) => {
-    if (v > 0) {
-        if (x > 300)
-            return 300;
-        if (x < 0)
-            return 0;
-        if (x > 0)
-            return 300;
-    }
-    if (v < 0) {
-        if (x < -300)
-            return -300;
-        if (x < 0)
-            return -300;
-        if (x > 0)
-            return 0
-    }
-    if (v === 0) {
-        if (x < -300)
-            return -300;
-        if (x > 300)
-            return 300;
-    }
-    return 0;
-}
 
 const AnimatedElevatedView = Animated.createAnimatedComponent(ElevatedView);
 
@@ -60,46 +35,49 @@ const Item = (props) => {
 
 const List = () => {
     return (
-        <View style={{ flex: 2, flexDirection: 'row' }}>
-            <View style={{ flex: 3 }}>
-                <View style={{ flex: 1 }}></View>
-                <View style={{ flex: 1, justifyContent: 'center' }}>
-                    <View style={{ justifyContent: 'space-around', paddingLeft: 10 }}>
-                        <Item text="Feed" nav="Feed" />
-                        <Item text="Events" nav="CategoryList" />
-                        <Item text="Register" />
-                        <Item text="Maps" />
-                        <Item text="Timeline" nav="Timeline" />
+        <ImageBackground source={{ uri: 'https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg' }} style={{ width, height }} resizeMode={'cover'}>
+            <View style={{ flex: 2, flexDirection: 'row' }}>
+                <View style={{ flex: 3 }}>
+                    <View style={{ flex: 1 }}></View>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <View style={{ justifyContent: 'space-around', paddingLeft: 10 }}>
+                            <Item text="Feed" nav="Feed" />
+                            <Item text="Events" nav="CategoryList" />
+                            <Item text="Register" />
+                            <Item text="Maps" />
+                            <Item text="Timeline" nav="Timeline" />
+                        </View>
                     </View>
+                    <View style={{ flex: 1 }}></View>
                 </View>
-                <View style={{ flex: 1 }}></View>
-            </View>
-            <View style={{ flex: 3 }}>
-                <View style={{ flex: 1 }}></View>
-                <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
-                    <View style={{ justifyContent: 'space-around', paddingRight: 10 }}>
-                        <Item text="Gallery" right nav="Gallery" />
-                        <Item text="Notifications" right />
-                        <Item text="About us" right />
-                        <Item text="Devs" right/>
-                        <Item text="Logout" right />
+                <View style={{ flex: 3 }}>
+                    <View style={{ flex: 1 }}></View>
+                    <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
+                        <View style={{ justifyContent: 'space-around', paddingRight: 10 }}>
+                            <Item text="Gallery" right nav="Gallery" />
+                            <Item text="Notifications" right />
+                            <Item text="About us" right />
+                            <Item text="Devs" right />
+                            <Item text="Logout" right />
+                        </View>
+
                     </View>
-
+                    <View style={{ flex: 1 }}></View>
                 </View>
-                <View style={{ flex: 1 }}></View>
-            </View>
 
-        </View>
+            </View>
+        </ImageBackground>
     )
 }
 
 export default class ResideMenu extends Component {
     state = {
         animatedValueX: 0,
-        animatedVelocity: 0
+        animatedVelocity: 0,
+        resideState: 0
     }
     render() {
-        const style = { width, height, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }
+        const style = { width, height, alignItems: 'center', justifyContent: 'center' }
         // const animatedStyle = { transform: this.animatedValue.getTranslateTransform() }
         const animatedStyle = {
             transform: [
@@ -124,20 +102,57 @@ export default class ResideMenu extends Component {
                     <List />
                 </View>
                 <AnimatedElevatedView
-                    elevation={7}
+                    elevation={25}
                     style={[animatedStyle, style, { position: 'absolute' }]}
                     {...this._panResponder.panHandlers}
                 >
-                    <Text>AHASHASH</Text>
+                    <ImageBackground source={{ uri: 'https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg' }} style={style} resizeMode={'cover'}>
+                        <View>
+                            <Text>AHASHASH</Text>
+                        </View>
+                    </ImageBackground>
                 </AnimatedElevatedView>
             </View>
         )
     }
+
     _resetReside = () => {
         Animated.spring(this.animatedValue.x, {
             toValue: 0,
             useNativeDriver: true
         }).start()
+    }
+    _helper = (x, v) => {
+        if (v > 0) {
+            if (x > 300)
+                return 300;
+            if (x < 0)
+                return 0;
+            if (x > 0)
+                return 300;
+        }
+        if (v < 0) {
+            if (x < -300)
+                return -300;
+            if (x < 0)
+                return -300;
+            if (x > 0)
+                return 0
+        }
+        if (v === 0) {
+            if(this.state.resideState === 0)
+                return 300
+            else
+                return 0
+        }
+        return 0;
+    }
+    _stateHelper = (x, v) => {
+        let resideState = this._helper(x, v);
+        this.setState({
+            resideState
+        });
+        return resideState;
     }
     componentWillMount = () => {
         navigate = this.props.navigation.navigate
@@ -162,7 +177,7 @@ export default class ResideMenu extends Component {
             onPanResponderRelease: (evt, gestureState) => {
                 Animated.parallel([
                     Animated.spring(this.animatedValue.x, {
-                        toValue: helper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx)),
+                        toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx)),
                         useNativeDriver: true
                     })
                 ]).start()
@@ -180,7 +195,7 @@ export default class ResideMenu extends Component {
     componentWillUnmount() {
         this.animatedValue.x.removeListener();
         this._resetReside();
-    } 
+    }
 
 
 }
