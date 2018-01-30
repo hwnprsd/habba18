@@ -9,7 +9,7 @@ import { width, height } from '../../constants';
 
 export default class EventCard extends Component {
     _onCardPress = () => {
-        this.props.setIndex(this.props.item.id);
+        this.props.setIndex({index: this.props.index, name: this.props.item.name});
         this.props.navigate('EventList', {categoryName: this.props.item.name});
     }
     render() {

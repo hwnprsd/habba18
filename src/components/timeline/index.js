@@ -10,80 +10,68 @@ import { UIActivityIndicator } from 'react-native-indicators'
 
 import styles from './styles';
 
-@inject('timelineStore', 'eventStore') @observer
+@inject('eventsV2') @observer
 export default class Auth extends Component {
     state = {
-        selected: {}
+        selected: ''
     }
     _onDayPress = day => {
         this.setState({
             selected: day.dateString
         })
-        this.props.timelineStore.setDate(day.dateString)
+        this.props.eventsV2.eventsFromDate(day.dateString)
     }
     _onCardPress = i => {
-        this.props.eventStore.setSelectedEventIndex(i);
-        this.props.navigation.navigate('EventDetail');
+        this.props.navigation.navigate('EventDetail', { item: this.props.eventsV2.eventsFromDate(this.state.selected)[i] });
     }
     _renderDetail = (rowData) => {
+        const i = this.props.eventsV2.eventsFromDate(this.state.selected).indexOf(rowData);
         return (
             <ElevatedView elevation={3} style={{ padding: 7, marginTop: -10, borderRadius: 3 }}>
-                <TouchableOpacity activeOpacity={0.7} onPress={() => this._onCardPress(rowData.id)}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => this._onCardPress(i)}>
                     <View>
-                        <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7 }}>{rowData.title}</Text>
-                        <Text style={{ fontFamily: fonts.latoRegular, fontSize: 12 }}>{rowData.description}</Text>
+                        <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7 }}>{rowData.name + ' at ' + rowData.venue}</Text>
+                        <Text style={{ fontFamily: fonts.latoRegular, fontSize: 12 }}>{rowData.date}</Text>
                     </View>
                 </TouchableOpacity>
             </ElevatedView>
         )
     }
     render() {
-        if (this.props.timelineStore.isFetching) {
-            return (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                    <UIActivityIndicator animating />
-                </View>
-            )
-        }
+        const { markedDates } = this.props.eventsV2;
         return (
             <ScrollView style={{}}>
-        
+
                 <Header title="Timeline" left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />
-                <ElevatedView 
+                <ElevatedView
                     elevation={3}
                     style={{ margin: 10, borderRadius: 3 }}
                 >
                     <Calendar
                         onDayPress={this._onDayPress}
-                        markedDates={{ ...this.props.timelineStore.getAllDates, [this.state.selected]: { selected: true } }}
+                        markedDates={{ ...markedDates, [this.state.selected]: { selected: true } }}
                         theme={{
                             todayTextColor: colors.primary,
                             selectedDayTextColor: 'white',
                             selectedDayBackgroundColor: colors.primary,
                             arrowColor: colors.primary
                         }}
-                
+
                     />
                 </ElevatedView>
-                {this.props.timelineStore.getEvents.length === 0 &&
+                {this.props.eventsV2.eventsFromDate(this.state.selected) && this.props.eventsV2.eventsFromDate(this.state.selected).length === 0 &&
                     <ElevatedView elevation={3} style={{ margin: 10, borderRadius: 3 }}>
-                        {!this.props.timelineStore.isEventsFetching &&
-                            <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
-                        }
-                        {this.props.timelineStore.isEventsFetching &&
-                            <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Loading Events!</Text>
-                        }
+                        <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
                     </ElevatedView>
                 }
                 <Timeline
-                    data={this.props.timelineStore.getEvents}
+                    data={this.props.eventsV2.eventsFromDate(this.state.selected) || []}
                     enableEmptySections={true}
                     innerCircle={'dot'}
-                    circleColor={'rgba(0,0,0,0)'}
+                    circleColor={colors.primaryDark}
                     lineColor={colors.primary}
-                    innerCircle={'icon'}
                     timeContainerStyle={{ minWidth: 52, marginTop: -2 }}
-                    timeStyle={{ textAlign: 'center', backgroundColor: colors.primary, color: 'white', padding: 2, borderRadius: 10 }}
+                    timeStyle={{ textAlign: 'center', backgroundColor: colors.primary, color: 'white', padding: 4, borderRadius: 5 }}
                     renderDetail={this._renderDetail}
                     separator={false}
                     options={{
@@ -93,11 +81,5 @@ export default class Auth extends Component {
                 />
             </ScrollView>
         )
-    }
-    componentWillUnmount() {
-        this.props.timelineStore.setDate('0000-00-00'); 
-    }
-    componentWillMount() {
-        this.props.timelineStore.fetchAllDates()
     }
 }

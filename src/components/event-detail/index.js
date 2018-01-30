@@ -10,13 +10,13 @@ import Header from '../header';
 
 import styles from './styles';
 
-@inject('eventStore') @observer
+@inject('eventsV2') @observer
 export default class EventDetails extends Component {
     _renderContent = () => {
-        const { description, rules, numb, eventhead, amount, pmoney } = this.props.eventStore.allEventDetails;
+        const { description, rules, numb, eventhead, amount, pmoney } = this.props.navigation.state.params.item;
         return (
             <View style={{ flex: 1, minHeight: height }}>
-                <ElevatedView style={[styles.card, {marginTop: 10}]} elevation={3}>
+                <ElevatedView style={[styles.card, { marginTop: 10 }]} elevation={3}>
                     <Text style={styles.titleText}>Description</Text>
                     <Text style={styles.contentText}>{description || ''}</Text>
                 </ElevatedView>
@@ -42,24 +42,15 @@ export default class EventDetails extends Component {
         )
     }
     render() {
-        const { name, url } = this.props.eventStore.allEventDetails;
-
-        if (this.props.eventStore.isEventFeteching) {
-            console.log('STAATUS', this.props.eventStore.isEventFeteching)
-            return <UIActivityIndicator animating />
-        }
-        else
-            return (
-                <CollapsibleToolbar
-                    renderContent={this._renderContent}
-                    renderNavBar={() => <Header collapsable title={name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
-                    imageSource={url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg'}
-                    collapsedNavBarBackgroundColor={colors.primaryDark}
-                    toolBarHeight={300}
-                />
-            )
-    }
-    componentWillMount() {
-        this.props.eventStore.fetchEventDetails();
+        const { name, url } = this.props.navigation.state.params.item;
+        return (
+            <CollapsibleToolbar
+                renderContent={this._renderContent}
+                renderNavBar={() => <Header collapsable title={name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
+                imageSource={url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg'}
+                collapsedNavBarBackgroundColor={colors.primaryDark}
+                toolBarHeight={300}
+            />
+        )
     }
 }

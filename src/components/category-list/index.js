@@ -15,34 +15,33 @@ import Header from '../header'
 import styles from './styles';
 // import { width } from '../../constants';
 
-const {width} = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 
-@inject('eventStore') @observer
+@inject('eventsV2') @observer
 export default class EventList extends Component {
-    componentWillMount() {
-        this.props.eventStore.fetchCategories();
-    }
+
     render() {
-        const { allCategories, isCategoryListFetching } = this.props.eventStore;
+        const { categoryList, isFetching, setCategory } = this.props.eventsV2;
+        if (isFetching)
+            return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <UIActivityIndicator animating color={"#fff"} />
+            </View>)
         return (
             <ImageBackground source={{ uri: "https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg" }} style={{ width: sliderWidth, flex: 1 }}>
                 <View style={{ flex: 1 }} >
-                    {isCategoryListFetching &&
-                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                            <UIActivityIndicator animating color={"#fff"} />
-                        </View>
-                    }
-                    <Header title={''} color="rgba(0,0,0,0)" left={{name: 'ios-arrow-back', action: this.props.navigation.goBack}} />
+
+                    <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel
                         style={{ flex: 1 }}
                         ref={c => { this.carousel = c }}
-                        data={allCategories}
+                        data={categoryList}
                         renderItem={
                             ({ item, index }) =>
                                 <CategoryCard
+                                    index={index}
                                     item={item}
-                                    setIndex={this.props.eventStore.setSelectedCategoryIndex}
+                                    setIndex={setCategory}
                                     navigate={this.props.navigation.navigate}
                                 />}
                         sliderWidth={sliderWidth}
