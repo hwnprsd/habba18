@@ -8,27 +8,32 @@ export default StyleSheet.create({
   },
   itemContainer: {
     alignItems: 'center',
-    borderRadius: 3,
     padding: 0,
     height: 145,
     flex: 1,
-    width: width/2.2,
+    width: width,
     overflow:'hidden',
     backgroundColor: '#fff',
   },
   itemName: {
-    fontSize: 15,
-    color: '#0f0f0f',
+    fontSize: 22,
+    color: '#fff',
     fontFamily: fonts.latoRegular,
-    margin: 5
   },
   image: {
-    width: width/2.2,
+    width: width,
     alignSelf: 'center',
     height: 150,
     flex: 1,
   },
-
+  textContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 10,
+    backgroundColor: 'rgba(0,0,0,0.33)'
+  },
   itemCode: {
     fontWeight: '600',
     fontSize: 12,

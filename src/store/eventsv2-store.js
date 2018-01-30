@@ -9,13 +9,19 @@ const EVENTSV2 = 'http://acharyahabba.in/habba18/json.php';
 class EventStore {
     @persist('list') @observable mainList = [];
     @persist('object') @observable timelineObj = {};
+    bak = [];
     @observable selectedCategory = {
         name: 'Music',
         index: 1,
     };
+    @observable error = {
+        present: false,
+        message: null
+    }
     @observable eventIndex = 0;
     @observable isFetching = false;
     @action fetchAllEvents = async () => {
+        this.bak = this.mainList;
         this.mainList = [];
         this.isFetching = true;
         try {
@@ -23,18 +29,22 @@ class EventStore {
             const res = await Promise.resolve(P1);
             this.mainList = res.data.result;
             this.isFetching = false;
+            this.bak = this.mainList;
             this.makeTimeline()
 
         } catch (e) {
+            // this.mainList = this.bak; // BACKUP FALLBACK
             this.errorMessage = e.message;
             this.errorPresent = true;
             this.isFetching = false;
+            this.makeTimeline();
             console.log(e.message);
         }
     }
     @computed get categoryList() {
-        return this.mainList.map(cat => ({ name: Object.keys(cat)[1], url: cat.image_url })).slice()
+        return this.mainList.map(cat => ({ name: Object.keys(cat)[1], url: cat.image_url, length: cat[Object.keys(cat)[1]].length })).slice()
     }
+
     @computed get eventsList() {
         return this.mainList.slice()[this.selectedCategory.index][this.selectedCategory.name].slice();
     }
@@ -60,7 +70,7 @@ class EventStore {
         return marked;
     }
     @action eventsFromDate = date => {
-        if(this.timelineObj[date])
+        if (this.timelineObj[date])
             return this.timelineObj[date]
         return [];
     }
@@ -69,6 +79,7 @@ class EventStore {
 const hydrate = create({ storage })
 
 export default eventsStore = new EventStore();
-eventsStore.fetchAllEvents();
 
-hydrate('EventStoreV2', eventsStore).then(() => { console.log('Event Store Hydrated') });
+hydrate('EventStoreV2', eventsStore).then(() => { console.log('Event Store Hydrated') }).catch(e => console.log('ERROR', e));
+
+eventsStore.fetchAllEvents();

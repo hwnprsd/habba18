@@ -22,11 +22,16 @@ const { width } = Dimensions.get('window')
 export default class EventList extends Component {
 
     render() {
-        const { categoryList, isFetching, setCategory } = this.props.eventsV2;
+        const { categoryList, isFetching, setCategory, error } = this.props.eventsV2;
         if (isFetching)
             return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <UIActivityIndicator animating color={"#fff"} />
             </View>)
+        if (error.present) {
+            return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 40, color: 'red' }}>{error.message}</Text>
+            </View>)
+        }
         return (
             <ImageBackground source={{ uri: "https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg" }} style={{ width: sliderWidth, flex: 1 }}>
                 <View style={{ flex: 1 }} >

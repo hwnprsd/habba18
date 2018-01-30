@@ -9,8 +9,9 @@ import { width, height } from '../../constants';
 
 export default class EventCard extends Component {
     _onCardPress = () => {
-        this.props.setIndex({index: this.props.index, name: this.props.item.name});
-        this.props.navigate('EventList', {categoryName: this.props.item.name});
+        const {index, item} = this.props;
+        this.props.setIndex({ index: index, name: item.name });
+        this.props.navigate('EventList', { categoryName: item.name, url: item.url });
     }
     render() {
         return (
@@ -19,14 +20,19 @@ export default class EventCard extends Component {
                     <View style={{}}>
                         <FastImage
                             source={{ uri: this.props.item.url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }}
-                            style={{ width: width / 1.5, height: height/3.4 }}
+                            style={{ width: width / 1.5, height: height / 1.8 }}
                             // style={{width: 250, height: 300, overflow: 'hidden'}}
                             resizeMode={'cover'}
                         />
                     </View>
-                    <Text style={styles.cardText}>
-                        {this.props.item.name || ''}
-                    </Text>
+                    <View style={styles.cardText}>
+                        <Text style={styles.text}>
+                            {this.props.item.name || ''}
+                        </Text>
+                        <Text style={[styles.text, { fontSize: 15 }]}>
+                            {this.props.item.length + ' Events' || ''}
+                        </Text>
+                    </View>
                 </ElevatedView>
             </TouchableOpacity>
         )

@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
-import { colors, height } from '../../constants';
-import { UIActivityIndicator } from 'react-native-indicators'
+import { colors, height, fonts } from '../../constants';
+import ViewMoreText from 'react-native-view-more-text';
 import Header from '../header';
 
 
@@ -12,17 +12,39 @@ import styles from './styles';
 
 @inject('eventsV2') @observer
 export default class EventDetails extends Component {
+    renderViewMore(onPress) {
+        return (
+            <Text style={styles.readMore} onPress={onPress}>View more</Text>
+        )
+    }
+    renderViewLess(onPress) {
+        return (
+            <Text style={styles.readMore} onPress={onPress}>View less</Text>
+        )
+    }
     _renderContent = () => {
         const { description, rules, numb, eventhead, amount, pmoney } = this.props.navigation.state.params.item;
         return (
             <View style={{ flex: 1, minHeight: height }}>
                 <ElevatedView style={[styles.card, { marginTop: 10 }]} elevation={3}>
                     <Text style={styles.titleText}>Description</Text>
-                    <Text style={styles.contentText}>{description || ''}</Text>
+                    <ViewMoreText
+                        numberOfLines={4}
+                        renderViewMore={this.renderViewMore}
+                        renderViewLess={this.renderViewLess}
+                    >
+                        <Text style={styles.contentText}>{description || ''}</Text>
+                    </ViewMoreText>
                 </ElevatedView>
                 <ElevatedView style={styles.card} elevation={3}>
                     <Text style={styles.titleText}>Rules & Regulations</Text>
-                    <Text style={styles.contentText}>{rules || ''}</Text>
+                    <ViewMoreText
+                        numberOfLines={4}
+                        renderViewMore={this.renderViewMore}
+                        renderViewLess={this.renderViewLess}
+                    >
+                        <Text style={styles.contentText}>{rules || ''}</Text>
+                    </ViewMoreText>
                 </ElevatedView>
                 <ElevatedView style={styles.card} elevation={3}>
                     <Text style={styles.titleText}>Contact Number</Text>

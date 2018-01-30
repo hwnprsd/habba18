@@ -23,5 +23,10 @@ export default StyleSheet.create({
         fontFamily: fonts.latoRegular,
         fontSize: 20,
         color: colors.primary
+    },
+    readMore: {
+        color: colors.primary,
+        fontFamily: fonts.latoBold,
+        marginTop: 5
     }
 })

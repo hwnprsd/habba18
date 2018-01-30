@@ -22,14 +22,14 @@ export default class EventList extends Component {
         const { eventsList } = this.props.eventsV2;
         return (
             <GridView
-                itemDimension={width / 3}
+                itemDimension={width/1.1}
                 items={eventsList}
-                style={[styles.gridView, { minHeight: height, paddingBottom: 50 }]}
+                style={[styles.gridView, { minHeight: height }]}
                 renderItem={(item) => (
-                    <ElevatedView elevation={3} style={{ borderRadius: 3 }}>
-                        <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item)}>
+                    <ElevatedView elevation={3}>
+                        <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item)} activeOpacity={0.7}>
                             <FastImage source={{ uri: item.url }} style={styles.image} resizeMode="cover" />
-                            <View style={{ justifyContent: 'center' }}>
+                            <View style={styles.textContainer}>
                                 <Text style={styles.itemName}>{item.name || ''}</Text>
                             </View>
                         </TouchableOpacity>
@@ -39,12 +39,13 @@ export default class EventList extends Component {
         )
     }
     render() {
-        const toolBarText = this.props.navigation.state.params.categoryName;
+        const { categoryName, url } = this.props.navigation.state.params;
+        const toolBarText = categoryName;
         return (
             <CollapsibleToolbar
                 renderContent={this._renderContent}
                 renderNavBar={() => <Header collapsable title={toolBarText} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
-                imageSource='https://lorempixel.com/400/600/'
+                imageSource={url || 'https://lorempixel.com/400/600/'}
                 collapsedNavBarBackgroundColor={colors.primaryDark}
                 toolBarHeight={200}
             />
