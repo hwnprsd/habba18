@@ -3,7 +3,6 @@ import { AsyncStorage as storage } from 'react-native';
 import { colors } from '../constants';
 import { create, persist } from 'mobx-persist';
 import axios from 'axios';
-import eventStore from './event-store';
 
 const EVENTSV2 = 'http://acharyahabba.in/habba18/json.php';
 
