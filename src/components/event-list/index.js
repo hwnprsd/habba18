@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
-import GridView from 'react-native-super-grid';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import { observer, inject } from 'mobx-react/native';
 import FastImage from 'react-native-fast-image';
@@ -22,30 +21,30 @@ export default class EventList extends Component {
     }
 
     componentWillUnmount() {
-      // Important to stop updating state after unmount
-      Dimensions.removeEventListener("change", this.handler);
+        // Important to stop updating state after unmount
+        Dimensions.removeEventListener("change", this.handler);
     }
     _onEventPress = item => {
         this.props.navigation.navigate('EventDetail', { item });
     }
     _renderContent = () => {
         const { eventsList } = this.props.eventsV2;
-        const {width, height} = this.state;
+        const { width, height } = this.state;
         console.log(this.state)
         return (
-            
-              <View  style={[styles.gridView, { minHeight: height }]} >
+
+            <View style={[styles.gridView, { minHeight: height }]} >
                 {eventsList.map((item) => (
                     <ElevatedView elevation={3} key={item.eid} style={styles.mainContainer}>
                         <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item)} activeOpacity={0.7}>
-                            <FastImage source={{ uri: item.url }} style={[styles.image, {width}]} resizeMode="cover" />
-                            <View style={[styles.textContainer, {width}]}>
+                            <FastImage source={{ uri: item.url }} style={[styles.image, { width }]} resizeMode="cover" />
+                            <View style={[styles.textContainer, { width }]}>
                                 <Text style={styles.itemName}>{item.name || ''}</Text>
                             </View>
                         </TouchableOpacity>
                     </ElevatedView>
                 ))}
-                </View>
+            </View>
         )
     }
     render() {

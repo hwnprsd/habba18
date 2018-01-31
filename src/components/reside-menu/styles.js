@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
+import { fonts } from '../../constants';
 
 export default StyleSheet.create({
     itemContainer: {
@@ -6,5 +7,7 @@ export default StyleSheet.create({
     },
     itemText: {
         fontSize: 20,
+        color: '#fff',
+        fontFamily: fonts.latoRegular
     },
 })

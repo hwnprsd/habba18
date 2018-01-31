@@ -1,8 +1,7 @@
 import { Dimensions } from 'react-native';
+import BackgroundImage from './images/bg.jpg';
 
-
-export const height = Dimensions.get('window').height;
-export const width = Dimensions.get('window').width;
+export const backgroundImage = BackgroundImage;
 
 export const fonts = {
     ubuntuLight: "Ubuntu-Light",

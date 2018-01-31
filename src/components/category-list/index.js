@@ -3,7 +3,7 @@ import {
     View,
     Text,
     ImageBackground,
-    Dimensions
+    Dimensions,
 } from 'react-native';
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
@@ -13,7 +13,7 @@ import { UIActivityIndicator } from 'react-native-indicators';
 import Header from '../header'
 
 import styles from './styles';
-// import { width } from '../../constants';
+import { backgroundImage } from '../../constants';
 
 
 @inject('eventsV2') @observer
@@ -26,14 +26,14 @@ export default class EventList extends Component {
     }
 
     componentWillUnmount() {
-      // Important to stop updating state after unmount
-      Dimensions.removeEventListener("change", this.handler);
+        // Important to stop updating state after unmount
+        Dimensions.removeEventListener("change", this.handler);
     }
     _onEventPress = item => {
         this.props.navigation.navigate('EventDetail', { item });
     }
     render() {
-        const {width, height} = this.state;
+        const { width, height } = this.state;
         const { categoryList, isFetching, setCategory, error } = this.props.eventsV2;
         if (isFetching)
             return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -45,12 +45,12 @@ export default class EventList extends Component {
             </View>)
         }
         return (
-            <ImageBackground source={{ uri: "https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg" }} style={{ width, flex: 1 }}>
+            <ImageBackground source={backgroundImage} style={{ width, flex: 1 }}>
                 <View style={{ flex: 1 }} >
-
                     <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel
                         style={{ flex: 1 }}
+                        containerCustomStyle={{ height: height / 1.8 }}
                         ref={c => { this.carousel = c }}
                         data={categoryList}
                         renderItem={

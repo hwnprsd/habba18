@@ -8,9 +8,10 @@ import {
     TouchableOpacity,
     ImageBackground,
     TouchableWithoutFeedback,
-    Dimensions
+    Dimensions,
+    StatusBar
 } from 'react-native';
-import { fonts } from '../../constants';
+import { fonts, backgroundImage } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view'
 
@@ -45,9 +46,10 @@ export default class ResideMenu extends Component {
     }
     handler = dims => this.setState(dims.window);
     List = () => {
-        const {width, height} = this.state;        
+        const { width, height } = this.state;
         return (
-            <ImageBackground source={{ uri: 'https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg' }} style={{ width, height }} resizeMode={'cover'}>
+            <ImageBackground source={backgroundImage} style={{ width, height }} resizeMode={'cover'}>
+                <StatusBar translucent backgroundColor='rgba(0,0,0,0)' />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
                     <View style={{ flex: 3 }}>
                         <View style={{ flex: 1 }}></View>
@@ -72,17 +74,17 @@ export default class ResideMenu extends Component {
                                 <Item text="Devs" right />
                                 <Item text="Logout" right />
                             </View>
-    
+
                         </View>
                         <View style={{ flex: 1 }}></View>
                     </View>
-    
+
                 </View>
             </ImageBackground>
         )
     }
     render() {
-        const {width, height} = this.state;
+        const { width, height } = this.state;
         const style = { width, height, alignItems: 'center', justifyContent: 'center' }
         // const animatedStyle = { transform: this.animatedValue.getTranslateTransform() }
         const animatedStyle = {
@@ -112,7 +114,7 @@ export default class ResideMenu extends Component {
                     style={[animatedStyle, style, { position: 'absolute' }]}
                     {...this._panResponder.panHandlers}
                 >
-                    <ImageBackground source={{ uri: 'https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg' }} style={style} resizeMode={'cover'}>
+                    <ImageBackground source={backgroundImage} style={style} resizeMode={'cover'}>
                         <View>
                             <Text>AHASHASH</Text>
                         </View>
@@ -146,7 +148,7 @@ export default class ResideMenu extends Component {
                 return 0
         }
         if (v === 0) {
-            if(this.state.resideState === 0)
+            if (this.state.resideState === 0)
                 return 300
             else
                 return 0
@@ -204,5 +206,5 @@ export default class ResideMenu extends Component {
         this.animatedValue.x.removeAllListeners();
 
 
-}
+    }
 }
