@@ -1,17 +1,21 @@
-import { StyleSheet } from 'react-native';
-import { fonts, width, height } from '../../constants';
+import { StyleSheet, Dimensions } from 'react-native';
+import { fonts } from '../../constants';
+
 
 export default StyleSheet.create({
   gridView: {
-    paddingTop: 25,
-    flex: 1,
+    paddingTop: 5,
+  },
+  mainContainer: {
+    margin: 5,
+    height: 145,
+    marginHorizontal: 10 
   },
   itemContainer: {
     alignItems: 'center',
     padding: 0,
-    height: 145,
     flex: 1,
-    width: width,
+    
     overflow:'hidden',
     backgroundColor: '#fff',
   },
@@ -21,7 +25,6 @@ export default StyleSheet.create({
     fontFamily: fonts.latoRegular,
   },
   image: {
-    width: width,
     alignSelf: 'center',
     height: 150,
     flex: 1,

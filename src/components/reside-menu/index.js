@@ -7,9 +7,10 @@ import {
     PanResponder,
     TouchableOpacity,
     ImageBackground,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Dimensions
 } from 'react-native';
-import { fonts, height, width } from '../../constants';
+import { fonts } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view'
 
@@ -33,50 +34,55 @@ const Item = (props) => {
 }
 
 
-const List = () => {
-    return (
-        <ImageBackground source={{ uri: 'https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg' }} style={{ width, height }} resizeMode={'cover'}>
-            <View style={{ flex: 2, flexDirection: 'row' }}>
-                <View style={{ flex: 3 }}>
-                    <View style={{ flex: 1 }}></View>
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                        <View style={{ justifyContent: 'space-around', paddingLeft: 10 }}>
-                            <Item text="Feed" nav="Feed" />
-                            <Item text="Events" nav="CategoryList" />
-                            <Item text="Register" />
-                            <Item text="Maps" />
-                            <Item text="Timeline" nav="Timeline" />
-                        </View>
-                    </View>
-                    <View style={{ flex: 1 }}></View>
-                </View>
-                <View style={{ flex: 3 }}>
-                    <View style={{ flex: 1 }}></View>
-                    <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
-                        <View style={{ justifyContent: 'space-around', paddingRight: 10 }}>
-                            <Item text="Gallery" right nav="Gallery" />
-                            <Item text="Notifications" right />
-                            <Item text="About us" right />
-                            <Item text="Devs" right />
-                            <Item text="Logout" right />
-                        </View>
-
-                    </View>
-                    <View style={{ flex: 1 }}></View>
-                </View>
-
-            </View>
-        </ImageBackground>
-    )
-}
 
 export default class ResideMenu extends Component {
     state = {
         animatedValueX: 0,
         animatedVelocity: 0,
-        resideState: 0
+        resideState: 0,
+        height: Dimensions.get("window").height,
+        width: Dimensions.get("window").width
+    }
+    handler = dims => this.setState(dims.window);
+    List = () => {
+        const {width, height} = this.state;        
+        return (
+            <ImageBackground source={{ uri: 'https://c1.staticflickr.com/5/4596/38672270274_39a3409c2c_b.jpg' }} style={{ width, height }} resizeMode={'cover'}>
+                <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <View style={{ flex: 3 }}>
+                        <View style={{ flex: 1 }}></View>
+                        <View style={{ flex: 1, justifyContent: 'center' }}>
+                            <View style={{ justifyContent: 'space-around', paddingLeft: 10 }}>
+                                <Item text="Feed" nav="Feed" />
+                                <Item text="Events" nav="CategoryList" />
+                                <Item text="Register" />
+                                <Item text="Maps" />
+                                <Item text="Timeline" nav="Timeline" />
+                            </View>
+                        </View>
+                        <View style={{ flex: 1 }}></View>
+                    </View>
+                    <View style={{ flex: 3 }}>
+                        <View style={{ flex: 1 }}></View>
+                        <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
+                            <View style={{ justifyContent: 'space-around', paddingRight: 10 }}>
+                                <Item text="Gallery" right nav="Gallery" />
+                                <Item text="Notifications" right />
+                                <Item text="About us" right />
+                                <Item text="Devs" right />
+                                <Item text="Logout" right />
+                            </View>
+    
+                        </View>
+                        <View style={{ flex: 1 }}></View>
+                    </View>
+    
+                </View>
+            </ImageBackground>
+        )
     }
     render() {
+        const {width, height} = this.state;
         const style = { width, height, alignItems: 'center', justifyContent: 'center' }
         // const animatedStyle = { transform: this.animatedValue.getTranslateTransform() }
         const animatedStyle = {
@@ -99,7 +105,7 @@ export default class ResideMenu extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={{ flex: 1, backgroundColor: '#e2e1e0' }}>
-                    <List />
+                    <this.List />
                 </View>
                 <AnimatedElevatedView
                     elevation={25}
@@ -155,6 +161,7 @@ export default class ResideMenu extends Component {
         return resideState;
     }
     componentWillMount = () => {
+        Dimensions.addEventListener("change", this.handler);
         navigate = this.props.navigation.navigate
         this.animatedValue = new Animated.ValueXY();
         this.animatedValue.x.addListener(v => { this.state.animatedValueX = v.value });
@@ -193,9 +200,9 @@ export default class ResideMenu extends Component {
         });
     };
     componentWillUnmount() {
-        this.animatedValue.x.removeListener();
-        this._resetReside();
-    }
+        Dimensions.removeEventListener("change", this.handler);
+        this.animatedValue.x.removeAllListeners();
 
 
+}
 }

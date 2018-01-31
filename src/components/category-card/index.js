@@ -1,21 +1,35 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import FitImage from 'react-native-fit-image';
 import ElevatedView from 'react-native-elevated-view';
 
 import styles from './styles';
-import { width, height } from '../../constants';
 
 export default class EventCard extends Component {
+    state = Dimensions.get("window");
+    handler = dims => this.setState(dims.window);
+    
+    componentWillMount() {
+        Dimensions.addEventListener("change", this.handler);
+    }
+    
+    componentWillUnmount() {
+        // Important to stop updating state after unmount
+        Dimensions.removeEventListener("change", this.handler);
+    }
+    _onEventPress = item => {
+        this.props.navigation.navigate('EventDetail', { item });
+    }
     _onCardPress = () => {
         const {index, item} = this.props;
         this.props.setIndex({ index: index, name: item.name });
         this.props.navigate('EventList', { categoryName: item.name, url: item.url });
     }
     render() {
+        const {width, height} = this.state;
         return (
-            <TouchableOpacity style={styles.container} onPress={this._onCardPress} activeOpacity={0.7}>
+            <TouchableOpacity style={[styles.container, { width: width / 1.5,height: height / 1.8}]} onPress={this._onCardPress} activeOpacity={0.7}>
                 <ElevatedView elevation={10} style={styles.cardContainer}>
                     <View style={{}}>
                         <FastImage

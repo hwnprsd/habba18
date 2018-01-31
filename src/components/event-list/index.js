@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import GridView from 'react-native-super-grid';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import { observer, inject } from 'mobx-react/native';
@@ -10,32 +10,42 @@ import ElevatedView from 'react-native-elevated-view';
 import Header from '../header'
 
 import styles from './styles';
-import { width, height, colors } from '../../constants';
-
+import { colors } from '../../constants';
 
 @inject('eventsV2') @observer
 export default class EventList extends Component {
+    state = Dimensions.get("window");
+    handler = dims => this.setState(dims.window);
+
+    componentWillMount() {
+        Dimensions.addEventListener("change", this.handler);
+    }
+
+    componentWillUnmount() {
+      // Important to stop updating state after unmount
+      Dimensions.removeEventListener("change", this.handler);
+    }
     _onEventPress = item => {
         this.props.navigation.navigate('EventDetail', { item });
     }
     _renderContent = () => {
         const { eventsList } = this.props.eventsV2;
+        const {width, height} = this.state;
+        console.log(this.state)
         return (
-            <GridView
-                itemDimension={width/1.1}
-                items={eventsList}
-                style={[styles.gridView, { minHeight: height }]}
-                renderItem={(item) => (
-                    <ElevatedView elevation={3}>
+            
+              <View  style={[styles.gridView, { minHeight: height }]} >
+                {eventsList.map((item) => (
+                    <ElevatedView elevation={3} key={item.eid} style={styles.mainContainer}>
                         <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item)} activeOpacity={0.7}>
-                            <FastImage source={{ uri: item.url }} style={styles.image} resizeMode="cover" />
-                            <View style={styles.textContainer}>
+                            <FastImage source={{ uri: item.url }} style={[styles.image, {width}]} resizeMode="cover" />
+                            <View style={[styles.textContainer, {width}]}>
                                 <Text style={styles.itemName}>{item.name || ''}</Text>
                             </View>
                         </TouchableOpacity>
                     </ElevatedView>
-                )}
-            />
+                ))}
+                </View>
         )
     }
     render() {
