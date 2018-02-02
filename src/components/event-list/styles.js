@@ -4,23 +4,23 @@ import { fonts } from '../../constants';
 
 export default StyleSheet.create({
   gridView: {
-    paddingTop: 5,
+    paddingTop: 2.5,
   },
   mainContainer: {
     margin: 2.5,
     height: 145,
-    marginHorizontal: 5 
+    marginHorizontal: 5
   },
   mainContainer2: {
     height: 145,
-    marginHorizontal: 2.5 
+    marginHorizontal: 2.5
   },
   itemContainer: {
     alignItems: 'center',
     padding: 0,
     flex: 1,
-    
-    overflow:'hidden',
+
+    overflow: 'hidden',
     backgroundColor: '#fff',
   },
   itemName: {

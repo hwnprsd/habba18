@@ -25,6 +25,7 @@
     "react-native-photo-browser": "^0.4.0",
     "react-native-popup-dialog": "^0.10.46",
     "react-native-snap-carousel": "^3.6.0",
+    "react-native-swiper": "^1.5.13",
     "react-native-timeline-listview": "^0.2.2",
     "react-native-vector-icons": "^4.5.0",
     "react-native-view-more-text": "^1.4.3",

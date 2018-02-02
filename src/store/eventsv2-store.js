@@ -48,6 +48,10 @@ class EventStore {
     @computed get eventsList() {
         return this.mainList.slice()[this.selectedCategory.index][this.selectedCategory.name].slice();
     }
+
+    @computed get _mainList() {
+        return this.mainList.slice()
+    }
     @action setCategory = o => { this.selectedCategory = { ...o } };
     @action setEventIndex = i => { this.eventIndex = i };
 
@@ -72,6 +76,9 @@ class EventStore {
         if (this.timelineObj[date])
             return this.timelineObj[date]
         return [];
+    }
+    @computed get selectedEventIndex() {
+        return parseInt(this.eventIndex)
     }
 }
 

@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react/native';
 import FastImage from 'react-native-fast-image';
 import { UIActivityIndicator } from 'react-native-indicators'
 import ElevatedView from 'react-native-elevated-view';
+import Swiper from 'react-native-swiper';
 
 import Header from '../header'
 
@@ -27,19 +28,24 @@ export default class EventList extends Component {
     _onEventPress = item => {
         this.props.navigation.navigate('EventDetail', { item });
     }
-    _renderContent = () => {
-        const { eventsList } = this.props.eventsV2;
+    _renderContent = (item, index) => {
+        const { _mainList } = this.props.eventsV2;
         const { width, height } = this.state;
+        const eventsList = _mainList[index][item].slice();
         let oldList = [];
         let list = [];
         let counter = 0;
         let c = 0;
         for (let i = 0; i < eventsList.length; i++) {
-            if (eventsList.length === 2 && i === 0 ) {
-                oldList.push(eventsList[i]);
+            const curr = {
+                ...eventsList[i],
+                index: i
             }
-            else if(eventsList.length === 2 && i == 1) {
-                oldList.push(eventsList[i]);
+            if (eventsList.length === 2 && i === 0) {
+                oldList.push(curr);
+            }
+            else if (eventsList.length === 2 && i == 1) {
+                oldList.push(curr);
                 list.push(oldList);
                 oldList = [];
             }
@@ -50,21 +56,21 @@ export default class EventList extends Component {
                             list.push(oldList);
                             oldList = [];
                         }
-                        list.push(eventsList[i]);
+                        list.push(curr);
                         counter = 1;
                         break;
                     case 1:
-                        oldList.push(eventsList[i]);
+                        oldList.push(curr);
                         counter = 2;
                         break;
                     case 2:
-                        oldList.push(eventsList[i]);
+                        oldList.push(curr);
                         counter = 0;
                         break;
                 }
-                
+
         }
-        if(oldList.length !== 0) {
+        if (oldList.length !== 0) {
             oldList.unshift(list.pop());
             list.push(oldList);
             oldList = [];
@@ -102,17 +108,34 @@ export default class EventList extends Component {
             </View>
         )
     }
-    render() {
+    _renderItem = (item, index) => {
         const { categoryName, url } = this.props.navigation.state.params;
         const toolBarText = categoryName;
         return (
             <CollapsibleToolbar
-                renderContent={this._renderContent}
-                renderNavBar={() => <Header collapsable title={toolBarText} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
-                imageSource={url || 'https://lorempixel.com/400/600/'}
+                key={index}
+                renderContent={this._renderContent.bind(this, item.name, index)}
+                renderNavBar={() => <Header collapsable title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
+                imageSource={item.url || 'https://lorempixel.com/400/600/'}
                 collapsedNavBarBackgroundColor={colors.primaryDark}
                 toolBarHeight={200}
+                showsVerticalScrollIndicator={false}
             />
+        )
+    }
+
+    render() {
+        const { categoryList, selectedCategory: { name, index }, setCategory } = this.props.eventsV2;
+        return (
+            <Swiper
+                index={index}
+                loop={false}
+                showsPagination={false}
+                loadMinimal
+                onIndexChanged={i => { setCategory({ name: categoryList[i].name, index: i }) }}
+            >
+                {categoryList.map((category, id) => this._renderItem(category, id))}
+            </Swiper>
         )
     }
 

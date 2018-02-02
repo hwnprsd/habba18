@@ -49,6 +49,7 @@ export default class EventList extends Component {
                 <View style={{ flex: 1 }} >
                     <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel
+                        layout={'tinder'}
                         style={{ flex: 1 }}
                         containerCustomStyle={{ height: height / 1.7 }}
                         ref={c => { this.carousel = c }}
