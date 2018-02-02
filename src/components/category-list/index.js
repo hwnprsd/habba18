@@ -51,7 +51,7 @@ export default class EventList extends Component {
                     <Carousel
                         layout={'tinder'}
                         style={{ flex: 1 }}
-                        containerCustomStyle={{ height: height / 1.7 }}
+                        containerCustomStyle={{ height: height / 1.5 }}
                         ref={c => { this.carousel = c }}
                         data={categoryList}
                         hasParallaxImages={true}
@@ -66,7 +66,7 @@ export default class EventList extends Component {
                                 />
                         }
                         sliderWidth={width}
-                        itemWidth={width / 1.5}
+                        itemWidth={width / 1.3}
                     />
                 </View>
             </ImageBackground>

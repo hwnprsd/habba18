@@ -9,7 +9,8 @@ import {
     ImageBackground,
     TouchableWithoutFeedback,
     Dimensions,
-    StatusBar
+    StatusBar,
+    Easing
 } from 'react-native';
 import { fonts, backgroundImage } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
@@ -185,14 +186,17 @@ export default class ResideMenu extends Component {
             onPanResponderTerminationRequest: (evt, gestureState) => true,
             onPanResponderRelease: (evt, gestureState) => {
                 Animated.sequence([
-                    Animated.decay(this.animatedValue.x, {
-                        velocity:  gestureState.vx, // velocity from gesture release
-                        deceleration: 0.993,
-                        useNativeDriver: true
-                    }),
+                    // Animated.decay(this.animatedValue.x, {
+                    //     velocity:  gestureState.vx, // velocity from gesture release
+                    //     deceleration: 0.997,
+                    //     useNativeDriver: true
+                    // }),
                     Animated.spring(this.animatedValue.x, {
+                        velocity:  gestureState.vx,
+                        overshootClamping: true,
                         toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx)),
-                        useNativeDriver: true
+                        useNativeDriver: true,
+                        easing: Easing.linear
                     })
                 ]).start()
                 this.animatedValue.flattenOffset();

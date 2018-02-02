@@ -90,10 +90,11 @@ export default class EventDetails extends Component {
         )
     }
     render() {
-        const { eventsList, eventIndex } = this.props.eventsV2;
-        const { index } = this.props.navigation.state.params.item;
+        const { item, eventsList, index } = this.props.navigation.state.params;
+        const id = item ? item.index : 0;
+        console.log(eventsList);
         return (
-            <Swiper index={index} loop={false} showsPagination={false} loadMinimal>
+            <Swiper index={index || id} loop={false} showsPagination={false} loadMinimal>
                 {eventsList.map((event, id) => {
                     return this._renderItem(event, id)
                 })}

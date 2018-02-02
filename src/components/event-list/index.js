@@ -25,8 +25,8 @@ export default class EventList extends Component {
         // Important to stop updating state after unmount
         Dimensions.removeEventListener("change", this.handler);
     }
-    _onEventPress = item => {
-        this.props.navigation.navigate('EventDetail', { item });
+    _onEventPress = (item, eventsList) => {
+        this.props.navigation.navigate('EventDetail', { item, eventsList });
     }
     _renderContent = (item, index) => {
         const { _mainList } = this.props.eventsV2;
@@ -75,14 +75,13 @@ export default class EventList extends Component {
             list.push(oldList);
             oldList = [];
         }
-        console.log(c, eventsList.length)
         return (
             <View style={[styles.gridView, { minHeight: height }]} >
                 {list.map((item, idx) => {
                     if (!Array.isArray(item))
                         return (
                             <View key={idx} style={styles.mainContainer}>
-                                <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item)} activeOpacity={1}>
+                                <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item, eventsList)} activeOpacity={1}>
                                     <FastImage source={{ uri: item.url }} style={[styles.image, { width }]} resizeMode="cover" />
                                     <View style={[styles.textContainer, { width }]}>
                                         <Text style={styles.itemName}>{item.name || ''}</Text>
@@ -94,7 +93,7 @@ export default class EventList extends Component {
                         <View key={idx} style={[{ flexDirection: 'row', paddingHorizontal: 2.5, marginVertical: 2.5 }]}>
                             {item.map((subItem, idx2) => (
                                 <View key={idx2} style={[styles.mainContainer2, { flex: 1 }]}>
-                                    <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, subItem)} activeOpacity={1}>
+                                    <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, subItem, eventsList)} activeOpacity={1}>
                                         <FastImage source={{ uri: subItem.url }} style={[styles.image, { width: width / 2 }]} resizeMode="cover" />
                                         <View style={[styles.textContainer, { width }]}>
                                             <Text style={styles.itemName}>{subItem.name || ''}</Text>

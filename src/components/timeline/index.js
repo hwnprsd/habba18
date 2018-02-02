@@ -22,7 +22,7 @@ export default class Auth extends Component {
         this.props.eventsV2.eventsFromDate(day.dateString)
     }
     _onCardPress = i => {
-        this.props.navigation.navigate('EventDetail', { item: this.props.eventsV2.eventsFromDate(this.state.selected)[i] });
+        this.props.navigation.navigate('EventDetail', { eventsList: this.props.eventsV2.eventsFromDate(this.state.selected), index: i });
     }
     _renderDetail = (rowData) => {
         const i = this.props.eventsV2.eventsFromDate(this.state.selected).indexOf(rowData);
