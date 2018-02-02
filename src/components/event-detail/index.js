@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
-import { colors, height, fonts } from '../../constants';
+import { colors, fonts } from '../../constants';
 import ViewMoreText from 'react-native-view-more-text';
 import Header from '../header';
 
@@ -12,6 +12,17 @@ import styles from './styles';
 
 @inject('eventsV2') @observer
 export default class EventDetails extends Component {
+    state = Dimensions.get("window");
+    handler = dims => this.setState(dims.window);
+
+    componentWillMount() {
+        Dimensions.addEventListener("change", this.handler);
+    }
+
+    componentWillUnmount() {
+        // Important to stop updating state after unmount
+        Dimensions.removeEventListener("change", this.handler);
+    }
     renderViewMore(onPress) {
         return (
             <Text style={styles.readMore} onPress={onPress}>View more</Text>
@@ -23,9 +34,10 @@ export default class EventDetails extends Component {
         )
     }
     _renderContent = () => {
+        const { height } = this.state;
         const { description, rules, numb, eventhead, amount, pmoney } = this.props.navigation.state.params.item;
         return (
-            <View style={{ flex: 1, minHeight: height }}>
+            <View style={{ flex: 1, minHeight: height}}>
                 <ElevatedView style={[styles.card, { marginTop: 10 }]} elevation={3}>
                     <Text style={styles.titleText}>Description</Text>
                     <ViewMoreText

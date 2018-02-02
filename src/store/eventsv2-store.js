@@ -60,7 +60,6 @@ class EventStore {
                 this.timelineObj[e.date].push(e)
             })
         })
-        console.log('LUMM', this.markedDates);
     }
     @computed get markedDates() {
         const marked = {};

@@ -7,9 +7,13 @@ export default StyleSheet.create({
     paddingTop: 5,
   },
   mainContainer: {
-    margin: 5,
+    margin: 2.5,
     height: 145,
-    marginHorizontal: 10 
+    marginHorizontal: 5 
+  },
+  mainContainer2: {
+    height: 145,
+    marginHorizontal: 2.5 
   },
   itemContainer: {
     alignItems: 'center',
@@ -20,7 +24,7 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
   },
   itemName: {
-    fontSize: 22,
+    fontSize: 18,
     color: '#fff',
     fontFamily: fonts.latoRegular,
   },

@@ -184,7 +184,12 @@ export default class ResideMenu extends Component {
             ]),
             onPanResponderTerminationRequest: (evt, gestureState) => true,
             onPanResponderRelease: (evt, gestureState) => {
-                Animated.parallel([
+                Animated.sequence([
+                    Animated.decay(this.animatedValue.x, {
+                        velocity:  gestureState.vx, // velocity from gesture release
+                        deceleration: 0.993,
+                        useNativeDriver: true
+                    }),
                     Animated.spring(this.animatedValue.x, {
                         toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx)),
                         useNativeDriver: true

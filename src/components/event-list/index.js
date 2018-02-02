@@ -30,20 +30,75 @@ export default class EventList extends Component {
     _renderContent = () => {
         const { eventsList } = this.props.eventsV2;
         const { width, height } = this.state;
-        console.log(this.state)
+        let oldList = [];
+        let list = [];
+        let counter = 0;
+        let c = 0;
+        for (let i = 0; i < eventsList.length; i++) {
+            if (eventsList.length === 2 && i === 0 ) {
+                oldList.push(eventsList[i]);
+            }
+            else if(eventsList.length === 2 && i == 1) {
+                oldList.push(eventsList[i]);
+                list.push(oldList);
+                oldList = [];
+            }
+            else
+                switch (counter) {
+                    case 0:
+                        if (oldList.length !== 0) {
+                            list.push(oldList);
+                            oldList = [];
+                        }
+                        list.push(eventsList[i]);
+                        counter = 1;
+                        break;
+                    case 1:
+                        oldList.push(eventsList[i]);
+                        counter = 2;
+                        break;
+                    case 2:
+                        oldList.push(eventsList[i]);
+                        counter = 0;
+                        break;
+                }
+                
+        }
+        if(oldList.length !== 0) {
+            oldList.unshift(list.pop());
+            list.push(oldList);
+            oldList = [];
+        }
+        console.log(c, eventsList.length)
         return (
-
             <View style={[styles.gridView, { minHeight: height }]} >
-                {eventsList.map((item) => (
-                    <ElevatedView elevation={3} key={item.eid} style={styles.mainContainer}>
-                        <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item)} activeOpacity={0.7}>
-                            <FastImage source={{ uri: item.url }} style={[styles.image, { width }]} resizeMode="cover" />
-                            <View style={[styles.textContainer, { width }]}>
-                                <Text style={styles.itemName}>{item.name || ''}</Text>
+                {list.map((item, idx) => {
+                    if (!Array.isArray(item))
+                        return (
+                            <View key={idx} style={styles.mainContainer}>
+                                <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item)} activeOpacity={1}>
+                                    <FastImage source={{ uri: item.url }} style={[styles.image, { width }]} resizeMode="cover" />
+                                    <View style={[styles.textContainer, { width }]}>
+                                        <Text style={styles.itemName}>{item.name || ''}</Text>
+                                    </View>
+                                </TouchableOpacity>
                             </View>
-                        </TouchableOpacity>
-                    </ElevatedView>
-                ))}
+                        )
+                    return (
+                        <View key={idx} style={[{ flexDirection: 'row', paddingHorizontal: 2.5, marginVertical: 2.5 }]}>
+                            {item.map((subItem, idx2) => (
+                                <View key={idx2} style={[styles.mainContainer2, { flex: 1 }]}>
+                                    <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, subItem)} activeOpacity={1}>
+                                        <FastImage source={{ uri: subItem.url }} style={[styles.image, { width: width / 2 }]} resizeMode="cover" />
+                                        <View style={[styles.textContainer, { width }]}>
+                                            <Text style={styles.itemName}>{subItem.name || ''}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            ))}
+                        </View>
+                    )
+                })}
             </View>
         )
     }

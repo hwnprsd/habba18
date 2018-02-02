@@ -8,7 +8,7 @@ import {
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
 import { observer, inject } from 'mobx-react/native';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
 import { UIActivityIndicator } from 'react-native-indicators';
 import Header from '../header'
 
@@ -50,17 +50,20 @@ export default class EventList extends Component {
                     <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel
                         style={{ flex: 1 }}
-                        containerCustomStyle={{ height: height / 1.8 }}
+                        containerCustomStyle={{ height: height / 1.7 }}
                         ref={c => { this.carousel = c }}
                         data={categoryList}
+                        hasParallaxImages={true}
                         renderItem={
-                            ({ item, index }) =>
+                            ({ item, index }, parallaxProps) =>
                                 <CategoryCard
                                     index={index}
                                     item={item}
                                     setIndex={setCategory}
                                     navigate={this.props.navigation.navigate}
-                                />}
+                                    parallaxProps={parallaxProps}
+                                />
+                        }
                         sliderWidth={width}
                         itemWidth={width / 1.5}
                     />
