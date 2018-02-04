@@ -24,14 +24,14 @@ export default StyleSheet.create({
     },
     text: {
         textAlign: 'left',
-        fontSize: 20,
+        fontSize: 28,
         fontFamily: fonts.latoRegular,
         color: '#fff'
     },
     shadow: {
         position: 'absolute',
         top: 0,
-        bottom: 18,
+        bottom: 25,
         shadowColor: 'black',
         shadowOpacity: 0.25,
         shadowOffset: { width: 0, height: 10 },

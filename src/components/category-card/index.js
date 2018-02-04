@@ -57,12 +57,12 @@ export default class EventCard extends Component {
                 style={{ width: _width, height: _height, flex: 1, justifyContent: 'center', borderRadius: 5 }}
                 onPress={this._onCardPress} activeOpacity={1}
             >
-                <View style={[styles.cardContainer, { width: _width, height: _height}]}>
+                <View style={[styles.cardContainer, { width: _width, height: _height }]}>
                     <View>
                         <ParallaxImage
                             source={{ uri: this.props.item.url }}
-                            style={{ width: _width, height: _height, }}
-                            containerStyle={{ width: _width, height: _height, }}
+                            style={{ width: _width, height: _height }}
+                            containerStyle={{ width: _width, height: _height, transform: [{ rotate: '180deg' }] }}
                             resizeMode="cover"
                             {...this.props.parallaxProps}
                         />

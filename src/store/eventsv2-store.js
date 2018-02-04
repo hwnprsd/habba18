@@ -9,7 +9,6 @@ const EVENTSV2 = 'http://acharyahabba.in/habba18/json.php';
 class EventStore {
     @persist('list') @observable mainList = [];
     @persist('object') @observable timelineObj = {};
-    bak = [];
     @observable selectedCategory = {
         name: 'Music',
         index: 1,
@@ -21,8 +20,6 @@ class EventStore {
     @observable eventIndex = 0;
     @observable isFetching = false;
     @action fetchAllEvents = async () => {
-        this.bak = this.mainList;
-        this.mainList = [];
         this.isFetching = true;
         try {
             const P1 = axios.get(EVENTSV2);
@@ -30,23 +27,22 @@ class EventStore {
             this.mainList = res.data.result;
             this.isFetching = false;
             this.bak = this.mainList;
-            this.makeTimeline()
 
         } catch (e) {
-            // this.mainList = this.bak; // BACKUP FALLBACK
-            this.errorMessage = e.message;
-            this.errorPresent = true;
             this.isFetching = false;
-            this.makeTimeline();
             console.log(e.message);
         }
     }
     @computed get categoryList() {
-        return this.mainList.map(cat => ({ name: Object.keys(cat)[1], url: cat.image_url, length: cat[Object.keys(cat)[1]].length })).slice()
+        if (this._mainList.length === 0) {
+            this.error.present = true;
+            this.error.message = 'Network Error'
+        }
+        return this._mainList.map(cat => ({ name: Object.keys(cat)[1], url: cat.image_url, length: cat[Object.keys(cat)[1]].length })).slice()
     }
 
     @computed get eventsList() {
-        return this.mainList.slice()[this.selectedCategory.index][this.selectedCategory.name].slice();
+        return this._mainList.slice()[this.selectedCategory.index][this.selectedCategory.name].slice();
     }
 
     @computed get _mainList() {
@@ -56,7 +52,7 @@ class EventStore {
     @action setEventIndex = i => { this.eventIndex = i };
 
     @action makeTimeline = () => {
-        this.mainList.map(c => {
+        this._mainList.map(c => {
             let key = Object.keys(c)[1];
             c[key].map(e => {
                 if (!this.timelineObj[e.date])
@@ -66,6 +62,11 @@ class EventStore {
         })
     }
     @computed get markedDates() {
+        if (this._mainList.length === 0) {
+            this.error.present = true;
+            this.error.message = 'Network Error'
+        }
+        else (this.makeTimeline())
         const marked = {};
         Object.keys(this.timelineObj).map(k => {
             marked[k] = { marked: true, dotColor: colors.primary }

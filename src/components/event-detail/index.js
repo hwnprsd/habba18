@@ -92,7 +92,6 @@ export default class EventDetails extends Component {
     render() {
         const { item, eventsList, index } = this.props.navigation.state.params;
         const id = item ? item.index : 0;
-        console.log(eventsList);
         return (
             <Swiper index={index || id} loop={false} showsPagination={false} loadMinimal>
                 {eventsList.map((event, id) => {

@@ -3623,7 +3623,7 @@ prop-types@15.5.10:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
 
-prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -3709,13 +3709,6 @@ react-devtools-core@3.0.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-mixin@^3.0.5:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/react-mixin/-/react-mixin-3.1.1.tgz#68749756bfe32699e561372a4aeecb926db72b7f"
-  dependencies:
-    object-assign "^4.0.1"
-    smart-mixin "^2.0.0"
-
 react-native-calendars@^1.16.1:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/react-native-calendars/-/react-native-calendars-1.16.1.tgz#b1729e329996a1cd11e43479c7612a213712ee4b"
@@ -3770,19 +3763,17 @@ react-native-fit-image@^1.5.4:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-image-gallery@^2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/react-native-image-gallery/-/react-native-image-gallery-2.1.5.tgz#f524b92ef7284d30ffbbd63f93019e0647e23229"
-  dependencies:
-    prop-types "^15.6.0"
-    react-mixin "^3.0.5"
-    react-timer-mixin "^0.13.3"
-
 react-native-indicators@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/react-native-indicators/-/react-native-indicators-0.10.0.tgz#714c4e9955c73c3b5d2bbd6c021d6b7aab1a8072"
   dependencies:
     prop-types "^15.5.10"
+
+react-native-parallax-scroll-view@^0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.20.1.tgz#7fad3411df8632b7c99fed5d0a5c0a8f97007b38"
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-photo-browser@^0.4.0:
   version "0.4.0"
@@ -3804,18 +3795,18 @@ react-native-progress@^3.2.0:
   dependencies:
     prop-types "^15.5.8"
 
-react-native-snap-carousel@^3.5.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.5.0.tgz#40c7373111699e3c2ad80ac2bc1aae62958b3e97"
+react-native-snap-carousel@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.6.0.tgz#bbd4c988314500af4a695f787f592fdfcd5c3df1"
   dependencies:
     prop-types "^15.6.0"
     react-addons-shallow-compare "15.6.2"
 
-react-native-super-grid@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-super-grid/-/react-native-super-grid-2.0.2.tgz#bf2a10052782ce149755cb6fa6a00538289193e9"
+react-native-swiper@^1.5.13:
+  version "1.5.13"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"
   dependencies:
-    prop-types "^15.6.0"
+    prop-types "^15.5.10"
 
 react-native-tab-view@^0.0.74:
   version "0.0.74"
@@ -3834,6 +3825,12 @@ react-native-vector-icons@^4.5.0:
     lodash "^4.0.0"
     prop-types "^15.5.10"
     yargs "^8.0.2"
+
+react-native-view-more-text@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-view-more-text/-/react-native-view-more-text-1.4.3.tgz#1df0dffa2ff472c0fd2f01217b1690a047d18575"
+  dependencies:
+    prop-types "^15.5.7"
 
 react-native@0.52.0:
   version "0.52.0"
@@ -3921,7 +3918,7 @@ react-test-renderer@16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-timer-mixin@^0.13.2, react-timer-mixin@^0.13.3:
+react-timer-mixin@^0.13.2:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/react-timer-mixin/-/react-timer-mixin-0.13.3.tgz#0da8b9f807ec07dc3e854d082c737c65605b3d22"
 
@@ -4346,10 +4343,6 @@ slash@^1.0.0:
 slide@^1.1.5:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
-
-smart-mixin@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/smart-mixin/-/smart-mixin-2.0.0.tgz#a34a1055e32a75b30d2b4e3ca323dc99cb53f437"
 
 sntp@1.x.x:
   version "1.0.9"
