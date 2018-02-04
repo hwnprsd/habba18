@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { observer, inject } from 'mobx-react/native';
 import FastImage from 'react-native-fast-image';
+import FitImage from 'react-native-fit-image';
 import { UIActivityIndicator } from 'react-native-indicators'
 import ElevatedView from 'react-native-elevated-view';
 import Swiper from 'react-native-swiper';
@@ -111,15 +113,34 @@ export default class EventList extends Component {
         const { categoryName, url } = this.props.navigation.state.params;
         const toolBarText = categoryName;
         return (
-            <CollapsibleToolbar
-                key={index}
-                renderContent={this._renderContent.bind(this, item.name, index)}
-                renderNavBar={() => <Header collapsable title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
-                imageSource={item.url || 'https://lorempixel.com/400/600/'}
-                collapsedNavBarBackgroundColor={colors.primaryDark}
-                toolBarHeight={200}
-                showsVerticalScrollIndicator={false}
-            />
+            // <CollapsibleToolbar
+            //     key={index}
+            //     renderContent={this._renderContent.bind(this, item.name, index)}
+            //     renderNavBar={() => <Header collapsable title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
+            //     imageSource={item.url || 'https://lorempixel.com/400/600/'}
+            //     collapsedNavBarBackgroundColor={colors.primaryDark}
+            //     toolBarHeight={200}
+            //     showsVerticalScrollIndicator={false}
+            // />
+            <ParallaxScrollView
+                backgroundColor="rgba(0,0,0,0)"
+                contentBackgroundColor="#fff"
+                backgroundSpeed={10}
+                parallaxHeaderHeight={300}
+                // renderScrollComponent={() => <Animated.View />}
+                renderForeground={() => (
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={styles.stickyHeader}>{item.name}</Text>
+                    </View>
+                )}
+                renderBackground={() => (
+                    <FitImage source={{ uri: item.url }} />
+                )}
+                renderStickyHeader={() => <Header collapsable title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />}
+                stickyHeaderHeight={60}
+            >
+                {this._renderContent(item.name, index)}
+            </ParallaxScrollView>
         )
     }
 

@@ -51,5 +51,9 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontFamily: fonts.latoLight,
     color: "#fff"
+  },
+  stickyHeader: { 
+    fontFamily: fonts.latoRegular,
+    fontSize: 50
   }
 });
