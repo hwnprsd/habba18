@@ -59,7 +59,7 @@ export default class ResideMenu extends Component {
                                 <Item text="Feed" nav="Feed" />
                                 <Item text="Events" nav="CategoryList" />
                                 <Item text="Register" />
-                                <Item text="Maps" />
+                                <Item text="Maps" nav="Maps" />
                                 <Item text="Timeline" nav="Timeline" />
                             </View>
                         </View>
