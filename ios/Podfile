@@ -22,6 +22,9 @@ target 'prototype' do
   ]
 
   pod 'react-native-maps', path: rn_maps_path
+  pod 'GoogleMaps'  # Remove this line if you don't want to support Google Maps on iOS
+  pod 'react-native-google-maps', path: rn_maps_path  # Remove this line if you don't want to support Google Maps on iOS
+
 end
 
 post_install do |installer|
