@@ -30,53 +30,53 @@ export default class EventCard extends Component {
         const { width, height } = this.state;
         let _width = width / 1.3;
         let _height = height / 1.5
-        // return (
-        //     <TouchableOpacity style={[styles.container, { width: width / 1.5, height: height / 1.8 }]} onPress={this._onCardPress} activeOpacity={0.7}>
-        //         <View elevation={10} style={styles.cardContainer}>
-        //             <View style={{}}>
-        //                 <FastImage
-        //                     source={{ uri: this.props.item.url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }}
-        //                     style={{ width: width / 1.5, height: height / 1.8 }}
-        //                     // style={{width: 250, height: 300, overflow: 'hidden'}}
-        //                     resizeMode={'cover'}
-        //                 />
-        //             </View>
-        //             <View style={styles.cardText}>
-        //                 <Text style={styles.text}>
-        //                     {this.props.item.name || ''}
-        //                 </Text>
-        //                 <Text style={[styles.text, { fontSize: 15 }]}>
-        //                     {this.props.item.length + ' Events' || ''}
-        //                 </Text>
-        //             </View>
-        //         </View>
-        //     </TouchableOpacity>
-        // )
         return (
-            <TouchableOpacity
-                style={{ width: _width, height: _height, flex: 1, justifyContent: 'center', borderRadius: 5 }}
-                onPress={this._onCardPress} activeOpacity={1}
-            >
-                <View style={[styles.cardContainer, { width: _width, height: _height }]}>
-                    <View>
-                        <ParallaxImage
-                            source={{ uri: this.props.item.url }}
+            <TouchableOpacity style={[styles.container, { width: _width, height: _height }]} activeOpacity={1} onPress={this._onCardPress} activeOpacity={0.7}>
+                <View elevation={10} style={styles.cardContainer}>
+                    <View style={{transform: [{ rotate: '180deg' }]}}>
+                        <FastImage
+                            source={{ uri: this.props.item.url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }}
                             style={{ width: _width, height: _height }}
-                            containerStyle={{ width: _width, height: _height, transform: [{ rotate: '180deg' }] }}
-                            resizeMode="cover"
-                            {...this.props.parallaxProps}
+                            // style={{width: 250, height: 300, overflow: 'hidden'}}
+                            resizeMode={'cover'}
                         />
-                        <View style={styles.cardText}>
-                            <Text style={styles.text}>
-                                {this.props.item.name || ''}
-                            </Text>
-                            <Text style={[styles.text, { fontSize: 15 }]}>
-                                {this.props.item.length + ' Events' || ''}
-                            </Text>
-                        </View>
+                    </View>
+                    <View style={styles.cardText}>
+                        <Text style={styles.text}>
+                            {this.props.item.name || ''}
+                        </Text>
+                        <Text style={[styles.text, { fontSize: 15 }]}>
+                            {this.props.item.length + ' Events' || ''}
+                        </Text>
                     </View>
                 </View>
             </TouchableOpacity>
         )
+        // return (
+        //     <TouchableOpacity
+        //         style={{ width: _width, height: _height, flex: 1, justifyContent: 'center', borderRadius: 5 }}
+        //         onPress={this._onCardPress} activeOpacity={1}
+        //     >
+        //         <View style={[styles.cardContainer, { width: _width, height: _height }]}>
+        //             <View>
+        //                 <ParallaxImage
+        //                     source={{ uri: this.props.item.url }}
+        //                     style={{ width: _width, height: _height }}
+        //                     containerStyle={{ width: _width, height: _height, transform: [{ rotate: '180deg' }] }}
+        //                     resizeMode="cover"
+        //                     {...this.props.parallaxProps}
+        //                 />
+        //                 <View style={styles.cardText}>
+        //                     <Text style={styles.text}>
+        //                         {this.props.item.name || ''}
+        //                     </Text>
+        //                     <Text style={[styles.text, { fontSize: 15 }]}>
+        //                         {this.props.item.length + ' Events' || ''}
+        //                     </Text>
+        //                 </View>
+        //             </View>
+        //         </View>
+        //     </TouchableOpacity>
+        // )
     }
 }

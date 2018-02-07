@@ -54,20 +54,17 @@ export default class EventList extends Component {
                     <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel
                         layout={'default'}
-                        layoutCardOffset={100}
+                        layoutCardOffset={50}
                         style={{ flex: 1 }}
                         containerCustomStyle={{ height: height / 1.5 }}
                         data={categoryList}
-                        hasParallaxImages={true}
-                        onSnapToItem={(index) => this.setState({ activeSlide: index })}
                         renderItem={
-                            ({ item, index }, parallaxProps) =>
+                            ({ item, index }) =>
                                 <CategoryCard
                                     index={index}
                                     item={item}
                                     setIndex={setCategory}
                                     navigate={this.props.navigation.navigate}
-                                    parallaxProps={parallaxProps}
                                 />
                         }
                         sliderWidth={width}

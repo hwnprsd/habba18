@@ -110,6 +110,7 @@ export default class EventList extends Component {
         )
     }
     _renderItem = (item, index) => {
+        const {width, height} = this.state;
         const { categoryName, url } = this.props.navigation.state.params;
         const toolBarText = categoryName;
         return (
@@ -127,7 +128,7 @@ export default class EventList extends Component {
                 backgroundColor="rgba(0,0,0,0)"
                 contentBackgroundColor="#fff"
                 backgroundSpeed={10}
-                parallaxHeaderHeight={300}
+                parallaxHeaderHeight={height/2}
                 // renderScrollComponent={() => <Animated.View />}
                 renderForeground={() => (
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -135,7 +136,7 @@ export default class EventList extends Component {
                     </View>
                 )}
                 renderBackground={() => (
-                    <FitImage source={{ uri: item.url }} />
+                    <FastImage source={{ uri: item.url }} style={{width, height: height/2}} resizeMode="cover" />
                 )}
                 renderStickyHeader={() => <Header title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />}
                 stickyHeaderHeight={70}
