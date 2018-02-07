@@ -5,6 +5,7 @@ import ElevatedView from 'react-native-elevated-view';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import ViewMoreText from 'react-native-view-more-text';
 import Swiper from 'react-native-swiper';
+import openMap from 'react-native-open-maps';
 
 import { colors, fonts } from '../../constants';
 import Header from '../header';
@@ -36,10 +37,10 @@ export default class EventDetails extends Component {
     }
     _renderContent = item => {
         const { height } = this.state;
-        const { description, rules, numb, eventhead, amount, pmoney } = item;
+        const { description, rules, numb, eventhead, amount, pmoney, lat, lang } = item;
         return (
             <View style={{ flex: 1, minHeight: height }}>
-                <ElevatedView style={[styles.card, { marginTop: 10 }]} elevation={3}>
+                <View style={[styles.card, { marginTop: 10 }]} elevation={3}>
                     <Text style={styles.titleText}>Description</Text>
                     <ViewMoreText
                         numberOfLines={4}
@@ -48,8 +49,8 @@ export default class EventDetails extends Component {
                     >
                         <Text style={styles.contentText}>{description || ''}</Text>
                     </ViewMoreText>
-                </ElevatedView>
-                <ElevatedView style={styles.card} elevation={3}>
+                </View>
+                <View style={styles.card} elevation={3}>
                     <Text style={styles.titleText}>Rules & Regulations</Text>
                     <ViewMoreText
                         numberOfLines={4}
@@ -58,21 +59,26 @@ export default class EventDetails extends Component {
                     >
                         <Text style={styles.contentText}>{rules || ''}</Text>
                     </ViewMoreText>
-                </ElevatedView>
-                <ElevatedView style={styles.card} elevation={3}>
+                </View>
+                <View style={styles.card} elevation={3}>
                     <Text style={styles.titleText}>Contact Number</Text>
                     <Text style={styles.contentText}>{eventhead || ''} - {numb || ''}</Text>
-                </ElevatedView>
-                <ElevatedView style={styles.card} elevation={3}>
+                </View>
+                <View style={styles.card} elevation={3}>
                     <Text style={styles.titleText}>Amount</Text>
                     <Text style={styles.contentText}>{'Registration'} - {amount || ''}</Text>
                     <Text style={styles.contentText}>{'Prize Money'} - {pmoney || ''}</Text>
-                </ElevatedView>
-                <ElevatedView style={styles.card} elevation={3}>
+                </View>
+                <View style={styles.card} elevation={3}>
                     <TouchableOpacity activeOpacity={0.7}>
                         <Text style={styles.button}>Register</Text>
                     </TouchableOpacity>
-                </ElevatedView>
+                </View>
+                <View style={styles.card} elevation={3}>
+                    <TouchableOpacity activeOpacity={0.7} onPress={() => {openMap({latitude: lat, longitude: lang})}}>
+                        <Text style={styles.button}>Navigate to event</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }

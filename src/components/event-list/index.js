@@ -13,7 +13,7 @@ import Header from '../header'
 
 import styles from './styles';
 import { colors } from '../../constants';
-
+i=0;
 @inject('eventsV2') @observer
 export default class EventList extends Component {
     state = Dimensions.get("window");
@@ -123,6 +123,7 @@ export default class EventList extends Component {
             //     showsVerticalScrollIndicator={false}
             // />
             <ParallaxScrollView
+                key={i++}
                 backgroundColor="rgba(0,0,0,0)"
                 contentBackgroundColor="#fff"
                 backgroundSpeed={10}
@@ -136,8 +137,8 @@ export default class EventList extends Component {
                 renderBackground={() => (
                     <FitImage source={{ uri: item.url }} />
                 )}
-                renderStickyHeader={() => <Header collapsable title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />}
-                stickyHeaderHeight={60}
+                renderStickyHeader={() => <Header title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />}
+                stickyHeaderHeight={70}
             >
                 {this._renderContent(item.name, index)}
             </ParallaxScrollView>
