@@ -4,6 +4,7 @@ import FastImage from 'react-native-fast-image';
 import FitImage from 'react-native-fit-image';
 import ElevatedView from 'react-native-elevated-view';
 import { ParallaxImage } from 'react-native-snap-carousel';
+import { BlurView, VibrancyView } from 'react-native-blur';
 
 import styles from './styles';
 
@@ -33,22 +34,23 @@ export default class EventCard extends Component {
         return (
             <TouchableOpacity style={[styles.container, { width: _width, height: _height }]} activeOpacity={1} onPress={this._onCardPress} activeOpacity={0.7}>
                 <View elevation={10} style={styles.cardContainer}>
-                    <View style={{transform: [{ rotate: '180deg' }]}}>
+                    <View style={{ transform: [{ rotate: '180deg' }] }}>
                         <FastImage
                             source={{ uri: this.props.item.url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }}
                             style={{ width: _width, height: _height }}
                             // style={{width: 250, height: 300, overflow: 'hidden'}}
                             resizeMode={'cover'}
                         />
+                        <BlurView />
                     </View>
-                    <View style={styles.cardText}>
+                    <VibrancyView style={styles.cardText}>
                         <Text style={styles.text}>
                             {this.props.item.name || ''}
                         </Text>
                         <Text style={[styles.text, { fontSize: 15 }]}>
                             {this.props.item.length + ' Events' || ''}
                         </Text>
-                    </View>
+                    </VibrancyView>
                 </View>
             </TouchableOpacity>
         )

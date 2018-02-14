@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Modal, } from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { observer, inject } from 'mobx-react/native';
@@ -8,7 +8,8 @@ import FitImage from 'react-native-fit-image';
 import { UIActivityIndicator } from 'react-native-indicators'
 import ElevatedView from 'react-native-elevated-view';
 import Swiper from 'react-native-swiper';
-
+import EventDetail from '../event-detail';
+import { BlurView, VibrancyView } from 'react-native-blur';
 import Header from '../header'
 
 import styles from './styles';
@@ -28,7 +29,20 @@ export default class EventList extends Component {
         Dimensions.removeEventListener("change", this.handler);
     }
     _onEventPress = (item, eventsList) => {
-        this.props.navigation.navigate('EventDetail', { item, eventsList });
+        this.setState({
+            modalProps: {
+                item,
+                eventsList,
+                closeModal: this._closeModal
+            },
+            modalVisible: true
+        })
+        // this.props.navigation.navigate('EventDetail', { item, eventsList });
+    }
+    _closeModal = () => {
+        this.setState({
+            modalVisible: false
+        })
     }
     _renderContent = (item, index) => {
         const { _mainList } = this.props.eventsV2;
@@ -79,15 +93,30 @@ export default class EventList extends Component {
         }
         return (
             <View style={[styles.gridView, { minHeight: height }]} >
+
+            <Modal
+              visible={this.state.modalVisible || false}
+              animationType={'slide'}
+              onRequestClose={() => this._closeModal()}
+              transparent
+              animationType={'fade'}
+              >
+              <View style={{flex: 1}}>
+                <BlurView style={{flex: 1}} blurType='light'/>
+                <View style={{flex: 1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}>
+                    <EventDetail {...this.state.modalProps} />
+                </View>
+              </View>
+          </Modal>
                 {list.map((item, idx) => {
                     if (!Array.isArray(item))
                         return (
                             <View key={idx} style={styles.mainContainer}>
                                 <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, item, eventsList)} activeOpacity={1}>
                                     <FastImage source={{ uri: item.url }} style={[styles.image, { width }]} resizeMode="cover" />
-                                    <View style={[styles.textContainer, { width }]}>
+                                    <VibrancyView style={[styles.textContainer, { width }]}>
                                         <Text style={styles.itemName}>{item.name || ''}</Text>
-                                    </View>
+                                    </VibrancyView>
                                 </TouchableOpacity>
                             </View>
                         )
@@ -97,9 +126,9 @@ export default class EventList extends Component {
                                 <View key={idx2} style={[styles.mainContainer2, { flex: 1 }]}>
                                     <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, subItem, eventsList)} activeOpacity={1}>
                                         <FastImage source={{ uri: subItem.url }} style={[styles.image, { width: width / 2 }]} resizeMode="cover" />
-                                        <View style={[styles.textContainer, { width }]}>
+                                        <VibrancyView style={[styles.textContainer, { width }]}>
                                             <Text style={styles.itemName}>{subItem.name || ''}</Text>
-                                        </View>
+                                        </VibrancyView>
                                     </TouchableOpacity>
                                 </View>
                             ))}
@@ -142,6 +171,7 @@ export default class EventList extends Component {
                 stickyHeaderHeight={70}
             >
                 {this._renderContent(item.name, index)}
+
             </ParallaxScrollView>
         )
     }
