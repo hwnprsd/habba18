@@ -3,6 +3,8 @@ package com.prototype;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.cmcewen.blurview.BlurViewPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new MapsPackage(),
+            new BlurViewPackage(),
             new FastImageViewPackage(),
             new VectorIconsPackage()
       );

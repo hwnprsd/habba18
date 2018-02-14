@@ -5,7 +5,8 @@ import EventDetail from './components/event-detail';
 import Timeline from './components/timeline';
 import Gallery from './components/gallery-grid';
 import ResideMenu from './components/reside-menu';
-import Feed from './components/feed'
+import Feed from './components/feed';
+import Maps from './components/maps';
 import { StackNavigator } from 'react-navigation';
 
 const MainStack = StackNavigator({
@@ -16,6 +17,7 @@ const MainStack = StackNavigator({
     EventDetail: { screen: EventDetail },
     Gallery: { screen: Gallery },
     EventList: { screen: EventList },
+    Maps: { screen: Maps }
 }, {
         headerMode: 'none'
     })

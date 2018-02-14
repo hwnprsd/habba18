@@ -39,7 +39,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.33)'
+    // backgroundColor: 'rgba(0,0,0,0.33)'
   },
   itemCode: {
     fontWeight: '600',

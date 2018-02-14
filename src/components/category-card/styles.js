@@ -12,7 +12,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#040404',
-        borderRadius: 5
+        borderRadius: 5,
     },
     cardText: {
         position: 'absolute',
@@ -20,7 +20,7 @@ export default StyleSheet.create({
         left: 0,
         right: 0,
         padding: 10,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        // backgroundColor: 'rgba(0,0,0,0.2)',
     },
     text: {
         textAlign: 'left',
@@ -34,7 +34,7 @@ export default StyleSheet.create({
         bottom: 25,
         shadowColor: 'black',
         shadowOpacity: 0.25,
-        shadowOffset: { width: 0, height: 10 },
+        shadowOffset: { width: 0, height: 10 }, 
         shadowRadius: 10,
         borderRadius: 8
     },

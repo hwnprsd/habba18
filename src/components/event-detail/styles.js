@@ -3,29 +3,29 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     card: {
-        borderRadius: 3,
         padding: 7,
-        marginHorizontal: 10,
-        marginTop: 5,
-        marginBottom: 5
+        // backgroundColor: 'rgba(0,0,0,0.7)',
+        marginTop: 1
     },
     titleText: {
         fontFamily: fonts.latoBold,
         fontSize: 18,
-        marginBottom: 7
+        marginBottom: 7,
+        color: 'white'
     },
     contentText: {
         fontFamily: fonts.latoRegular,
         fontSize: 16,
+        color: 'white'
     },
     button: {
         textAlign: 'center',
         fontFamily: fonts.latoRegular,
         fontSize: 20,
-        color: colors.primary
+        color: '#e5e5e5'
     },
     readMore: {
-        color: colors.primary,
+        color: '#f4f4f4',
         fontFamily: fonts.latoBold,
         marginTop: 5
     }

@@ -3769,6 +3769,14 @@ react-native-indicators@^0.10.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-maps@^0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.19.0.tgz#ce94fad1cf360e335cb4338a68c95f791e869074"
+
+react-native-open-maps@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-open-maps/-/react-native-open-maps-0.1.1.tgz#86bdd82f2abe0222fb3f6ce410b7ff4499662ced"
+
 react-native-parallax-scroll-view@^0.20.1:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/react-native-parallax-scroll-view/-/react-native-parallax-scroll-view-0.20.1.tgz#7fad3411df8632b7c99fed5d0a5c0a8f97007b38"
