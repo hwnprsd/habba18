@@ -17,6 +17,7 @@ class MapsStore {
             runInAction(() => {
                 this._allLocations = res.data.result;
                 this.isFetching = false;
+                console.log(this._allLocations)
             })
         } catch (e) {
             this.isFetching = false;
@@ -26,7 +27,7 @@ class MapsStore {
         }
     }
     @computed get allLocations() {
-        return this._allLocations.slice();
+        return []
     }
 }
 

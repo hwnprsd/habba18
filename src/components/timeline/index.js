@@ -27,7 +27,7 @@ export default class Auth extends Component {
     _renderDetail = (rowData) => {
         const i = this.props.eventsV2.eventsFromDate(this.state.selected).indexOf(rowData);
         return (
-            <ElevatedView elevation={3} style={{ padding: 7, marginTop: -10, borderRadius: 3 }}>
+            <ElevatedView elevation={3} style={{ padding: 7, marginTop: -10, borderRadius: 3, backgroundColor: '#fff' }}>
                 <TouchableOpacity activeOpacity={0.7} onPress={() => this._onCardPress(i)}>
                     <View>
                         <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7 }}>{rowData.name + ' at ' + rowData.venue}</Text>
@@ -45,7 +45,7 @@ export default class Auth extends Component {
                 <Header title="Timeline" left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />
                 <ElevatedView
                     elevation={3}
-                    style={{ margin: 10, borderRadius: 3 }}
+                    style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff' }}
                 >
                     <Calendar
                         onDayPress={this._onDayPress}
@@ -60,7 +60,7 @@ export default class Auth extends Component {
                     />
                 </ElevatedView>
                 {this.props.eventsV2.eventsFromDate(this.state.selected) && this.props.eventsV2.eventsFromDate(this.state.selected).length === 0 &&
-                    <ElevatedView elevation={3} style={{ margin: 10, borderRadius: 3 }}>
+                    <ElevatedView elevation={3} style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff' }}>
                         <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
                     </ElevatedView>
                 }
