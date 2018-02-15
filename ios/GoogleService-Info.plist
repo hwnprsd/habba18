@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>530659869085-fksk9773uic7g5gh43unpkr79l73uas9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.530659869085-fksk9773uic7g5gh43unpkr79l73uas9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD-YODU_1rPowN6bPBntpSIE3r1jnMp2ic</string>
+	<key>GCM_SENDER_ID</key>
+	<string>530659869085</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.acharya.habbafest</string>
+	<key>PROJECT_ID</key>
+	<string>habba2018-2fd40</string>
+	<key>STORAGE_BUCKET</key>
+	<string>habba2018-2fd40.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true></true>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false></false>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:530659869085:ios:e7c8e8ee1430c3af</string>
+	<key>DATABASE_URL</key>
+	<string>https://habba2018-2fd40.firebaseio.com</string>
+</dict>
+</plist>
