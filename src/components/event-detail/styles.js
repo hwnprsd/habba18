@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     card: {
         padding: 7,
-        // backgroundColor: 'rgba(0,0,0,0.7)',
+        backgroundColor: 'rgba(0,0,0,0.4)',
         marginTop: 1
     },
     titleText: {

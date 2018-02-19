@@ -105,7 +105,7 @@ export default class EventList extends Component {
                     animationType={'fade'}
                 >
                     <View style={{ flex: 1 }}>
-                        <BlurView style={{ flex: 1 }} blurType='light' />
+                        <BlurView style={{ flex: 1 }} blurType='light' blurAmount={2} />
                         <View style={{ flex: 1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
                             <EventDetail {...this.state.modalProps} navigate={this.props.navigation.navigate} />
                         </View>
@@ -200,7 +200,7 @@ export default class EventList extends Component {
                     <View style={{ flex: 1 }} />
                 </View>
                 <Animated.View style={{ position: 'absolute', top: 0, width: '100%', height: 70, opacity: interpolatedValue }}>
-                    <VibrancyView style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
+                    <BlurView style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.goBack() }}
                             style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
@@ -212,7 +212,7 @@ export default class EventList extends Component {
                             <Text style={styles.eventName}>{item.name}</Text>
                         </View>
                         <View style={{ flex: 1 }} />
-                    </VibrancyView>
+                    </BlurView>
                 </Animated.View>
             </View>
         )

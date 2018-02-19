@@ -21,6 +21,7 @@ import LottieView from 'lottie-react-native';
 import { fonts, backgroundImage } from '../../constants';
 import BG from '../../images/xred.jpg';
 import HabbaGif from './256-No-Dither.gif';
+import RightArrow from '../../utils/right.json'
 import styles from './styles';
 
 let navigate
@@ -147,7 +148,7 @@ export default class ResideMenu extends Component {
                             ref={animation => {
                                 this.rightAnim = animation;
                             }}
-                            source={require('./right.json')}
+                            source={RightArrow}
                             style={{ height: 25, width: 35 }}
                             loop
                         />
@@ -157,7 +158,7 @@ export default class ResideMenu extends Component {
                             ref={animation => {
                                 this.leftAnim = animation;
                             }}
-                            source={require('./right.json')}
+                            source={RightArrow}
                             style={{ height: 25, width: 35 }}
                             loop
                         />

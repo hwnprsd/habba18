@@ -9,9 +9,10 @@ import Swiper from 'react-native-swiper';
 import openMap from 'react-native-open-maps';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { VibrancyView, BlurView } from 'react-native-blur'
-import { colors, fonts } from '../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from 'react-native-elements'
+
+import { colors, fonts } from '../../constants';
 import Header from '../header';
 import styles from './styles';
 
@@ -66,8 +67,8 @@ export default class EventDetails extends Component {
                             <Icon onPress={this.props.closeModal} name='ios-arrow-back' style={{ color: 'white', fontSize: 22, margin: 10 }} />
                         </TouchableOpacity>
                     </View>
-                    <BlurView style={{ marginTop: 10 }}>
-                        <View style={[styles.card]}>
+                    <BlurView style={[styles.card, { marginTop: 10 }]} blurType="light" >
+                        <View >
                             <Text style={styles.titleText}>Description</Text>
                             <ViewMoreText
                                 numberOfLines={4}
@@ -78,7 +79,7 @@ export default class EventDetails extends Component {
                             </ViewMoreText>
                         </View>
                     </BlurView>
-                    <BlurView style={styles.card} >
+                    <BlurView blurType="light" style={styles.card} >
                         <View >
                             <Text style={styles.titleText}>Rules & Regulations</Text>
                             <ViewMoreText
@@ -90,21 +91,21 @@ export default class EventDetails extends Component {
                             </ViewMoreText>
                         </View>
                     </BlurView>
-                    <BlurView style={styles.card} >
+                    <BlurView style={styles.card} blurType="light">
                         <Text style={styles.titleText}>Contact Number</Text>
                         <Text style={styles.contentText}>{eventhead || ''} - {numb || ''}</Text>
                     </BlurView>
-                    <BlurView style={styles.card} >
+                    <BlurView style={styles.card} blurType="light" >
                         <Text style={styles.titleText}>Amount</Text>
                         <Text style={styles.contentText}>{'Registration'} - {amount || ''}</Text>
                         <Text style={styles.contentText}>{'Prize Money'} - {pmoney || ''}</Text>
                     </BlurView>
-                    <BlurView style={styles.card} >
+                    <BlurView style={styles.card} blurType="light" >
                         <TouchableOpacity activeOpacity={0.7} onPress={this._onRegisterPress}>
                             <Text style={styles.button}>Register</Text>
                         </TouchableOpacity>
                     </BlurView>
-                    <BlurView style={[styles.card, { marginBottom: 50 }]} >
+                    <BlurView style={[styles.card, { marginBottom: 50 }]} blurType="light">
                         <TouchableOpacity activeOpacity={0.7} onPress={() => { openMap({ latitude: lat, longitude: lang }) }}>
                             <Text style={styles.button}>Navigate to event</Text>
                         </TouchableOpacity>
@@ -121,6 +122,7 @@ export default class EventDetails extends Component {
                         </TouchableOpacity>
                     </VibrancyView>
                 </Animated.View> */}
+
             </View>
         )
     }
@@ -178,6 +180,20 @@ export default class EventDetails extends Component {
                 showsPagination={false}
                 loadMinimal bounces
                 onIndexChanged={i => this.setState({ currIndex: i })}
+                paginationStyle={{
+                    position: 'absolute',
+                    bottom: 0
+                }}
+                // activeDot={
+                //     <View style={{backgroundColor: '#000', opacity: 0.5,width: 8, height: 8, borderRadius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3,}} />
+                // }
+                showsButtons
+                nextButton={
+                    <Text style={{color: 'rgba(0,0,0,0.5)', fontSize: 30}}>›</Text>
+                }
+                prevButton={
+                    <Text style={{color: 'rgba(0,0,0,0.5)', fontSize: 30}}>‹</Text>
+                }
             >
                 {eventsList.map((event, id) => {
                     return this._renderContent(event)
@@ -190,5 +206,8 @@ export default class EventDetails extends Component {
         const { item, index } = this.props;
         const id = item ? item.index : 0;
         this.setState({ currIndex: index || id })
+    }
+    componentDidMount() {
+
     }
 }
