@@ -9,9 +9,9 @@ import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
 import { observer, inject } from 'mobx-react/native';
 import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
-import { UIActivityIndicator } from 'react-native-indicators';
-import Header from '../header'
+import LottieView from 'lottie-react-native';
 
+import Header from '../header'
 import styles from './styles';
 import { backgroundImage } from '../../constants';
 
@@ -76,7 +76,6 @@ export default class EventList extends Component {
     handler = dims => this.setState(dims.window);
 
 
-
     componentWillMount() {
         Dimensions.addEventListener("change", this.handler);
         this.setState({ activeSlide: 0 })
@@ -90,9 +89,19 @@ export default class EventList extends Component {
         const { width, height } = this.state;
         const { categoryList, isFetching, setCategory, error } = this.props.eventsV2;
         if (isFetching)
-            return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <UIActivityIndicator animating color={"#fff"} />
-            </View>)
+            return (
+                <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+                    <View>
+                        <LottieView
+                            ref={animation => {
+                                animation.play();
+                            }}
+                            source={require('../../utils/loading.json')}
+                            style={{ height: 300, width: 300 }}
+                            loop
+                        />
+                    </View>
+                </View>)
         if (error.present) {
             return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 40, color: 'red' }}>{error.message}</Text>
@@ -109,7 +118,7 @@ export default class EventList extends Component {
                         style={{ height: '50%' }}
                         containerCustomStyle={{}}
                         data={categoryList}
-                            // scrollInterpolator={stackScrollInterpolator}
+                        // scrollInterpolator={stackScrollInterpolator}
                         // slideInterpolatedStyle={stackAnimatedStyles}
                         // useScrollView={true}
                         renderItem={

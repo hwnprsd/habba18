@@ -1,10 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { fonts } from '../../constants';
 
+const inpColor = '#616161';
+const mainColor = '#424242';
+
 export default StyleSheet.create({
     elevatedCard: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.3)',
+        backgroundColor: 'rgba(0,0,0,0)',
         margin: 30, width: '90%',
         height: '100%',
         alignSelf: 'center',
@@ -12,6 +15,7 @@ export default StyleSheet.create({
         shadowColor: 'rgba(0,0,0,0.4)',
         shadowOpacity: 0.7,
         shadowRadius: 20,
+        borderRadius: 5,
     },
     scrollView: {
         position: 'absolute',
@@ -23,17 +27,17 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: fonts.latoRegular,
-        color: 'white',
+        color: mainColor,
         fontSize: 30,
     },
     textValue: {
         fontFamily: fonts.latoRegular,
-        color: '#e5e5e5',
+        color: inpColor,
         fontSize: 18
     },
     textLabel: {
         fontFamily: fonts.latoBold,
-        color: 'white',
+        color: mainColor,
         fontSize: 13,
         marginBottom: 10
     },

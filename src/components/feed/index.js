@@ -17,11 +17,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import { UIActivityIndicator } from 'react-native-indicators';
 import { BlurView } from 'react-native-blur';
 import { observer, inject } from 'mobx-react/native';
+import LottieView from 'lottie-react-native';
 
 import Header from '../header';
+import Loading from '../loading';
 import { width } from '../../constants';
 import styles from './styles';
-import BG from '../../images/xx.jpg'
+import BG from '../../images/xbg1.jpg'
 
 const uri = 'https://unsplash.com/photos/32ZvquJMY80'
 // import styles from './styles';
@@ -36,32 +38,30 @@ export default class Auth extends Component {
         console.log(item.resources, isImageURL)
         uri = isImageURL ? item.resources : `https://i.ytimg.com/vi/${item.resources}/hqdefault.jpg`
         return (
-            <View style={styles.elevatedCard}>
-                <BlurView  style={{ flex: 1 }} >
-                    <View style={styles.text}>
-                        <Text style={styles.headingText}>{item.heading || ''}</Text>
-                        <Text style={styles.captionText}>{item.caption || ''}</Text>
-                    </View>
-                    <TouchableWithoutFeedback onPress={() => {
-                        if (item.resources.slice(0, 4) !== "http") {
-                            this.setState({
-                                video: item.resources
-                            });
-                            this.openModal();
+            <BlurView blurType="light" style={[styles.elevatedCard, { flex: 1 }]} >
+                <View style={{ padding: 5 }}>
+                    <Text style={styles.headingText}>{item.heading || ''}</Text>
+                    <Text style={styles.captionText}>{item.caption || ''}</Text>
+                </View>
+                <TouchableWithoutFeedback onPress={() => {
+                    if (item.resources.slice(0, 4) !== "http") {
+                        this.setState({
+                            video: item.resources
+                        });
+                        this.openModal();
+                    }
+                }}>
+                    <View>
+                        <FitImage source={{ uri: uri || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }} indicator={true} style={{}} />
+                        {/* <FitImage source={{ uri }} style={{ height: 108 * 2, width: 192 * 2 }} /> */}
+                        {!isImageURL &&
+                            <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
+                                <Image source={require('../../icons/play.png')} style={{ height: 16.7 * 3, width: 24 * 3, }} />
+                            </View>
                         }
-                    }}>
-                        <View>
-                            <FitImage source={{ uri: uri || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }} indicator={true} style={{}} />
-                            {/* <FitImage source={{ uri }} style={{ height: 108 * 2, width: 192 * 2 }} /> */}
-                            {!isImageURL &&
-                                <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Image source={require('../../icons/play.png')} style={{ height: 16.7 * 3, width: 24 * 3, }} />
-                                </View>
-                            }
-                        </View>
-                    </TouchableWithoutFeedback>
-                </BlurView>
-            </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </BlurView>
         )
     }
     closeModal() {
@@ -71,13 +71,16 @@ export default class Auth extends Component {
         this.setState({ modalVisible: true })
     }
     render() {
+       
         onShouldStartLoadWithRequest = (navigator) => {
             this.videoPlayer.stopLoading(); //Some reference to your WebView to make it stop loading that URL
             return false;
 
         }
         if (this.props.feedStore.isFeedFetching)
-            return <UIActivityIndicator animating />
+            return (
+                <Loading />
+            )
         return (
             <View style={{ flex: 1 }} >
                 {/* <LinearGradient
@@ -95,14 +98,10 @@ export default class Auth extends Component {
                         renderItem={this._renderItem}
                         keyExtractor={i => i.id}
                         ListHeaderComponent={() => (
-                            <View style={[styles.elevatedCard, { marginBottom: 10 }]}>
-                                <BlurView blurType='light' style={{ flex: 1 }} >
-                                    <View style={{ padding: 10 }}>
-                                        <Text style={[{ textAlign: 'center' }, styles.text]}>
-                                            News Feed
+                            <View style={{ padding: 10 }}>
+                                <Text style={[{ textAlign: 'center' }, styles.text]}>
+                                    News Feed
                                     </Text>
-                                    </View>
-                                </BlurView>
                             </View>
                         )}
                     />

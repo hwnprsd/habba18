@@ -14,18 +14,16 @@ export default class Notifs extends Component {
     _renderItem = ({ item }) => {
         console.log(item);
         return (
-            <ElevatedView elevation={5} style={styles.elevatedCard}>
-                <BlurView blurType='light' style={{ flex: 1 }} >
-                    <View style={{ padding: 10 }}>
-                        <Text style={[styles.textName]}>
-                            {item.name}
-                        </Text>
-                        <Text style={[styles.textMessage]}>
-                            {item.message}
-                        </Text>
-                    </View>
-                </BlurView>
-            </ElevatedView>
+            <BlurView blurType='light' style={[styles.elevatedCard, { flex: 1 }]} >
+                <View style={{ padding: 10 }}>
+                    <Text style={[styles.textName]}>
+                        {item.name}
+                    </Text>
+                    <Text style={[styles.textMessage]}>
+                        {item.message}
+                    </Text>
+                </View>
+            </BlurView>
         )
     }
     render() {
@@ -49,15 +47,11 @@ export default class Notifs extends Component {
                     style={styles.scrollView}
                     ListFooterComponent={() => <View style={{ height: 300 }} />}
                     ListHeaderComponent={() => (
-                        <ElevatedView elevation={5} style={[styles.elevatedCard, { marginBottom: 10 }]}>
-                            <BlurView blurType='light' style={{ flex: 1 }} >
                                 <View style={{ padding: 10 }}>
                                     <Text style={[{ textAlign: 'center' }, styles.text]}>
                                         Notifications
                                     </Text>
                                 </View>
-                            </BlurView>
-                        </ElevatedView>
                     )}
                     renderItem={this._renderItem}
                     keyExtractor={(item) => item.id}

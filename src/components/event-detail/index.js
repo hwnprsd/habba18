@@ -8,7 +8,7 @@ import ViewMoreText from 'react-native-view-more-text';
 import Swiper from 'react-native-swiper';
 import openMap from 'react-native-open-maps';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
-import { VibrancyView, BlurView } from 'react-native-blur'
+import { BlurView } from 'react-native-blur'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from 'react-native-elements'
 
@@ -67,8 +67,8 @@ export default class EventDetails extends Component {
                             <Icon onPress={this.props.closeModal} name='ios-arrow-back' style={{ color: 'white', fontSize: 22, margin: 10 }} />
                         </TouchableOpacity>
                     </View>
-                    <BlurView style={[styles.card, { marginTop: 10 }]} blurType="light" >
-                        <View >
+                    <BlurView style={[styles.card]} blurType="light" >
+                        <View style={styles.contain}>
                             <Text style={styles.titleText}>Description</Text>
                             <ViewMoreText
                                 numberOfLines={4}
@@ -78,9 +78,9 @@ export default class EventDetails extends Component {
                                 <Text style={styles.contentText}>{description || ''}</Text>
                             </ViewMoreText>
                         </View>
-                    </BlurView>
-                    <BlurView blurType="light" style={styles.card} >
-                        <View >
+                        {/* </BlurView> */}
+                        {/* <BlurView blurType="light" style={styles.card} > */}
+                        <View style={styles.contain}>
                             <Text style={styles.titleText}>Rules & Regulations</Text>
                             <ViewMoreText
                                 numberOfLines={4}
@@ -90,25 +90,33 @@ export default class EventDetails extends Component {
                                 <Text style={styles.contentText}>{rules || ''}</Text>
                             </ViewMoreText>
                         </View>
-                    </BlurView>
-                    <BlurView style={styles.card} blurType="light">
-                        <Text style={styles.titleText}>Contact Number</Text>
-                        <Text style={styles.contentText}>{eventhead || ''} - {numb || ''}</Text>
-                    </BlurView>
-                    <BlurView style={styles.card} blurType="light" >
-                        <Text style={styles.titleText}>Amount</Text>
-                        <Text style={styles.contentText}>{'Registration'} - {amount || ''}</Text>
-                        <Text style={styles.contentText}>{'Prize Money'} - {pmoney || ''}</Text>
-                    </BlurView>
-                    <BlurView style={styles.card} blurType="light" >
-                        <TouchableOpacity activeOpacity={0.7} onPress={this._onRegisterPress}>
-                            <Text style={styles.button}>Register</Text>
-                        </TouchableOpacity>
-                    </BlurView>
-                    <BlurView style={[styles.card, { marginBottom: 50 }]} blurType="light">
-                        <TouchableOpacity activeOpacity={0.7} onPress={() => { openMap({ latitude: lat, longitude: lang }) }}>
-                            <Text style={styles.button}>Navigate to event</Text>
-                        </TouchableOpacity>
+                        {/* </BlurView> */}
+                        {/* <BlurView style={styles.card} blurType="light"> */}
+                        <View style={styles.contain}>
+                            <Text style={styles.titleText}>Contact Number</Text>
+                            <Text style={styles.contentText}>{eventhead || ''} - {numb || ''}</Text>
+                        </View>
+                        {/* </BlurView> */}
+                        {/* <BlurView style={styles.card} blurType="light" > */}
+                        <View style={styles.contain}>
+                            <Text style={styles.titleText}>Amount</Text>
+                            <Text style={styles.contentText}>{'Registration'} - {amount || ''}</Text>
+                            <Text style={styles.contentText}>{'Prize Money'} - {pmoney || ''}</Text>
+                        </View>
+                        {/* </BlurView> */}
+                        {/* <BlurView style={styles.card} blurType="light" > */}
+                        <View style={styles.contain}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={this._onRegisterPress}>
+                                <Text style={styles.button}>Register</Text>
+                            </TouchableOpacity>
+                        </View>
+                        {/* </BlurView> */}
+                        {/* <BlurView style={[styles.card, { marginBottom: 50 }]} blurType="light"> */}
+                        <View style={styles.contain}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => { openMap({ latitude: lat, longitude: lang }) }}>
+                                <Text style={styles.button}>Navigate to event</Text>
+                            </TouchableOpacity>
+                        </View>
                     </BlurView>
 
                 </ScrollView>
@@ -189,10 +197,10 @@ export default class EventDetails extends Component {
                 // }
                 showsButtons
                 nextButton={
-                    <Text style={{color: 'rgba(0,0,0,0.5)', fontSize: 30}}>›</Text>
+                    <Text style={{ color: 'rgba(0,0,0,0.3)', fontSize: 30 }}>›</Text>
                 }
                 prevButton={
-                    <Text style={{color: 'rgba(0,0,0,0.5)', fontSize: 30}}>‹</Text>
+                    <Text style={{ color: 'rgba(0,0,0,0.3)', fontSize: 30 }}>‹</Text>
                 }
             >
                 {eventsList.map((event, id) => {

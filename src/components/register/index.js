@@ -63,6 +63,8 @@ export default class Register extends Component {
         })
     }
     render() {
+        const inpColor = '#616161';
+        const iconColor = '#424242';
         const { isFetching } = this.props.eventsV2;
         if (isFetching) {
             return (
@@ -71,9 +73,9 @@ export default class Register extends Component {
         }
         const { eventIndex, selectedCategory, categoryList, eventsList, _userDetails } = this.props.eventsV2;
         const { userName, userEmail, collegeName } = _userDetails;
-        let _userName = userName === ''? undefined: userName;
-        let _userEmail = userEmail === ''? undefined: userEmail;
-        let _collegeName = collegeName === ''? undefined: collegeName;
+        let _userName = userName === '' ? undefined : userName;
+        let _userEmail = userEmail === '' ? undefined : userEmail;
+        let _collegeName = collegeName === '' ? undefined : collegeName;
         return (
             <ImageBackground style={{ flex: 1, width: '100%', height: '100%' }} source={BG}>
                 {/* <LinearGradient
@@ -85,21 +87,20 @@ export default class Register extends Component {
                     }}>
                 </LinearGradient> */}
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
-                    <View style={styles.elevatedCard}>
-                        <BlurView blurType='light' style={{ flex: 1 }} >
+                <Text style={[{ textAlign: 'center' }, styles.text]}>Registration</Text>
+                        
+                        <BlurView blurType='light' style={[styles.elevatedCard, { flex: 1 }]} >
                             <View style={{ padding: 10 }}>
-                                <Text style={[{ textAlign: 'center' }, styles.text]}>
-                                    Registration
-                                </Text>
+
                                 <Sae
                                     onChangeText={userName => { this.setState({ userName }) }}
                                     style={{ backgroundColor: 'rgba(0,0,0,0)', marginTop: 20, marginBottom: 5 }}
                                     label={'Name'}
                                     iconClass={MaterialsIcon}
                                     iconName={'person'}
-                                    iconColor={'white'}
+                                    iconColor={iconColor}
                                     labelStyle={styles.textLabel}
-                                    inputStyle={{ color: '#e5e5e5' }}
+                                    inputStyle={{ color: inpColor}}
                                     defaultValue={_userName}
                                 />
                                 <Sae
@@ -108,10 +109,10 @@ export default class Register extends Component {
                                     label={'College'}
                                     iconClass={MaterialsIcon}
                                     iconName={'school'}
-                                    iconColor={'white'}
+                                    iconColor={iconColor}
                                     labelStyle={styles.textLabel}
-                                    inputStyle={{ color: '#e5e5e5' }}
-                                    defaultValue={_collegeName}                                    
+                                    inputStyle={{ color: inpColor }}
+                                    defaultValue={_collegeName}
                                 />
                                 <Sae
                                     onChangeText={userEmail => { this.setState({ userEmail }) }}
@@ -119,10 +120,10 @@ export default class Register extends Component {
                                     label={'Email'}
                                     iconClass={MaterialsIcon}
                                     iconName={'mail'}
-                                    iconColor={'white'  }
+                                    iconColor={iconColor}
                                     labelStyle={styles.textLabel}
-                                    inputStyle={{ color: '#e5e5e5' }}
-                                    defaultValue={_userEmail}                                    
+                                    inputStyle={{ color: inpColor }}
+                                    defaultValue={_userEmail}
                                 />
                                 <TouchableOpacity onPress={this._onCatActionPress} style={styles.touchable}>
                                     <Text style={styles.textLabel}>
@@ -159,7 +160,6 @@ export default class Register extends Component {
                                 />
                             </View>
                         </BlurView>
-                    </View>
                 </ScrollView>
             </ImageBackground>
         )

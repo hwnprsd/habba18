@@ -25,7 +25,7 @@ class EventStore {
         collegeName: ''
     }
     @action setUserDetails = u => { this.userDetails = { ...u } }
-    @computed get _userDetails () {
+    @computed get _userDetails() {
         return this.userDetails
     }
     @action fetchAllEvents = async () => {
@@ -92,8 +92,10 @@ class EventStore {
         return marked;
     }
     @action eventsFromDate = date => {
-        if (this.timelineObj[date])
+        if (this.timelineObj[date] && date !== '') {
+            console.log(this.timelineObj[date])
             return this.timelineObj[date]
+        }
         return [];
     }
     @computed get selectedEventIndex() {

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import Header from '../header';
 import { colors, fonts, height } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
 import Timeline from 'react-native-timeline-listview'
-import ElevatedView from 'react-native-elevated-view';
 import { BlurView } from 'react-native-blur';
 import { Calendar } from 'react-native-calendars';
 import { UIActivityIndicator } from 'react-native-indicators'
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons';
 
+import BG from '../../images/xbg1.jpg'
 import styles from './styles';
 
 @inject('eventsV2') @observer
@@ -29,29 +30,38 @@ export default class Auth extends Component {
     _renderDetail = (rowData) => {
         const i = this.props.eventsV2.eventsFromDate(this.state.selected).indexOf(rowData);
         return (
-            <ElevatedView elevation={3} style={{ padding: 7, marginTop: -10, borderRadius: 3, backgroundColor: 'rgba(0,0,0,0)' }}>
-                <BlurView blurType="light">
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => this._onCardPress(i)}>
-                        <View>
-                            <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7 }}>{rowData.name + ' at ' + rowData.venue}</Text>
-                            <Text style={{ fontFamily: fonts.latoRegular, fontSize: 12 }}>{rowData.date}</Text>
-                        </View>
-                    </TouchableOpacity>
-                </BlurView>
-            </ElevatedView>
+            <BlurView blurType="light" style={{ padding: 7, marginTop: -10, borderRadius: 3, backgroundColor: 'rgba(0,0,0,0)' }}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => this._onCardPress(i)}>
+                    <View>
+                        <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7 }}>{rowData.name + ' at ' + rowData.venue}</Text>
+                        <Text style={{ fontFamily: fonts.latoRegular, fontSize: 12 }}>{rowData.date}</Text>
+                    </View>
+                </TouchableOpacity>
+            </BlurView>
         )
     }
     render() {
         const { markedDates } = this.props.eventsV2;
         return (
-            <LinearGradient colors={['#4ecdc4', '#505a64']}>
-                <ScrollView style={{}}>
+            <ImageBackground source={BG} style={{ width: '100%', height: '100%' }}>
 
-                    <Header title="Timeline" left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />
-                    <ElevatedView
-                        elevation={3}
-                        style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff' }}
+                <ScrollView style={{}}>
+                    <View style={{ paddingTop: 20, flexDirection: 'row', width: '100%', height: 70, justifyContent: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.goBack() }}
+                            style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={{ flex: 1, justifyContent: 'center', opacity: 1 }}>
+                                <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} />
+                            </View>
+                        </TouchableOpacity>
+                        <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                        </View>
+                        <View style={{ flex: 1 }} />
+                    </View>
+                    <View
+                        style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff', marginTop: 10 }}
                     >
+
                         <Calendar
                             onDayPress={this._onDayPress}
                             markedDates={{ ...markedDates, [this.state.selected]: { selected: true } }}
@@ -63,30 +73,32 @@ export default class Auth extends Component {
                             }}
 
                         />
-                    </ElevatedView>
+                    </View>
                     {this.props.eventsV2.eventsFromDate(this.state.selected) && this.props.eventsV2.eventsFromDate(this.state.selected).length === 0 &&
-                        <ElevatedView elevation={3} style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff' }}>
+                        <BlurView blurType="light" style={{ margin: 10, borderRadius: 3 }}>
                             <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
-                        </ElevatedView>
+                        </BlurView>
                     }
                     <Timeline
-                        data={this.props.eventsV2.eventsFromDate(this.state.selected) || []}
+                        data={this.props.eventsV2.eventsFromDate(this.state.selected).slice() || []}
                         enableEmptySections={true}
                         innerCircle={'dot'}
                         circleColor={colors.primaryDark}
                         lineColor={colors.primary}
-                        timeContainerStyle={{ minWidth: 52, marginTop: -2 }}
+                        timeContainerStyle={{ minWidth: 52, marginTop: -2, height: '100%' }}
                         timeStyle={{ textAlign: 'center', backgroundColor: colors.primary, color: 'white', padding: 4, borderRadius: 5 }}
                         renderDetail={this._renderDetail}
-                        detailContainerStyle={{borderRadius: 3}}
+                        detailContainerStyle={{ borderRadius: 3 }}
                         separator={false}
                         options={{
-                            style: { padding: 10, minHeight: height },
-                            renderHeader: () => <View style={{ height: 20 }} />
+                            style: { padding: 10, minHeight: '100%' },
+                            renderHeader: () => <View style={{ height: 20 }} />,
+                            removeClippedSubviews: false
                         }}
                     />
                 </ScrollView>
-            </LinearGradient>
+
+            </ImageBackground>
         )
     }
 }
