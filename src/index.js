@@ -9,6 +9,7 @@ import Feed from './components/feed';
 import Maps from './components/maps';
 import Register from './components/register';
 import Notification from './components/notification'
+import Dev from './components/dev'
 import { StackNavigator } from 'react-navigation';
 
 const MainStack = StackNavigator({
@@ -21,7 +22,8 @@ const MainStack = StackNavigator({
     EventList: { screen: EventList },
     Maps: { screen: Maps },
     Register: { screen: Register },
-    Notification: { screen: Notification }
+    Notification: { screen: Notification },
+    Dev: { screen: Dev }
 }, {
         headerMode: 'none'
     })

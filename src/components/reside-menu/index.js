@@ -10,13 +10,17 @@ import {
     TouchableWithoutFeedback,
     Dimensions,
     StatusBar,
-    Easing
+    Easing,
+    Image
 } from 'react-native';
-import { fonts, backgroundImage } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
-import ElevatedView from 'react-native-elevated-view'
-import BG from '../../images/xred.jpg'
+import ElevatedView from 'react-native-elevated-view';
+import Swiper from 'react-native-swiper';
+import LottieView from 'lottie-react-native';
 
+import { fonts, backgroundImage } from '../../constants';
+import BG from '../../images/xred.jpg';
+import HabbaGif from './256-No-Dither.gif';
 import styles from './styles';
 
 let navigate
@@ -73,7 +77,7 @@ export default class ResideMenu extends Component {
                                 <Item text="Gallery" right nav="Gallery" />
                                 <Item text="Notifications" right nav="Notification" />
                                 <Item text="About us" right />
-                                <Item text="Devs" right />
+                                <Item text="Devs" nav="Dev" right />
                                 <Item text="Logout" right />
                             </View>
 
@@ -88,7 +92,7 @@ export default class ResideMenu extends Component {
     render() {
         const { width, height } = this.state;
         const style = {
-            width, height, alignItems: 'center', justifyContent: 'center', 
+            width, height, alignItems: 'center', justifyContent: 'center',
             shadowOpacity: 0.3,
             shadowRadius: 20,
             shadowColor: 'rgba(0,0,0,0.7)',
@@ -121,11 +125,43 @@ export default class ResideMenu extends Component {
                     style={[animatedStyle, style, { position: 'absolute' }]}
                     {...this._panResponder.panHandlers}
                 >
-                    <ImageBackground source={BG} style={style} resizeMode={'cover'}>
-                        <View>
-                            <Text>AHASHASH</Text>
-                        </View>
-                    </ImageBackground>
+                    <Swiper
+                        key={3}
+                        autoplayTimeout={3}
+                        scrollEnabled={false}
+                        // loop
+                        autoplay
+                        autoplayDirection={false}
+                        showsPagination={false}
+                        onIndexChanged={i => this.setState({ currIndex: i })}
+                    >
+                        {['red', 'black', 'blue', 'green'].map((i, x) => {
+                            return (
+                                <View key={x} style={{ width: '100%', height: '100%', backgroundColor: i, }} />
+                            )
+                        })}
+                    </Swiper>
+                    <Image source={HabbaGif} style={{ width: '100%', height: '50%', position: 'absolute' }} />
+                    <View style={{ position: 'absolute', right: 0 }}>
+                        <LottieView
+                            ref={animation => {
+                                this.rightAnim = animation;
+                            }}
+                            source={require('./right.json')}
+                            style={{ height: 25, width: 35 }}
+                            loop
+                        />
+                    </View>
+                    <View style={{ position: 'absolute', left: 0, transform: [{ rotate: '180deg'}] }}>
+                        <LottieView
+                            ref={animation => {
+                                this.leftAnim = animation;
+                            }}
+                            source={require('./right.json')}
+                            style={{ height: 25, width: 35 }}
+                            loop
+                        />
+                    </View>
                 </Animated.View>
             </View>
         )
@@ -137,7 +173,7 @@ export default class ResideMenu extends Component {
             useNativeDriver: true
         }).start()
     }
-    _helper = (x, v) => {
+    _helper = (x, v, g) => {
         if (v > 0) {
             if (x > 300)
                 return 300;
@@ -155,15 +191,19 @@ export default class ResideMenu extends Component {
                 return 0
         }
         if (v === 0) {
-            if (this.state.resideState === 0)
-                return 300
+            if (this.state.resideState === 0) {
+                if(g > 170)
+                    return -300;
+                else 
+                    return 300
+            }
             else
                 return 0
         }
         return 0;
     }
-    _stateHelper = (x, v) => {
-        let resideState = this._helper(x, v);
+    _stateHelper = (x, v, g) => {
+        let resideState = this._helper(x, v, g);
         this.setState({
             resideState
         });
@@ -200,14 +240,12 @@ export default class ResideMenu extends Component {
                     Animated.spring(this.animatedValue.x, {
                         velocity: gestureState.vx,
                         overshootClamping: true,
-                        toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx)),
+                        toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx), parseFloat(gestureState.x0)),
                         useNativeDriver: true,
                         easing: Easing.linear
                     })
                 ]).start()
                 this.animatedValue.flattenOffset();
-
-
             },
             onPanResponderTerminate: (evt, gestureState) => {
             },
@@ -219,7 +257,9 @@ export default class ResideMenu extends Component {
     componentWillUnmount() {
         Dimensions.removeEventListener("change", this.handler);
         this.animatedValue.x.removeAllListeners();
-
-
+    }
+    componentDidMount() {
+        this.rightAnim.play()
+        this.leftAnim.play()
     }
 }
