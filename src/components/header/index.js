@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, StyleSheet, View, Platform, TouchableHighlight, Text } from 'react-native';
+import { StatusBar, StyleSheet, View, Platform, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { colors } from '../../constants'
 
@@ -19,13 +19,13 @@ export default class Navbar extends Component {
         if (!left)
             return (<View />);
         return (
-            <TouchableHighlight underlayColor={'rgba(1,1,1,0.1)'}
+            <TouchableOpacity
                 onPress={() => { left.action ? left.action() : false }}
                 style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                     <Icon name={left.name} style={{ color, fontSize: this._iconSize }} />
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     };
     _renderRight = (color) => {
@@ -33,13 +33,13 @@ export default class Navbar extends Component {
         if (!right)
             return (<View />);
         return (
-            <TouchableHighlight underlayColor={'rgba(1,1,1,0.1)'} onPress={() => {
+            <TouchableOpacity underlayColor={'rgba(1,1,1,0.1)'} onPress={() => {
                 right.action ? right.action() : false
             }} style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
                 <View style={{ flex: 1, justifyContent: 'center' }}>
                     <Icon name={right.name} style={{ color, fontSize: this._iconSize }} />
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         )
     };
 

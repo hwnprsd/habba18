@@ -43,7 +43,10 @@
 		3EE9404C53C9486680D2B1EC /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 492F414DC4AF4860A8D0912F /* Lato-Regular.ttf */; };
 		45C8DE8A8C014A3087DC2D70 /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3DC5A0CB652F4DF38A8704F8 /* Ubuntu-Medium.ttf */; };
 		4832709820317A5D0044522E /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4832709420317A0D0044522E /* libRNBlur.a */; };
+		483B03C9203597D900DF321C /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483B03C8203597D900DF321C /* GameKit.framework */; };
+		483B03CB203597E000DF321C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 483B03CA203597E000DF321C /* StoreKit.framework */; };
 		4860ABD420354F8300A7B046 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4860ABD320354F8300A7B046 /* GoogleService-Info.plist */; };
+		4860AC1A20355C2A00A7B046 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4860ABED20355C1000A7B046 /* libBVLinearGradient.a */; };
 		48CDD63B20345DA00060FD19 /* FirebaseAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48CDD61020345DA00060FD19 /* FirebaseAnalytics.framework */; };
 		48CDD63D20345DAA0060FD19 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48CDD63C20345DA90060FD19 /* FirebaseCore.framework */; };
 		48CDD63F20345DAF0060FD19 /* FirebaseCoreDiagnostics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48CDD63E20345DAF0060FD19 /* FirebaseCoreDiagnostics.framework */; };
@@ -337,6 +340,20 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		4860ABEC20355C1000A7B046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4860ABE720355C1000A7B046 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = BVLinearGradient;
+		};
+		4860ABEE20355C1000A7B046 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4860ABE720355C1000A7B046 /* BVLinearGradient.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 64AA15081EF7F30100718508;
+			remoteInfo = "BVLinearGradient-tvOS";
+		};
 		48D20B552034592100D9BA65 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 48D20B512034592100D9BA65 /* RNFIRMessaging.xcodeproj */;
@@ -412,7 +429,10 @@
 		3DC5A0CB652F4DF38A8704F8 /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Medium.ttf"; path = "../assets/fonts/Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
 		47758794D1BD4B1F82E3C94E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		4832706820317A0D0044522E /* RNBlur.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
+		483B03C8203597D900DF321C /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		483B03CA203597E000DF321C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4860ABD320354F8300A7B046 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4860ABE720355C1000A7B046 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		48CDD61020345DA00060FD19 /* FirebaseAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseAnalytics.framework; path = ../../../../Downloads/Firebase/Analytics/FirebaseAnalytics.framework; sourceTree = "<group>"; };
 		48CDD63C20345DA90060FD19 /* FirebaseCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCore.framework; path = ../../../../Downloads/Firebase/Analytics/FirebaseCore.framework; sourceTree = "<group>"; };
 		48CDD63E20345DAF0060FD19 /* FirebaseCoreDiagnostics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FirebaseCoreDiagnostics.framework; path = ../../../../Downloads/Firebase/Analytics/FirebaseCoreDiagnostics.framework; sourceTree = "<group>"; };
@@ -461,11 +481,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4860AC1A20355C2A00A7B046 /* libBVLinearGradient.a in Frameworks */,
 				48D20B572034593700D9BA65 /* libRNFIRMessaging.a in Frameworks */,
 				4832709820317A5D0044522E /* libRNBlur.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				483B03C9203597D900DF321C /* GameKit.framework in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -486,6 +508,7 @@
 				48CDD63F20345DAF0060FD19 /* FirebaseCoreDiagnostics.framework in Frameworks */,
 				48CDD64520345DC70060FD19 /* GoogleToolboxForMac.framework in Frameworks */,
 				48CDD64720345DCB0060FD19 /* nanopb.framework in Frameworks */,
+				483B03CB203597E000DF321C /* StoreKit.framework in Frameworks */,
 				6D7FA19D978942F3BFDB1DA6 /* libFastImage.a in Frameworks */,
 				9032E53D95F04602CF0D2167 /* libPods-prototype.a in Frameworks */,
 			);
@@ -661,6 +684,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				483B03CA203597E000DF321C /* StoreKit.framework */,
+				483B03C8203597D900DF321C /* GameKit.framework */,
 				48CDD64A20345DD80060FD19 /* Protobuf.framework */,
 				48CDD64820345DD30060FD19 /* FirebaseMessaging.framework */,
 				48CDD64620345DCB0060FD19 /* nanopb.framework */,
@@ -719,6 +744,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4860ABE820355C1000A7B046 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4860ABED20355C1000A7B046 /* libBVLinearGradient.a */,
+				4860ABEF20355C1000A7B046 /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		48D20B522034592100D9BA65 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -748,6 +782,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4860ABE720355C1000A7B046 /* BVLinearGradient.xcodeproj */,
 				48D20B512034592100D9BA65 /* RNFIRMessaging.xcodeproj */,
 				4832706820317A0D0044522E /* RNBlur.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -904,7 +939,8 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = R5PC29S7E7;
+						DevelopmentTeam = T6EQU2M74R;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -912,6 +948,12 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 							com.apple.Push = {
@@ -942,6 +984,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 4860ABE820355C1000A7B046 /* Products */;
+					ProjectRef = 4860ABE720355C1000A7B046 /* BVLinearGradient.xcodeproj */;
+				},
 				{
 					ProductGroup = 484D51772029A0BE00B31219 /* Products */;
 					ProjectRef = 33DD36AABA2B4E038C6F31BE /* FastImage.xcodeproj */;
@@ -1270,6 +1316,20 @@
 			remoteRef = 484D517F2029A0BF00B31219 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		4860ABED20355C1000A7B046 /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 4860ABEC20355C1000A7B046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4860ABEF20355C1000A7B046 /* libBVLinearGradient.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libBVLinearGradient.a;
+			remoteRef = 4860ABEE20355C1000A7B046 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		48D20B562034592100D9BA65 /* libRNFIRMessaging.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1514,7 +1574,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = R5PC29S7E7;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = T6EQU2M74R;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1533,6 +1595,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/prototype.app/prototype";
 			};
 			name = Debug;
@@ -1541,8 +1604,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = R5PC29S7E7;
+				DEVELOPMENT_TEAM = T6EQU2M74R;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
@@ -1557,6 +1622,7 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/prototype.app/prototype";
 			};
 			name = Release;
@@ -1567,8 +1633,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = prototype/prototype.entitlements;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_STYLE[sdk=*]" = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = T6EQU2M74R;
@@ -1607,6 +1675,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = prototype/prototype.entitlements;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;

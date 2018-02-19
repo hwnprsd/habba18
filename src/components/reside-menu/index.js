@@ -15,6 +15,7 @@ import {
 import { fonts, backgroundImage } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view'
+import BG from '../../images/xred.jpg'
 
 import styles from './styles';
 
@@ -49,7 +50,7 @@ export default class ResideMenu extends Component {
     List = () => {
         const { width, height } = this.state;
         return (
-            <ImageBackground source={backgroundImage} style={{ width, height }} resizeMode={'cover'}>
+            <ImageBackground source={BG} style={{ width, height }} resizeMode={'cover'}>
                 <StatusBar translucent backgroundColor='rgba(0,0,0,0)' />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
                     <View style={{ flex: 3 }}>
@@ -58,7 +59,7 @@ export default class ResideMenu extends Component {
                             <View style={{ justifyContent: 'space-around', paddingLeft: 10 }}>
                                 <Item text="Feed" nav="Feed" />
                                 <Item text="Events" nav="CategoryList" />
-                                <Item text="Register" />
+                                <Item text="Register" nav="Register" />
                                 <Item text="Maps" nav="Maps" />
                                 <Item text="Timeline" nav="Timeline" />
                             </View>
@@ -70,7 +71,7 @@ export default class ResideMenu extends Component {
                         <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center' }}>
                             <View style={{ justifyContent: 'space-around', paddingRight: 10 }}>
                                 <Item text="Gallery" right nav="Gallery" />
-                                <Item text="Notifications" right />
+                                <Item text="Notifications" right nav="Notification" />
                                 <Item text="About us" right />
                                 <Item text="Devs" right />
                                 <Item text="Logout" right />
@@ -86,7 +87,13 @@ export default class ResideMenu extends Component {
     }
     render() {
         const { width, height } = this.state;
-        const style = { width, height, alignItems: 'center', justifyContent: 'center' }
+        const style = {
+            width, height, alignItems: 'center', justifyContent: 'center', 
+            shadowOpacity: 0.3,
+            shadowRadius: 20,
+            shadowColor: 'rgba(0,0,0,0.7)',
+            backgroundColor: 'rgba(0,0,0,0.1)',
+        }
         // const animatedStyle = { transform: this.animatedValue.getTranslateTransform() }
         const animatedStyle = {
             transform: [
@@ -110,17 +117,16 @@ export default class ResideMenu extends Component {
                 <View style={{ flex: 1, backgroundColor: '#e2e1e0' }}>
                     <this.List />
                 </View>
-                <AnimatedElevatedView
-                    elevation={25}
+                <Animated.View
                     style={[animatedStyle, style, { position: 'absolute' }]}
                     {...this._panResponder.panHandlers}
                 >
-                    <ImageBackground source={backgroundImage} style={style} resizeMode={'cover'}>
+                    <ImageBackground source={BG} style={style} resizeMode={'cover'}>
                         <View>
                             <Text>AHASHASH</Text>
                         </View>
                     </ImageBackground>
-                </AnimatedElevatedView>
+                </Animated.View>
             </View>
         )
     }
@@ -192,7 +198,7 @@ export default class ResideMenu extends Component {
                     //     useNativeDriver: true
                     // }),
                     Animated.spring(this.animatedValue.x, {
-                        velocity:  gestureState.vx,
+                        velocity: gestureState.vx,
                         overshootClamping: true,
                         toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx)),
                         useNativeDriver: true,

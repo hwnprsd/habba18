@@ -26,7 +26,7 @@ export default class Maps extends Component {
                       showIndoors
                 >
                 {this.props.mapsStore.allLocations.map((l, i) => 
-                  <Marker  key={i} coordinate={{latitude: parseFloat(l.lat), longitude: parseFloat(l.lang)}}> 
+                  <Marker  key={i} coordinate={{latitude: (l.lat), longitude: (l.lang)}}> 
                     <View style={{backgroundColor: 'white', borderRadius: 3, paddingHorizontal: 1}}>
                       <Text style={{fontSize: 10,}}>{l.name}</Text>
                     </View>

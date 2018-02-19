@@ -19,9 +19,6 @@ export default class EventCard extends Component {
     componentWillUnmount() {
         Dimensions.removeEventListener("change", this.handler);
     }
-    _onEventPress = item => {
-        this.props.navigation.navigate('EventDetail', { item });
-    }
     _onCardPress = () => {
         const { index, item } = this.props;
         this.props.setIndex({ index: index, name: item.name });

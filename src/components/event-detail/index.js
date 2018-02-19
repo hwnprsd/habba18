@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, ScrollView, TouchableHighlight } from 'react-native';
+import { View, Text, Dimensions, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
@@ -11,7 +11,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { VibrancyView, BlurView } from 'react-native-blur'
 import { colors, fonts } from '../../constants';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Divider} from 'react-native-elements'
+import { Divider } from 'react-native-elements'
 import Header from '../header';
 import styles from './styles';
 
@@ -20,6 +20,7 @@ import styles from './styles';
 export default class EventDetails extends Component {
     state = Dimensions.get("window");
     handler = dims => this.setState(dims.window);
+    _animatedValue = new Animated.Value(0);
 
     componentWillMount() {
         Dimensions.addEventListener("change", this.handler);
@@ -39,68 +40,97 @@ export default class EventDetails extends Component {
             <Text style={styles.readMore} onPress={onPress}>View less</Text>
         )
     }
+    _onRegisterPress = () => {
+        this.props.eventsV2.setEventIndex(this.state.currIndex);
+        this.props.closeModal();
+        this.props.navigate('Register')
+    }
     _renderContent = item => {
         const { height, width } = this.state;
         const { description, rules, numb, eventhead, amount, pmoney, lat, lang, name } = item;
+        // const interpolatedValue = this._animatedValue.interpolate({
+        //     inputRange: [0, height / 4, height / 3],
+        //     outputRange: [0, 1],
+        //     extrapolate: 'clamp'
+        // })
         return (
-            <ScrollView style={{ flex: 1, paddingTop: 50, paddingHorizontal: 10, paddingBottom: 50 }} key={i++} showsVerticalScrollIndicator={false}>
-                <View>
-                    <FastImage source={{ uri: item.url }} style={{ width: width - 20, height: height / 3 }} resizeMode="cover" />
-                    <VibrancyView style={{ position: 'absolute', top: 0, flexDirection: 'row', padding: 10,  width: '100%', justifyContent: 'center'}}>
+            <View style={{ flex: 1 }} key={i++}>
+                <ScrollView
+                    onScroll={this.onScroll}
+                    style={{ flex: 1, paddingTop: 50, paddingHorizontal: 10, paddingBottom: 50 }}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View>
+                        <FastImage source={{ uri: item.url }} style={{ width: width - 20, height: height / 3 }} resizeMode="cover" />
+                        <TouchableOpacity onPress={this.props.closeModal} style={{ position: 'absolute', left: 0, }}>
+                            <Icon onPress={this.props.closeModal} name='ios-arrow-back' style={{ color: 'white', fontSize: 22, margin: 10 }} />
+                        </TouchableOpacity>
+                    </View>
+                    <BlurView style={{ marginTop: 10 }}>
+                        <View style={[styles.card]}>
+                            <Text style={styles.titleText}>Description</Text>
+                            <ViewMoreText
+                                numberOfLines={4}
+                                renderViewMore={this.renderViewMore}
+                                renderViewLess={this.renderViewLess}
+                            >
+                                <Text style={styles.contentText}>{description || ''}</Text>
+                            </ViewMoreText>
+                        </View>
+                    </BlurView>
+                    <BlurView style={styles.card} >
+                        <View >
+                            <Text style={styles.titleText}>Rules & Regulations</Text>
+                            <ViewMoreText
+                                numberOfLines={4}
+                                renderViewMore={this.renderViewMore}
+                                renderViewLess={this.renderViewLess}
+                            >
+                                <Text style={styles.contentText}>{rules || ''}</Text>
+                            </ViewMoreText>
+                        </View>
+                    </BlurView>
+                    <BlurView style={styles.card} >
+                        <Text style={styles.titleText}>Contact Number</Text>
+                        <Text style={styles.contentText}>{eventhead || ''} - {numb || ''}</Text>
+                    </BlurView>
+                    <BlurView style={styles.card} >
+                        <Text style={styles.titleText}>Amount</Text>
+                        <Text style={styles.contentText}>{'Registration'} - {amount || ''}</Text>
+                        <Text style={styles.contentText}>{'Prize Money'} - {pmoney || ''}</Text>
+                    </BlurView>
+                    <BlurView style={styles.card} >
+                        <TouchableOpacity activeOpacity={0.7} onPress={this._onRegisterPress}>
+                            <Text style={styles.button}>Register</Text>
+                        </TouchableOpacity>
+                    </BlurView>
+                    <BlurView style={[styles.card, { marginBottom: 50 }]} >
+                        <TouchableOpacity activeOpacity={0.7} onPress={() => { openMap({ latitude: lat, longitude: lang }) }}>
+                            <Text style={styles.button}>Navigate to event</Text>
+                        </TouchableOpacity>
+                    </BlurView>
+
+                </ScrollView>
+                {/* <Animated.View style={{ position: 'absolute', top: 0, opacity: interpolatedValue, width: '100%' }}>
+                    <VibrancyView style={{ flex: 1, flexDirection: 'row', padding: 10, width: '100%', justifyContent: 'center' }}>
                         <Text style={{ color: 'white', alignSelf: 'center', fontSize: 22, }}>
                             Event Name
                         </Text>
-                        <TouchableHighlight onPress={this.props.closeModal} style={{ position: 'absolute', left: 0,}}>
-                        <Icon onPress={this.props.closeModal} name='ios-arrow-back' style={{  color: 'white', fontSize: 22, margin: 10}} />
-                        </TouchableHighlight>
+                        <TouchableOpacity onPress={this.props.closeModal} style={{ position: 'absolute', left: 0, }}>
+                            <Icon onPress={this.props.closeModal} name='ios-arrow-back' style={{ color: 'white', fontSize: 22, margin: 10 }} />
+                        </TouchableOpacity>
                     </VibrancyView>
-                </View>
-                <BlurView style={{ marginTop: 10 }}>
-                <View style={[styles.card]}>
-                    <Text style={styles.titleText}>Description</Text>
-                    <ViewMoreText
-                        numberOfLines={4}
-                        renderViewMore={this.renderViewMore}
-                        renderViewLess={this.renderViewLess}
-                    >
-                        <Text style={styles.contentText}>{description || ''}</Text>
-                    </ViewMoreText>
-                    </View>
-                </BlurView>
-                <BlurView style={styles.card} >
-                <View >
-                    <Text style={styles.titleText}>Rules & Regulations</Text>
-                    <ViewMoreText
-                        numberOfLines={4}
-                        renderViewMore={this.renderViewMore}
-                        renderViewLess={this.renderViewLess}
-                    >
-                        <Text style={styles.contentText}>{rules || ''}</Text>
-                    </ViewMoreText>
-                    </View>
-                </BlurView>
-                <BlurView style={styles.card} >
-                    <Text style={styles.titleText}>Contact Number</Text>
-                    <Text style={styles.contentText}>{eventhead || ''} - {numb || ''}</Text>
-                </BlurView>
-                <BlurView style={styles.card} >
-                    <Text style={styles.titleText}>Amount</Text>
-                    <Text style={styles.contentText}>{'Registration'} - {amount || ''}</Text>
-                    <Text style={styles.contentText}>{'Prize Money'} - {pmoney || ''}</Text>
-                </BlurView>
-                <BlurView style={styles.card} >
-                    <TouchableOpacity activeOpacity={0.7}>
-                        <Text style={styles.button}>Register</Text>
-                    </TouchableOpacity>
-                </BlurView>
-                <BlurView style={[styles.card, {marginBottom: 50}]} >
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => { openMap({ latitude: lat, longitude: lang }) }}>
-                        <Text style={styles.button}>Navigate to event</Text>
-                    </TouchableOpacity>
-                </BlurView>
-            </ScrollView>
+                </Animated.View> */}
+            </View>
         )
     }
+    onScroll = Animated.event([{
+        nativeEvent: {
+            contentOffset: {
+                y: this._animatedValue
+            }
+        }
+    }]);
     _renderItem = (item, id) => {
         const { name, url } = item;
         const { height, width } = this.state;
@@ -142,12 +172,23 @@ export default class EventDetails extends Component {
         const { item, eventsList, index } = this.props;
         const id = item ? item.index : 0;
         return (
-            <Swiper index={index || id} loop={false} showsPagination={false} loadMinimal bounces>
+            <Swiper
+                index={index || id}
+                loop={false}
+                showsPagination={false}
+                loadMinimal bounces
+                onIndexChanged={i => this.setState({ currIndex: i })}
+            >
                 {eventsList.map((event, id) => {
                     return this._renderContent(event)
                 })}
             </Swiper>
 
         )
+    }
+    componentWillMount() {
+        const { item, index } = this.props;
+        const id = item ? item.index : 0;
+        this.setState({ currIndex: index || id })
     }
 }

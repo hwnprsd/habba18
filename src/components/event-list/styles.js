@@ -1,19 +1,25 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { fonts } from '../../constants';
 
+const distanceBetweenTiles = 1;
 
 export default StyleSheet.create({
   gridView: {
-    paddingTop: 2.5,
+    paddingTop: distanceBetweenTiles,
   },
   mainContainer: {
-    margin: 2.5,
+    margin: distanceBetweenTiles,
     height: 145,
-    marginHorizontal: 5
+    marginHorizontal: distanceBetweenTiles * 2
   },
   mainContainer2: {
     height: 145,
-    marginHorizontal: 2.5
+    marginHorizontal: distanceBetweenTiles
+  },
+  mainContainer3: {
+    flexDirection: 'row',
+    paddingHorizontal: distanceBetweenTiles,
+    marginVertical: distanceBetweenTiles
   },
   itemContainer: {
     alignItems: 'center',
@@ -52,8 +58,13 @@ export default StyleSheet.create({
     fontFamily: fonts.latoLight,
     color: "#fff"
   },
-  stickyHeader: { 
+  stickyHeader: {
     fontFamily: fonts.latoRegular,
     fontSize: 50
+  },
+  eventName: {
+    color: 'white',
+    fontSize: 26,
+    fontFamily: fonts.latoRegular
   }
 });

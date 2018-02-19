@@ -5,14 +5,15 @@ export default StyleSheet.create({
     container: {
         justifyContent: 'center',
         paddingBottom: 18,
-        flex: 1
+        flex: 1,
 
     },
     cardContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#040404',
-        borderRadius: 5,
+        shadowOpacity: 0.3,
+        shadowRadius: 20,
     },
     cardText: {
         position: 'absolute',

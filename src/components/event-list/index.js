@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Modal, } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, Modal, TouchableHighlight, Animated } from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { observer, inject } from 'mobx-react/native';
@@ -10,14 +10,16 @@ import ElevatedView from 'react-native-elevated-view';
 import Swiper from 'react-native-swiper';
 import EventDetail from '../event-detail';
 import { BlurView, VibrancyView } from 'react-native-blur';
-import Header from '../header'
+import Icon from 'react-native-vector-icons/Ionicons';
 
+import Header from '../header'
 import styles from './styles';
 import { colors } from '../../constants';
-i=0;
+i = 0;
 @inject('eventsV2') @observer
 export default class EventList extends Component {
     state = Dimensions.get("window");
+    _animatedValue = new Animated.Value(0);
     handler = dims => this.setState(dims.window);
 
     componentWillMount() {
@@ -91,23 +93,24 @@ export default class EventList extends Component {
             list.push(oldList);
             oldList = [];
         }
+
         return (
             <View style={[styles.gridView, { minHeight: height }]} >
 
-            <Modal
-              visible={this.state.modalVisible || false}
-              animationType={'slide'}
-              onRequestClose={() => this._closeModal()}
-              transparent
-              animationType={'fade'}
-              >
-              <View style={{flex: 1}}>
-                <BlurView style={{flex: 1}} blurType='light'/>
-                <View style={{flex: 1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0}}>
-                    <EventDetail {...this.state.modalProps} />
-                </View>
-              </View>
-          </Modal>
+                <Modal
+                    visible={this.state.modalVisible || false}
+                    animationType={'slide'}
+                    onRequestClose={() => this._closeModal()}
+                    transparent
+                    animationType={'fade'}
+                >
+                    <View style={{ flex: 1 }}>
+                        <BlurView style={{ flex: 1 }} blurType='light' />
+                        <View style={{ flex: 1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
+                            <EventDetail {...this.state.modalProps} navigate={this.props.navigation.navigate} />
+                        </View>
+                    </View>
+                </Modal>
                 {list.map((item, idx) => {
                     if (!Array.isArray(item))
                         return (
@@ -121,7 +124,7 @@ export default class EventList extends Component {
                             </View>
                         )
                     return (
-                        <View key={idx} style={[{ flexDirection: 'row', paddingHorizontal: 2.5, marginVertical: 2.5 }]}>
+                        <View key={idx} style={styles.mainContainer3}>
                             {item.map((subItem, idx2) => (
                                 <View key={idx2} style={[styles.mainContainer2, { flex: 1 }]}>
                                     <TouchableOpacity style={[styles.itemContainer]} onPress={this._onEventPress.bind(this, subItem, eventsList)} activeOpacity={1}>
@@ -138,41 +141,80 @@ export default class EventList extends Component {
             </View>
         )
     }
-    _renderItem = ({item, index}) => {
-        const {width, height} = this.state;
+    onScroll = Animated.event([{
+        nativeEvent: {
+            contentOffset: {
+                y: this._animatedValue
+            }
+        }
+    }]);
+
+    _renderItem = ({ item, index }) => {
+        const { width, height } = this.state;
         const { categoryName, url } = this.props.navigation.state.params;
         const toolBarText = categoryName;
+        const interpolatedValue = this._animatedValue.interpolate({
+            inputRange: [0, height / 3, height / 2],
+            outputRange: [0, 0, 1],
+            extrapolate: 'clamp'
+        })
         return (
-            // <CollapsibleToolbar
-            //     key={index}
-            //     renderContent={this._renderContent.bind(this, item.name, index)}
-            //     renderNavBar={() => <Header collapsable title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} color={"rgba(0,0,0,0)"} />}
-            //     imageSource={item.url || 'https://lorempixel.com/400/600/'}
-            //     collapsedNavBarBackgroundColor={colors.primaryDark}
-            //     toolBarHeight={200}
-            //     showsVerticalScrollIndicator={false}
-            // />
-            <ParallaxScrollView
-                key={i++}
-                backgroundColor="rgba(0,0,0,0)"
-                contentBackgroundColor="#fff"
-                backgroundSpeed={10}
-                parallaxHeaderHeight={height/2}
-                // renderScrollComponent={() => <Animated.View />}
-                renderForeground={() => (
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={styles.stickyHeader}>{item.name}</Text>
-                    </View>
-                )}
-                renderBackground={() => (
-                    <FastImage source={{ uri: item.url }} style={{width, height: height/2}} resizeMode="cover" />
-                )}
-                renderStickyHeader={() => <Header title={item.name} left={{ name: "ios-arrow-back", action: this.props.navigation.goBack }} />}
-                stickyHeaderHeight={70}
-            >
-                {this._renderContent(item.name, index)}
+            <View style={{ flex: 1 }}>
 
-            </ParallaxScrollView>
+                <ParallaxScrollView
+                    onScroll={this.onScroll}
+                    key={i++}
+                    backgroundColor="rgba(0,0,0,0)"
+                    contentBackgroundColor="#fff"
+                    backgroundSpeed={10}
+                    parallaxHeaderHeight={height / 2}
+                    // renderScrollComponent={() => <Animated.View />}
+                    renderForeground={() => (
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={styles.stickyHeader}>{item.name}</Text>
+                        </View>
+                    )}
+                    renderBackground={() => (
+                        <FastImage source={{ uri: item.url }} style={{ width, height: height / 2 }} resizeMode="cover" />
+                    )}
+
+                >
+                    {this._renderContent(item.name, index)}
+
+                </ParallaxScrollView>
+
+                <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
+
+                    <TouchableOpacity
+                        onPress={() => { this.props.navigation.goBack() }}
+                        style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
+                        <Animated.View style={{ flex: 1, justifyContent: 'center', opacity: (1 - interpolatedValue) }}>
+                            <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} />
+                        </Animated.View>
+                    </TouchableOpacity>
+                    <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                        <Animated.View style={{ opacity: interpolatedValue }}>
+                            <Text style={styles.eventName}>{item.name}</Text>
+                        </Animated.View>
+                    </View>
+                    <View style={{ flex: 1 }} />
+                </View>
+                <Animated.View style={{ position: 'absolute', top: 0, width: '100%', height: 70, opacity: interpolatedValue }}>
+                    <VibrancyView style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.goBack() }}
+                            style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} />
+                            </View>
+                        </TouchableOpacity>
+                        <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={styles.eventName}>{item.name}</Text>
+                        </View>
+                        <View style={{ flex: 1 }} />
+                    </VibrancyView>
+                </Animated.View>
+            </View>
         )
     }
 
@@ -191,6 +233,10 @@ export default class EventList extends Component {
             // </Swiper>
         )
     }
-
+    componentWillUnmount() {
+        this.setState({
+            modalVisible: false
+        })
+    }
 }
     // {/*renderNavBar={() => <View style={{ height: 50, flex: 1, justifyContent: 'center', alignItems: 'center' }}><Text style={styles.toolBarText}>{toolBarText}</Text></View>}*/}

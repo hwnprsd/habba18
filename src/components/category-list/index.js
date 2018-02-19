@@ -8,13 +8,67 @@ import {
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
 import { observer, inject } from 'mobx-react/native';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
 import { UIActivityIndicator } from 'react-native-indicators';
 import Header from '../header'
 
 import styles from './styles';
 import { backgroundImage } from '../../constants';
 
+function stackScrollInterpolator(index, carouselProps) {
+    const range = [1, 0, -1, -2, -3];
+    const inputRange = getInputRangeFromIndexes(range, index, carouselProps);
+    const outputRange = range;
+
+    return {
+        inputRange,
+        outputRange
+    };
+}
+function stackAnimatedStyles(index, animatedValue, carouselProps) {
+    const sizeRef = carouselProps.vertical ? carouselProps.itemHeight : carouselProps.itemWidth;
+    const translateProp = carouselProps.vertical ? 'translateY' : 'translateX';
+
+    const cardOffset = 9;
+    const card1Scale = 0.9;
+    const card2Scale = 0.8;
+
+    const getTranslateFromScale = (index, scale) => {
+        const centerFactor = 1 / scale * index;
+        const centeredPosition = -Math.round(sizeRef * centerFactor);
+        const edgeAlignment = Math.round((sizeRef - (sizeRef * scale)) / 2);
+        const offset = Math.round(cardOffset * Math.abs(index) / scale);
+
+        return centeredPosition - edgeAlignment - offset;
+    };
+
+    return {
+        opacity: animatedValue.interpolate({
+            inputRange: [-3, -2, -1, 0],
+            outputRange: [0, 0.5, 0.75, 1],
+            extrapolate: 'clamp'
+        }),
+        transform: [{
+            scale: animatedValue.interpolate({
+                inputRange: [-2, -1, 0, 1],
+                outputRange: [card2Scale, card1Scale, 1, card1Scale],
+                extrapolate: 'clamp'
+            })
+        }, {
+            [translateProp]: animatedValue.interpolate({
+                inputRange: [-3, -2, -1, 0, 1],
+                outputRange: [
+                    getTranslateFromScale(-3, card2Scale),
+                    getTranslateFromScale(-2, card2Scale),
+                    getTranslateFromScale(-1, card1Scale),
+                    0,
+                    sizeRef * 0.5
+                ],
+                extrapolate: 'clamp'
+            })
+        }]
+    };
+}
 
 @inject('eventsV2') @observer
 export default class EventList extends Component {
@@ -31,9 +85,6 @@ export default class EventList extends Component {
     componentWillUnmount() {
         // Important to stop updating state after unmount
         Dimensions.removeEventListener("change", this.handler);
-    }
-    _onEventPress = item => {
-        this.props.navigation.navigate('EventDetail', { item });
     }
     render() {
         const { width, height } = this.state;
@@ -53,11 +104,14 @@ export default class EventList extends Component {
                 <View style={{ flex: 1 }} >
                     <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel
-                        layout={'default'}
-                        layoutCardOffset={50}
-                        style={{ flex: 1 }}
-                        containerCustomStyle={{ height: height / 1.5 }}
+                        ref={(c) => { this._carousel = c; }}
+                        layoutCardOffset={20}
+                        style={{ height: '50%' }}
+                        containerCustomStyle={{}}
                         data={categoryList}
+                            // scrollInterpolator={stackScrollInterpolator}
+                        // slideInterpolatedStyle={stackAnimatedStyles}
+                        // useScrollView={true}
                         renderItem={
                             ({ item, index }) =>
                                 <CategoryCard
@@ -69,7 +123,7 @@ export default class EventList extends Component {
                         }
                         sliderWidth={width}
                         itemWidth={width / 1.3}
-                    />                        
+                    />
                 </View>
             </ImageBackground>
         )

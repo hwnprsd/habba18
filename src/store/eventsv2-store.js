@@ -11,7 +11,7 @@ class EventStore {
     @persist('object') @observable timelineObj = {};
     @observable selectedCategory = {
         name: 'Music',
-        index: 1,
+        index: 0,
     };
     @observable error = {
         present: false,
@@ -19,6 +19,15 @@ class EventStore {
     }
     @observable eventIndex = 0;
     @observable isFetching = false;
+    @persist('object') @observable userDetails = {
+        userName: '',
+        userEmail: '',
+        collegeName: ''
+    }
+    @action setUserDetails = u => { this.userDetails = { ...u } }
+    @computed get _userDetails () {
+        return this.userDetails
+    }
     @action fetchAllEvents = async () => {
         this.isFetching = true;
         try {
@@ -42,14 +51,23 @@ class EventStore {
     }
 
     @computed get eventsList() {
-        return this._mainList.slice()[this.selectedCategory.index][this.selectedCategory.name].slice();
+        if (this._mainList.length === 0) {
+            this.error.present = true;
+            this.error.message = 'Network Error';
+            return []
+        }
+        return this._mainList[this.selectedCategory.index][this.selectedCategory.name];
     }
 
     @computed get _mainList() {
         return this.mainList.slice()
     }
-    @action setCategory = o => { this.selectedCategory = { ...o } };
-    @action setEventIndex = i => { this.eventIndex = i };
+    @action setCategory = o => { console.log(o); this.selectedCategory = { ...o } };
+    @action setEventIndex = i => {
+        this.eventIndex = i;
+        console.log(this.categoryList)
+        console.log(this.eventsList)
+    };
 
     @action makeTimeline = () => {
         this._mainList.map(c => {
@@ -90,3 +108,5 @@ export default eventsStore = new EventStore();
 hydrate('EventStoreV2', eventsStore).then(() => { console.log('Event Store Hydrated') }).catch(e => console.log('ERROR', e));
 
 eventsStore.fetchAllEvents();
+console.log(eventsStore.userDetails)
+
