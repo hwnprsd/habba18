@@ -4,12 +4,14 @@ import {
     Text,
     ImageBackground,
     Dimensions,
+    TouchableOpacity
 } from 'react-native';
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
 import { observer, inject } from 'mobx-react/native';
 import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
 import LottieView from 'lottie-react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Loading from '../loading';
 import Header from '../header'
@@ -73,6 +75,7 @@ function stackAnimatedStyles(index, animatedValue, carouselProps) {
 
 @inject('eventsV2') @observer
 export default class EventList extends Component {
+
     state = Dimensions.get("window");
     handler = dims => this.setState(dims.window);
 
@@ -90,7 +93,7 @@ export default class EventList extends Component {
         const { width, height } = this.state;
         const { categoryList, isFetching, setCategory, error } = this.props.eventsV2;
         if (isFetching)
-            return(
+            return (
                 <Loading />
             )
         if (error.present) {
@@ -102,7 +105,6 @@ export default class EventList extends Component {
         return (
             <ImageBackground source={BG} style={{ width, flex: 1 }}>
                 <View style={{ flex: 1 }} >
-                    <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel
                         ref={(c) => { this._carousel = c; }}
                         layoutCardOffset={20}
@@ -125,7 +127,24 @@ export default class EventList extends Component {
                         itemWidth={width / 1.3}
                     />
                 </View>
+                <View style={{ position: 'absolute', top: 0, width: '100%', height: 70 }}>
+                    <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.goBack() }}
+                            style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} ref={ref => { this.backBtn = ref }} />
+                            </View>
+                        </TouchableOpacity>
+                        <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                        </View>
+                        <View style={{ flex: 1 }} />
+                    </View>
+                </View>
             </ImageBackground>
         )
+    }
+    componentDidMount() {
+
     }
 }
