@@ -5,10 +5,12 @@ import { create, persist } from 'mobx-persist';
 import axios from 'axios';
 
 const EVENTSV2 = 'http://acharyahabba.in/habba18/json.php';
+const VERSION_API = 'http://acharyahabba.in/habba18/dbchange.php';
 
 class EventStore {
     @persist('list') @observable mainList = [];
     @persist('object') @observable timelineObj = {};
+    versionArr = [];
     @observable selectedCategory = {
         name: 'Music',
         index: 0,
@@ -22,6 +24,7 @@ class EventStore {
     @persist('object') @observable userDetails = {
         userName: '',
         userEmail: '',
+        userMobile: '',
         collegeName: ''
     }
     @action setUserDetails = u => { this.userDetails = { ...u } }
@@ -29,6 +32,7 @@ class EventStore {
         return this.userDetails
     }
     @action fetchAllEvents = async () => {
+        console.log('-----FETCHING-----')
         this.isFetching = true;
         try {
             const P1 = axios.get(EVENTSV2);
@@ -36,11 +40,35 @@ class EventStore {
             this.mainList = res.data.result;
             this.isFetching = false;
             this.bak = this.mainList;
-
         } catch (e) {
             this.isFetching = false;
             console.log(e.message);
         }
+    }
+    @action fetchVersion = async () => {
+        this.isFetching = true;
+        try {
+            const P1 = axios.get(VERSION_API);
+            const res = await Promise.resolve(P1);
+            this.isFetching = false;
+            this.versionArr = res.data.result;
+            const cachedVersion = await storage.getItem('APIVersion');
+            if (cachedVersion === null) {
+                await storage.setItem('APIVersion', JSON.stringify(this.versionArr));
+                this.fetchAllEvents();
+            }
+            else {
+                const ver = await JSON.parse(cachedVersion);
+                if (this.versionArr[0].version !== ver[0].version || this.versionArr[2].version !== ver[2].version) {
+                    await storage.setItem('APIVersion', JSON.stringify(this.versionArr));
+                    this.fetchAllEvents();
+                }
+            }
+        } catch (e) {
+            this.isFetching = false;
+            console.log(e.message);
+        }
+
     }
     @computed get categoryList() {
         if (this._mainList.length === 0) {
@@ -109,6 +137,5 @@ export default eventsStore = new EventStore();
 
 hydrate('EventStoreV2', eventsStore).then(() => { console.log('Event Store Hydrated') }).catch(e => console.log('ERROR', e));
 
-eventsStore.fetchAllEvents();
-console.log(eventsStore.userDetails)
+eventsStore.fetchVersion();
 

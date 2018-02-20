@@ -96,6 +96,7 @@ export default class Auth extends Component {
                             removeClippedSubviews: false
                         }}
                     />
+                    
                 </ScrollView>
 
             </ImageBackground>

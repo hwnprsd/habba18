@@ -11,9 +11,10 @@ import { observer, inject } from 'mobx-react/native';
 import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
 import LottieView from 'lottie-react-native';
 
+import Loading from '../loading';
 import Header from '../header'
 import styles from './styles';
-import { backgroundImage } from '../../constants';
+import BG from '../../images/xbg1.jpg'
 
 function stackScrollInterpolator(index, carouselProps) {
     const range = [1, 0, -1, -2, -3];
@@ -89,19 +90,9 @@ export default class EventList extends Component {
         const { width, height } = this.state;
         const { categoryList, isFetching, setCategory, error } = this.props.eventsV2;
         if (isFetching)
-            return (
-                <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
-                    <View>
-                        <LottieView
-                            ref={animation => {
-                                animation.play();
-                            }}
-                            source={require('../../utils/loading.json')}
-                            style={{ height: 300, width: 300 }}
-                            loop
-                        />
-                    </View>
-                </View>)
+            return(
+                <Loading />
+            )
         if (error.present) {
             return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 40, color: 'red' }}>{error.message}</Text>
@@ -109,7 +100,7 @@ export default class EventList extends Component {
         }
         const { slider1Ref } = this.state;
         return (
-            <ImageBackground source={backgroundImage} style={{ width, flex: 1 }}>
+            <ImageBackground source={BG} style={{ width, flex: 1 }}>
                 <View style={{ flex: 1 }} >
                     <Header title={''} color="rgba(0,0,0,0)" left={{ name: 'ios-arrow-back', action: this.props.navigation.goBack }} />
                     <Carousel

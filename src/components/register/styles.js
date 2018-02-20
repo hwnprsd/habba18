@@ -46,6 +46,11 @@ export default StyleSheet.create({
         fontSize: 10,
     },
     touchable: {
-        marginVertical: 5 
+        marginVertical: 5
+    },
+    eventName: {
+        color: 'white',
+        fontSize: 26,
+        fontFamily: fonts.latoRegular
     }
 })

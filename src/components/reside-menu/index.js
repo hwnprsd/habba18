@@ -77,7 +77,7 @@ export default class ResideMenu extends Component {
                             <View style={{ justifyContent: 'space-around', paddingRight: 10 }}>
                                 <Item text="Gallery" right nav="Gallery" />
                                 <Item text="Notifications" right nav="Notification" />
-                                <Item text="About us" right />
+                                <Item text="About us" right nav="AboutUs" />
                                 <Item text="Devs" nav="Dev" right />
                                 <Item text="Logout" right />
                             </View>

@@ -184,7 +184,6 @@ export default class EventList extends Component {
                 </ParallaxScrollView>
 
                 <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
-
                     <TouchableOpacity
                         onPress={() => { this.props.navigation.goBack() }}
                         style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>

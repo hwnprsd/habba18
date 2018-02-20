@@ -8,7 +8,7 @@ export default StyleSheet.create({
     elevatedCard: {
         flex: 1,
         // backgroundColor: 'rgba(0,0,0,0.25)',
-        width: '90%',
+        width: '95%',
         marginVertical: 2.5,
         height: '100%',
         alignSelf: 'center',
@@ -23,7 +23,6 @@ export default StyleSheet.create({
         paddingTop: 100,
         flex: 1,
         width: '100%',
-        height: '100%'
     },
     text: {
         fontFamily: fonts.latoRegular,
@@ -39,11 +38,16 @@ export default StyleSheet.create({
     textName: {
         fontSize: 18,
         color: textColor,
-        fontFamily: fonts.latoBold
+        fontFamily: fonts.latoRegular
     },
     textMessage: {
         fontSize: 13,
         color: textColor,
+        fontFamily: fonts.latoRegular
+    },
+    eventName: {
+        color: 'white',
+        fontSize: 26,
         fontFamily: fonts.latoRegular
     }
 })
