@@ -52,6 +52,7 @@ class EventStore {
             const res = await Promise.resolve(P1);
             this.isFetching = false;
             this.versionArr = res.data.result;
+            console.log(this.isFetching)
             const cachedVersion = await storage.getItem('APIVersion');
             if (cachedVersion === null) {
                 await storage.setItem('APIVersion', JSON.stringify(this.versionArr));
@@ -63,6 +64,7 @@ class EventStore {
                     await storage.setItem('APIVersion', JSON.stringify(this.versionArr));
                     this.fetchAllEvents();
                 }
+
             }
         } catch (e) {
             this.isFetching = false;

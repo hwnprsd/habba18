@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, ImageBackground, Animated } from 'react-native';
 import Header from '../header';
 import { colors, fonts, height } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
@@ -10,6 +10,7 @@ import { UIActivityIndicator } from 'react-native-indicators'
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import Loading from '../loading';
 import BG from '../../images/xbg1.jpg'
 import styles from './styles';
 
@@ -18,6 +19,7 @@ export default class Auth extends Component {
     state = {
         selected: ''
     }
+    _animatedValue = new Animated.Value(0);
     _onDayPress = day => {
         this.setState({
             selected: day.dateString
@@ -40,20 +42,29 @@ export default class Auth extends Component {
             </BlurView>
         )
     }
+    onScroll = Animated.event([{
+        nativeEvent: {
+            contentOffset: {
+                y: this._animatedValue
+            }
+        }
+    }]);
     render() {
-        const { markedDates } = this.props.eventsV2;
+        const { markedDates, isFetching } = this.props.eventsV2;
+        const interpolatedValue = this._animatedValue.interpolate({
+            inputRange: [0, 10, 20],
+            outputRange: [0, 0, 1],
+            extrapolate: 'clamp'
+        })
+        if (isFetching)
+        return (
+            <Loading />
+        )
         return (
             <ImageBackground source={BG} style={{ width: '100%', height: '100%' }}>
 
-                <ScrollView style={{}}>
+                <ScrollView style={{}} onScroll={this.onScroll}>
                     <View style={{ paddingTop: 20, flexDirection: 'row', width: '100%', height: 70, justifyContent: 'center' }}>
-                        <TouchableOpacity
-                            onPress={() => { this.props.navigation.goBack() }}
-                            style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
-                            <View style={{ flex: 1, justifyContent: 'center', opacity: 1 }}>
-                                <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} />
-                            </View>
-                        </TouchableOpacity>
                         <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
                         </View>
                         <View style={{ flex: 1 }} />
@@ -96,9 +107,37 @@ export default class Auth extends Component {
                             removeClippedSubviews: false
                         }}
                     />
-                    
-                </ScrollView>
 
+                </ScrollView>
+                <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
+                    <TouchableOpacity
+                        onPress={() => { this.props.navigation.goBack() }}
+                        style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
+                        <Animated.View style={{ flex: 1, justifyContent: 'center', opacity: (1 - interpolatedValue) }}>
+                            <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} />
+                        </Animated.View>
+                    </TouchableOpacity>
+                    <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                        <Animated.View style={{ opacity: interpolatedValue }}>
+                        </Animated.View>
+                    </View>
+                    <View style={{ flex: 1 }} />
+                </View>
+                <Animated.View style={{ position: 'absolute', top: 0, width: '100%', height: 70, opacity: interpolatedValue }}>
+                    <BlurView style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.goBack() }}
+                            style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={{ flex: 1, justifyContent: 'center' }}>
+                                <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} />
+                            </View>
+                        </TouchableOpacity>
+                        <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={styles.eventName}>Timeline</Text>
+                        </View>
+                        <View style={{ flex: 1 }} />
+                    </BlurView>
+                </Animated.View>
             </ImageBackground>
         )
     }
