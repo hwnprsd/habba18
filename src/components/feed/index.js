@@ -10,7 +10,8 @@ import {
     Modal,
     ImageBackground,
     TouchableOpacity,
-    Animated
+    Animated,
+    StatusBar
 } from 'react-native';
 import PopupDialog from 'react-native-popup-dialog';
 import FitImage from 'react-native-fit-image';
@@ -24,6 +25,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Header from '../header';
 import Loading from '../loading';
+import Error from '../error';
 import { width } from '../../constants';
 import styles from './styles';
 import BG from '../../images/xbg1.jpg'
@@ -88,6 +90,10 @@ export default class Auth extends Component {
             return false;
 
         }
+        if (this.props.feedStore.errorPresent)
+            return (
+                <Error back={() => { this.props.navigation.goBack() }} />
+            )
         if (this.props.feedStore.isFeedFetching)
             return (
                 <Loading />
@@ -108,6 +114,7 @@ export default class Auth extends Component {
                     }}>
                 </LinearGradient> */}
                 <ImageBackground source={BG} style={{ width: '100%', height: '100%' }} resizeMode='cover'>
+                    <StatusBar barStyle="light-content" />
                     <FlatList
                         onScroll={this.onScroll}
                         data={this.props.feedStore.allFeed}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, ActionSheetIOS, TouchableOpacity, ImageBackground, Animated } from 'react-native';
+import { StatusBar, View, Text, ScrollView, ActionSheetIOS, TouchableOpacity, ImageBackground, Animated } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import ElevatedView from 'react-native-elevated-view';
 import LinearGradient from 'react-native-linear-gradient';
@@ -94,6 +94,7 @@ export default class Register extends Component {
         return (
             <ImageBackground style={{ flex: 1, width: '100%', height: '100%' }} source={BG}>
 
+                <StatusBar barStyle="light-content" />
                 <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView} onScroll={this.onScroll}>
 
                     <Text style={[{ textAlign: 'center' }, styles.text]}>Registration</Text>

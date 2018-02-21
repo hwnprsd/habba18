@@ -56,7 +56,6 @@ export default class ResideMenu extends Component {
         const { width, height } = this.state;
         return (
             <ImageBackground source={BG} style={{ width, height }} resizeMode={'cover'}>
-                <StatusBar translucent backgroundColor='rgba(0,0,0,0)' />
                 <View style={{ flex: 2, flexDirection: 'row' }}>
                     <View style={{ flex: 3 }}>
                         <View style={{ flex: 1 }}></View>
@@ -119,6 +118,7 @@ export default class ResideMenu extends Component {
 
         return (
             <View style={{ flex: 1, flexDirection: 'row' }}>
+                <StatusBar barStyle="light-content"/>
                 <View style={{ flex: 1, backgroundColor: '#e2e1e0' }}>
                     <this.List />
                 </View>

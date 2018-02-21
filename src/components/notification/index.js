@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList, TouchableOpacity, Image, ImageBackground, Animated } from 'react-native';
+import { View, StatusBar, Text, ScrollView, FlatList, TouchableOpacity, Image, ImageBackground, Animated } from 'react-native';
 import { BlurView } from 'react-native-blur';
 import ElevatedView from 'react-native-elevated-view';
 import LinearGradient from 'react-native-linear-gradient';
@@ -57,6 +57,7 @@ export default class Notifs extends Component {
                     }}>
                 </LinearGradient> */}
 
+                <StatusBar barStyle="light-content" />
                 <FlatList
                     onScroll={this.onScroll}
                     showsVerticalScrollIndicator={false}

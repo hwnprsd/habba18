@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Dimensions, Modal, TouchableHighlight, Animated } from 'react-native';
+import { StatusBar, View, Text, TouchableOpacity, Dimensions, Modal, TouchableHighlight, Animated } from 'react-native';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { observer, inject } from 'mobx-react/native';
@@ -96,7 +96,7 @@ export default class EventList extends Component {
 
         return (
             <View style={[styles.gridView, { minHeight: height }]} >
-
+                <StatusBar translucent backgroundColor='rgba(0,0,0,0)' />
                 <Modal
                     visible={this.state.modalVisible || false}
                     animationType={'slide'}

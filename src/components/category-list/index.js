@@ -4,7 +4,8 @@ import {
     Text,
     ImageBackground,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    StatusBar
 } from 'react-native';
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
@@ -14,6 +15,7 @@ import LottieView from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Loading from '../loading';
+import Error from '../error';
 import Header from '../header'
 import styles from './styles';
 import BG from '../../images/xbg1.jpg'
@@ -97,13 +99,14 @@ export default class EventList extends Component {
                 <Loading />
             )
         if (error.present) {
-            return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ fontSize: 40, color: 'red' }}>{error.message}</Text>
-            </View>)
+            return (
+                <Error back={this.props.navigaion.goBack} />
+            )
         }
         const { slider1Ref } = this.state;
         return (
             <ImageBackground source={BG} style={{ width, flex: 1 }}>
+                <StatusBar barStyle="light-content" />
                 <View style={{ flex: 1 }} >
                     <Carousel
                         ref={(c) => { this._carousel = c; }}

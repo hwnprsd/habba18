@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, ImageBackground, Animated } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    ImageBackground,
+    Animated,
+    FlatList,
+    StatusBar
+} from 'react-native';
 import Header from '../header';
 import { colors, fonts, height } from '../../constants';
 import { observer, inject } from 'mobx-react/native';
@@ -42,73 +52,75 @@ export default class Auth extends Component {
             </BlurView>
         )
     }
-    onScroll = Animated.event([{
-        nativeEvent: {
-            contentOffset: {
-                y: this._animatedValue
-            }
-        }
-    }]);
+    onScroll = Animated.event(
+        [{ nativeEvent: { contentOffset: { y: this._animatedValue } } }],
+    )
     render() {
         const { markedDates, isFetching } = this.props.eventsV2;
         const interpolatedValue = this._animatedValue.interpolate({
-            inputRange: [0, 10, 20],
+            inputRange: [0, 20, 100],
             outputRange: [0, 0, 1],
             extrapolate: 'clamp'
         })
         if (isFetching)
-        return (
-            <Loading />
-        )
+            return (
+                <Loading />
+            )
         return (
             <ImageBackground source={BG} style={{ width: '100%', height: '100%' }}>
+                <StatusBar barStyle="light-content" />
+                <FlatList style={{}} onScroll={this.onScroll}
+                    renderItem={() => (
+                        <View>
 
-                <ScrollView style={{}} onScroll={this.onScroll}>
-                    <View style={{ paddingTop: 20, flexDirection: 'row', width: '100%', height: 70, justifyContent: 'center' }}>
-                        <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={{ paddingTop: 20, flexDirection: 'row', width: '100%', height: 70, justifyContent: 'center' }}>
+                                <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                                </View>
+                                <View style={{ flex: 1 }} />
+                            </View>
+                            <View
+                                style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff', marginTop: 10 }}
+                            >
+
+                                <Calendar
+                                    onDayPress={this._onDayPress}
+                                    markedDates={{ ...markedDates, [this.state.selected]: { selected: true } }}
+                                    theme={{
+                                        todayTextColor: colors.primary,
+                                        selectedDayTextColor: 'white',
+                                        selectedDayBackgroundColor: colors.primary,
+                                        arrowColor: colors.primary
+                                    }}
+
+                                />
+                            </View>
+                            {this.props.eventsV2.eventsFromDate(this.state.selected) && this.props.eventsV2.eventsFromDate(this.state.selected).length === 0 &&
+                                <BlurView blurType="light" style={{ margin: 10, borderRadius: 3 }}>
+                                    <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
+                                </BlurView>
+                            }
+                            <Timeline
+                                data={this.props.eventsV2.eventsFromDate(this.state.selected).slice() || []}
+                                enableEmptySections={true}
+                                innerCircle={'dot'}
+                                circleColor={colors.primaryDark}
+                                lineColor={colors.primary}
+                                timeContainerStyle={{ minWidth: 52, marginTop: -2, height: '100%' }}
+                                timeStyle={{ textAlign: 'center', backgroundColor: colors.primary, color: 'white', padding: 4, borderRadius: 5 }}
+                                renderDetail={this._renderDetail}
+                                detailContainerStyle={{ borderRadius: 3 }}
+                                separator={false}
+                                options={{
+                                    style: { padding: 10, minHeight: '100%' },
+                                    renderHeader: () => <View style={{ height: 20 }} />,
+                                    removeClippedSubviews: false
+                                }}
+                            />
                         </View>
-                        <View style={{ flex: 1 }} />
-                    </View>
-                    <View
-                        style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff', marginTop: 10 }}
-                    >
-
-                        <Calendar
-                            onDayPress={this._onDayPress}
-                            markedDates={{ ...markedDates, [this.state.selected]: { selected: true } }}
-                            theme={{
-                                todayTextColor: colors.primary,
-                                selectedDayTextColor: 'white',
-                                selectedDayBackgroundColor: colors.primary,
-                                arrowColor: colors.primary
-                            }}
-
-                        />
-                    </View>
-                    {this.props.eventsV2.eventsFromDate(this.state.selected) && this.props.eventsV2.eventsFromDate(this.state.selected).length === 0 &&
-                        <BlurView blurType="light" style={{ margin: 10, borderRadius: 3 }}>
-                            <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
-                        </BlurView>
-                    }
-                    <Timeline
-                        data={this.props.eventsV2.eventsFromDate(this.state.selected).slice() || []}
-                        enableEmptySections={true}
-                        innerCircle={'dot'}
-                        circleColor={colors.primaryDark}
-                        lineColor={colors.primary}
-                        timeContainerStyle={{ minWidth: 52, marginTop: -2, height: '100%' }}
-                        timeStyle={{ textAlign: 'center', backgroundColor: colors.primary, color: 'white', padding: 4, borderRadius: 5 }}
-                        renderDetail={this._renderDetail}
-                        detailContainerStyle={{ borderRadius: 3 }}
-                        separator={false}
-                        options={{
-                            style: { padding: 10, minHeight: '100%' },
-                            renderHeader: () => <View style={{ height: 20 }} />,
-                            removeClippedSubviews: false
-                        }}
+                    )} 
+                    data={['0']}
+                    keyExtractor={() => 1}
                     />
-
-                </ScrollView>
                 <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
                     <TouchableOpacity
                         onPress={() => { this.props.navigation.goBack() }}

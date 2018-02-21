@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { StatusBar, View, Text, Dimensions, ScrollView, TouchableOpacity, Animated } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
@@ -56,6 +56,7 @@ export default class EventDetails extends Component {
         // })
         return (
             <View style={{ flex: 1 }} key={i++}>
+                <StatusBar translucent backgroundColor='rgba(0,0,0,0)' />
                 <ScrollView
                     onScroll={this.onScroll}
                     style={{ flex: 1, paddingTop: 50, paddingHorizontal: 10, paddingBottom: 50 }}

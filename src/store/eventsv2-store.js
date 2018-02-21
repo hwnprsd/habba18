@@ -42,6 +42,7 @@ class EventStore {
             this.bak = this.mainList;
         } catch (e) {
             this.isFetching = false;
+            this.error.present = true;
             console.log(e.message);
         }
     }

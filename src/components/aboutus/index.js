@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, Dimensions, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
 import { BlurView } from 'react-native-blur';
 
@@ -39,6 +39,7 @@ export default class AboutUs extends Component {
     render() {
         return (
             <ImageBackground source={BG} style={{ height: '100%', width: '100%' }}>
+                <StatusBar barStyle="light-content" />
 
                 <Carousel
                     ref={(c) => { this._carousel = c; }}
@@ -57,7 +58,7 @@ export default class AboutUs extends Component {
                     itemWidth={containerWidth}
                 />
                 <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
-                    
+
                     <TouchableOpacity
                         onPress={() => { this.props.navigation.goBack() }}
                         style={{ flex: 1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'center' }}>
@@ -65,8 +66,8 @@ export default class AboutUs extends Component {
                             <Icon name='ios-arrow-back' style={{ color: 'white', fontSize: 25 }} />
                         </View>
                     </TouchableOpacity>
-                    <View style={{flex: 5}} />
-                    <View style={{flex: 1}} />
+                    <View style={{ flex: 5 }} />
+                    <View style={{ flex: 1 }} />
                 </View>
             </ImageBackground>
         )
