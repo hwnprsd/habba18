@@ -7,23 +7,24 @@ import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
 import { VibrancyView } from 'react-native-blur';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ClusteredMapView from 'react-native-maps-super-cluster'
 
 // import styles from './styles';
 
 const { width } = Dimensions.get('window');
 @inject('mapsStore') @observer
 export default class Maps extends Component {
+
   onSnap = i => {
     this.props.mapsStore.setCategory({
       name: this.props.mapsStore.categoryList[i].name,
       index: i
     });
-    this.props.mapsStore.eventsList.filter(l => l.lat !== "" && l.lang !== "").forEach((l, i) => {
-      this.setState({
-        lat: l.lat,
-        lang: l.lang
-      })
+    let arr = this.props.mapsStore.eventsList.filter(l => l.lat !== "" && l.lang !== "").map((l, i) => {
+      console.log(i)
+        return `${i}`
     })
+    setTimeout(() => this.map.fitToElements(true), 10);
   }
   state = {
     lat: 13.085055,
@@ -34,6 +35,7 @@ export default class Maps extends Component {
       <View style={{ flex: 1 }}>
         <StatusBar barStyle="light-content" />
         <MapView
+          ref={r => {this.map = r}}
           style={{ flex: 1 }}
           region={{
             latitude: this.state.lat,
@@ -50,7 +52,7 @@ export default class Maps extends Component {
         >
           {this.props.mapsStore.eventsList.filter(l => l.lat !== "" && l.lang !== "").map((l, i) => {
             return (
-              <Marker key={i} coordinate={{ latitude: parseFloat(l.lat), longitude: parseFloat(l.lang) }} style={{ width: 100, height: 100 }}>
+              <Marker identifier={`${i}`} key={i} coordinate={{ latitude: parseFloat(l.lat), longitude: parseFloat(l.lang) }} style={{ width: 100, height: 100 }}>
                 <View style={{ backgroundColor: 'white', borderRadius: 3, padding: 5 }}>
                   <Text style={{ fontSize: 10, }}>{l.name}</Text>
                 </View>
@@ -86,5 +88,8 @@ export default class Maps extends Component {
   }
   componentWillMount() {
     this.props.mapsStore.fetchLocations();
+  }
+  componentDidMount() {
+    setTimeout(() => this.map.fitToElements(true), 1000);
   }
 }
