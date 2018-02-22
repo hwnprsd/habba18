@@ -109,7 +109,6 @@ export default class EventList extends Component {
                 <StatusBar barStyle="light-content" />
                 <View style={{ position: 'absolute', bottom: 0, height: '100%', width: '100%', flex: 1 }} >
                     <Carousel
-                        layout="stack"
                         ref={(c) => { this._carousel = c; }}
                         layoutCardOffset={20}
                         style={{ height: '100%' }}

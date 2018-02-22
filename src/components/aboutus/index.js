@@ -21,42 +21,6 @@ const { width, height } = Dimensions.get('window');
 const containerWidth = width / 1.1;
 const aboutUs = `
 
-     About
-
-    ￼
-
-    " Nurturing Aspirations Supporting Growth "
-
-    The Sanskrit word "Acharya", which means "TEACHER", epitomizes the quintessential values of our institution, where traditional respect for teachers is of paramount importance. At our 28th year, we at Acharya Institutes, Bangalore are proud to be the choice of students from around the world.
-
-    Growing Stature of Acharya
-
-     120 acres of WiFi Campus
-     13 Educational Institutions
-     15 research centers
-     Nearly 100 programs in over 50 Academic Streams
-     Over 12,000 students for 70 countries
-     1000+ teaching, technical and administration staff
-     Affiliated to VTU, BU, RGUHS and KSLU
-     Approved by AICTE, Council of Architecture, KSNC, INC, NCTE, PCI and Bar Council of India
-     NBA, NAAC accredited
-     Technical and Academic association with leading industry and corporate
-     Collaboration with many academic and research organizations
-
-    We are –
-    A student centric campus that attracts over 4000 aspiring youth each year from across the globe.
-    We have –
-    An atmosphere of academic excellence that draws best teaching faculty into it
-    We instill –
-    Time tested values in grooming youth into responsible human beings
-    We create –
-    An encouraging and competitive environment that enables academic growth 
-
-    Our Motto
-    "Nurturing Aspirations Supporting Growth"
-
-    Our Vision
-    "Acharya Institutes, Committed to the cause of value-based education in all disciplines, envisions itself as a fountainhead of innovative human enterprise, with inspirational initiatives for Academic Excellence"
 `;
 const aboutHabba = `
 Acharya Habba is the annual techno-cultural fest organised by Acharya Institutes, Bangalore. Spanning over a duration of a month, it draws about 25,000+ students from more than 300 colleges across Karnataka
@@ -73,7 +37,36 @@ export default class AboutUs extends Component {
                         <Text style={styles.heading}>About Acharya</Text>
                         <BlurView blurType="light" style={styles.card}>
                             <Text style={styles.text}>
-                                {aboutUs}
+                            <Text style={styles.b}>" Nurturing Aspirations Supporting Growth "</Text>
+{'\n'}{'\n'}
+The Sanskrit word "Acharya", which means "TEACHER", epitomizes the quintessential values of our institution, where traditional respect for teachers is of paramount importance. At our 28th year, we at Acharya Institutes, Bangalore are proud to be the choice of students from around the world.
+
+{'\n'}{'\n'}<Text style={styles.b}>Growing Stature of Acharya</Text>{'\n'}{'\n'}
+
+    120 acres of WiFi Campus{'\n'}
+    13 Educational Institutions{'\n'}
+    15 research centers{'\n'}
+    Nearly 100 programs in over 50 Academic Streams{'\n'}
+    Over 12,000 students for 70 countries{'\n'}
+    1000+ teaching, technical and administration staff{'\n'}
+    Affiliated to VTU, BU, RGUHS and KSLU{'\n'}
+    Approved by AICTE, Council of Architecture, KSNC, INC, NCTE, PCI and Bar Council of India
+    NBA, NAAC accredited{'\n'}
+    Technical and Academic association with leading industry and corporate{'\n'}
+    Collaboration with many academic and research organizations {'\n'}{'\n'}
+
+<Text style={styles.b}>We are –</Text>{'\n'}
+A student centric campus that attracts over 4000 aspiring youth each year from across the globe.{'\n'}{'\n'}
+<Text style={styles.b}>We have –</Text>{'\n'}
+An atmosphere of academic excellence that draws best teaching faculty into it{'\n'}{'\n'}
+<Text style={styles.b}>We instill –</Text>{'\n'}
+Time tested values in grooming youth into responsible human beings{'\n'}{'\n'}
+<Text style={styles.b}>We create –</Text>{'\n'}
+An encouraging and competitive environment that enables academic growth{'\n'}{'\n'}
+<Text style={styles.b}>Our Motto -</Text>{'\n'}
+"Nurturing Aspirations Supporting Growth"{'\n'}{'\n'}
+<Text style={styles.b}>Our Vision -</Text>{'\n'}
+"Acharya Institutes, Committed to the cause of value-based education in all disciplines, envisions itself as a fountainhead of innovative human enterprise, with inspirational initiatives for Academic Excellence"
                             </Text>
                         </BlurView>
                     </View>

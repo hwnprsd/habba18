@@ -22,9 +22,10 @@ export default class Maps extends Component {
     });
     let arr = this.props.mapsStore.eventsList.filter(l => l.lat !== "" && l.lang !== "").map((l, i) => {
       console.log(i)
-        return `${i}`
+      return `${i}`
     })
-    setTimeout(() => this.map.fitToElements(true), 10);
+    if (arr.length !== 0)
+      setTimeout(() => this.map.fitToElements(true), 10);
   }
   state = {
     lat: 13.085055,
@@ -35,7 +36,7 @@ export default class Maps extends Component {
       <View style={{ flex: 1 }}>
         <StatusBar barStyle="light-content" />
         <MapView
-          ref={r => {this.map = r}}
+          ref={r => { this.map = r }}
           style={{ flex: 1 }}
           region={{
             latitude: this.state.lat,
@@ -69,7 +70,7 @@ export default class Maps extends Component {
             renderItem={({ item }) => {
               console.log(item.image);
               return (
-                <View style={{  flex: 1, width: width / 2, height: 120, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 1, width: width / 2, height: 120, backgroundColor: 'white', justifyContent: 'center', alignItems: 'center' }}>
                   <FastImage source={{ uri: item.url }} style={{ width: width / 2, height: 120 }} resizeMode="cover" />
                   <Text style={{ fontSize: 15, position: 'absolute' }}>
                     {item.name}
@@ -83,6 +84,9 @@ export default class Maps extends Component {
             itemWidth={width / 2}
           />
         </View>
+        <Text style={{position: 'absolute', bottom: 0, textAlign: 'center', color: 'white', fontSize: 10, alignSelf: 'center'}}>
+            Swipe to view the location of different events
+        </Text>
       </View>
     )
   }

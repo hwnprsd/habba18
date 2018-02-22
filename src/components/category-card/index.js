@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions, Linking } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import FitImage from 'react-native-fit-image';
 import ElevatedView from 'react-native-elevated-view';
@@ -21,8 +21,13 @@ export default class EventCard extends Component {
     }
     _onCardPress = () => {
         const { index, item } = this.props;
-        this.props.setIndex({ index: index, name: item.name });
-        this.props.navigate('EventList', { categoryName: item.name, url: item.url });
+        if (item.name === 'Dance') {
+            Linking.openURL('http://dancetranceindia.com/')
+        }
+        else {
+            this.props.setIndex({ index: index, name: item.name });
+            this.props.navigate('EventList', { categoryName: item.name, url: item.url });
+        }
     }
     render() {
         const { width, height } = this.state;

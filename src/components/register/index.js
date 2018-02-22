@@ -17,8 +17,8 @@ import MaterialsIcon from 'react-native-vector-icons/MaterialIcons';
 import { Button } from 'react-native-elements'
 import { inject, observer } from 'mobx-react/native';
 import { Sae } from 'react-native-textinput-effects';
-import { Dropdown } from 'react-native-material-dropdown';
 import Icon from 'react-native-vector-icons/Ionicons';
+import DropdownAlert from 'react-native-dropdownalert';
 
 import BG from '../../images/xbg1.jpg'
 import Loading from '../loading';
@@ -66,15 +66,28 @@ export default class Register extends Component {
                 this.props.eventsV2.setEventIndex(buttonIndex);
             })
     };
+    onClose = () => {
+        this.props.eventsV2.setPostMessage('')
+    }
+    dropdown = {alertWithType: () => 1}
+    onMessage = () => {
+        const { eventIndex, eventsList, postMessage, setPostMessage } = this.props.eventsV2;
+        if (postMessage !== '') {
+            this.dropdown.alertWithType('info', 'Alert', postMessage);
+            setPostMessage('')
+        }
+    }
     _onRegisterPress = (amount, eventName) => {
         const { userName, userEmail, userMobile, collegeName } = this.state;
+        const { eventIndex, eventsList, postMessage, setPostMessage } = this.props.eventsV2;
         this.props.eventsV2.setUserDetails({
             userName,
             userEmail,
             userMobile,
             collegeName
         });
-        // this.props.eventsV2.register({})
+        this.props.eventsV2.registerForEvent(eventsList[eventIndex].name);
+
     }
     onScroll = Animated.event([{
         nativeEvent: {
@@ -86,9 +99,11 @@ export default class Register extends Component {
     render() {
         const inpColor = '#616161';
         const iconColor = '#424242';
-        const { isFetching } = this.props.eventsV2;
+        const { isFetching, postMessage } = this.props.eventsV2;
         if (isFetching)
             return <Loading />
+        if (postMessage !== '')
+            this.onMessage()
         const interpolatedValue = this._animatedValue.interpolate({
             inputRange: [0, 20, 50],
             outputRange: [0, 0, 1],
@@ -236,6 +251,7 @@ export default class Register extends Component {
                         <View style={{ flex: 1 }} />
                     </BlurView>
                 </Animated.View>
+                <DropdownAlert ref={ref => this.dropdown = ref} onClose={data => this.onClose(data)} />
             </ImageBackground >
         )
     }

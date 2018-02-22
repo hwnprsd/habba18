@@ -45,7 +45,7 @@ export default StyleSheet.create({
     },
     text: {
         fontFamily: fonts.latoRegular,
-        fontSize: 12,
+        fontSize: 13,
         color: inpColor,
         marginBottom: 50
     },
@@ -60,6 +60,9 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 26,
         fontFamily: fonts.latoRegular
+    },
+    b: {
+        fontFamily: fonts.latoBold
     }
 
 })

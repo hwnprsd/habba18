@@ -1,7 +1,5 @@
 import { Dimensions } from 'react-native';
-import BackgroundImage from './images/bg.jpg';
 
-export const backgroundImage = BackgroundImage;
 
 export const fonts = {
     ubuntuLight: "Ubuntu-Light",
@@ -13,6 +11,6 @@ export const fonts = {
 
 export const colors = {
     primaryDark: "#512da8",
-    primary: "#7e57c2"
+    primary: "#4ecdc4"
 }
 

@@ -3,6 +3,7 @@ import { AsyncStorage as storage } from 'react-native';
 import { colors } from '../constants';
 import { create, persist } from 'mobx-persist';
 import axios from 'axios';
+var qs = require('qs')
 
 const EVENTSV2 = 'http://acharyahabba.in/habba18/json.php';
 const VERSION_API = 'http://acharyahabba.in/habba18/dbchange.php';
@@ -27,9 +28,14 @@ class EventStore {
         userMobile: '',
         collegeName: ''
     }
+    @observable postMessage = '';
+    @observable isPosting = false;
     @action setUserDetails = u => { this.userDetails = { ...u } }
     @computed get _userDetails() {
         return this.userDetails
+    }
+    @action setPostMessage = pm => {
+        this.postMessage = pm;
     }
     @action fetchAllEvents = async () => {
         console.log('-----FETCHING-----')
@@ -132,6 +138,30 @@ class EventStore {
     @computed get selectedEventIndex() {
         return parseInt(this.eventIndex)
     }
+
+    @action registerForEvent = async (eventName) => {
+            this.isPosting = true;
+        const { userName, userEmail, userMobile, collegeName } = this.userDetails;
+        const details = {
+            name: userName,
+            clg: collegeName,
+            num: userMobile,
+            email: userEmail,
+            sub: eventName
+        }
+        if(userName === '')
+            return
+        try {
+            console.log('asdadads', qs.stringify(details))
+            const x = await axios.post('http://acharyahabba.in/habba18/register.php', qs.stringify(details))
+            this.isPosting = false;
+            this.postMessage = x.data;
+        } catch (e) {
+            console.log(e.message, 'ERRRRo')
+            didPostingFail = true;
+            this.isPosting = false;
+        }
+    }
 }
 
 const hydrate = create({ storage })
@@ -142,3 +172,4 @@ hydrate('EventStoreV2', eventsStore).then(() => { console.log('Event Store Hydra
 
 eventsStore.fetchVersion();
 
+eventsStore.registerForEvent({})

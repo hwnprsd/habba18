@@ -19,10 +19,16 @@ import { observer, inject } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
 import Swiper from 'react-native-swiper';
 import LottieView from 'lottie-react-native';
+import FastImage from 'react-native-fast-image'
+import {
+    AppTour,
+    AppTourSequence,
+    AppTourView
+} from "react-native-material-showcase-ios";
 
-import { fonts, backgroundImage } from '../../constants';
+import { fonts } from '../../constants';
+import BG from '../../images/xbg1.jpg';
 import AppIntro from '../app-intro';
-import BG from '../../images/xred.jpg';
 import HabbaGif from './256-No-Dither.gif';
 import RightArrow from '../../utils/right.json'
 import styles from './styles';
@@ -55,6 +61,10 @@ export default class ResideMenu extends Component {
         width: Dimensions.get("window").width,
         modalVisible: false
     }
+    constructor() {
+        super();
+    }
+    appTourTargets = []
     handler = dims => this.setState(dims.window);
     List = () => {
         const { width, height } = this.state;
@@ -82,7 +92,6 @@ export default class ResideMenu extends Component {
                                 <Item text="Notifications" right nav="Notification" />
                                 <Item text="About us" right nav="AboutUs" />
                                 <Item text="Devs" nav="Dev" right />
-                                <Item text="Logout" right />
                             </View>
 
                         </View>
@@ -140,17 +149,25 @@ export default class ResideMenu extends Component {
                         showsPagination={false}
                         onIndexChanged={i => this.setState({ currIndex: i })}
                     >
-                        {['red', 'black', 'blue', 'green'].map((i, x) => {
+                        {[1, 2, 3, 4].map((i, x) => {
                             return (
-                                <View key={x} style={{ width: '100%', height: '100%', backgroundColor: i, }} />
+                                <FastImage source={{ uri: `http://acharyahabba.in/habba18/images/slider${i}.jpg` }} key={x} style={{ width: '100%', height: '100%', }} resizeMode="cover" />
                             )
                         })}
                     </Swiper>
                     <Image source={HabbaGif} style={{ width: '100%', height: '50%', position: 'absolute' }} />
                     <View style={{ position: 'absolute', right: 0 }}>
                         <LottieView
-                            ref={animation => {
-                                this.rightAnim = animation;
+                            ref={ref => {
+                                this.rightAnim = ref;
+                                this.appTourTargets.push((AppTourView.for(
+                                    ref,
+                                    {
+                                        primaryText: "Open the Menu!",
+                                        secondaryText:
+                                            "Click on this half of the screen to push the menu to the left!"
+                                    }
+                                )))
                             }}
                             source={RightArrow}
                             style={{ height: 25, width: 35 }}
@@ -159,8 +176,16 @@ export default class ResideMenu extends Component {
                     </View>
                     <View style={{ position: 'absolute', left: 0, transform: [{ rotate: '180deg' }] }}>
                         <LottieView
-                            ref={animation => {
-                                this.leftAnim = animation;
+                            ref={ref => {
+                                this.leftAnim = ref;
+                                // this.appTourTargets.push((AppTourView.for(
+                                //     ref,
+                                //     {
+                                //         primaryText: "Open the Menu!",
+                                //         secondaryText:
+                                //             "Click on this half of the screen to push the menu to the right!"
+                                //     }
+                                // )))
                             }}
                             source={RightArrow}
                             style={{ height: 25, width: 35 }}
@@ -174,7 +199,11 @@ export default class ResideMenu extends Component {
                     onRequestClose={() => { this.setState({ modalVisible: false }) }}
                     animationType="fade"
                 >
-                    <AppIntro close={() => { this.setState({ modalVisible: false }) }} />
+                    <AppIntro 
+                        close={() => {this.setState({ modalVisible: false }); }}
+                        umount={this.tapToView}
+
+                     />
                 </Modal>
             </View>
         )
@@ -222,66 +251,84 @@ export default class ResideMenu extends Component {
         });
         return resideState;
     }
-    componentWillMount = async () => {
-        Dimensions.addEventListener("change", this.handler);
-        navigate = this.props.navigation.navigate
-        this.animatedValue = new Animated.ValueXY();
-        this.animatedValue.x.addListener(v => { this.state.animatedValueX = v.value });
-        this._panResponder = PanResponder.create({
-            // Ask to be the responder:
-            onStartShouldSetPanResponder: (evt, gestureState) => true,
-            onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-            onMoveShouldSetPanResponder: (evt, gestureState) => true,
-            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-
-            onPanResponderGrant: (evt, gestureState) => {
-                this.animatedValue.setOffset({ x: this.state.animatedValueX });
-                this.animatedValue.setValue({ x: 0, y: 0 }); //Initial value
-            },
-            onPanResponderMove: Animated.event([
-                null,
-                { dx: this.animatedValue.x, vx: this.state.animatedVelocity }
-            ]),
-            onPanResponderTerminationRequest: (evt, gestureState) => true,
-            onPanResponderRelease: (evt, gestureState) => {
-                Animated.sequence([
-                    // Animated.decay(this.animatedValue.x, {
-                    //     velocity:  gestureState.vx, // velocity from gesture release
-                    //     deceleration: 0.997,
-                    //     useNativeDriver: true
-                    // }),
-                    Animated.spring(this.animatedValue.x, {
-                        velocity: gestureState.vx,
-                        overshootClamping: true,
-                        toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx), parseFloat(gestureState.x0)),
-                        useNativeDriver: true,
-                        easing: Easing.linear
-                    })
-                ]).start()
-                this.animatedValue.flattenOffset();
-            },
-            onPanResponderTerminate: (evt, gestureState) => {
-            },
-            onShouldBlockNativeResponder: (evt, gestureState) => {
-                return true;
-            },
+tapToView  = () => {
+    setTimeout(() => {
+        let appTourSequence = new AppTourSequence();
+        this.appTourTargets.forEach(appTourTarget => {
+            appTourSequence.add(appTourTarget);
         });
-    };
-    componentWillUnmount() {
-        Dimensions.removeEventListener("change", this.handler);
-        this.animatedValue.x.removeAllListeners();
+
+        // AppTour.ShowSequence(appTourSequence);
+    }, 2000);
+}
+componentWillMount = async () => {
+    Dimensions.addEventListener("change", this.handler);
+    navigate = this.props.navigation.navigate
+    this.animatedValue = new Animated.ValueXY();
+    this.animatedValue.x.addListener(v => { this.state.animatedValueX = v.value });
+    this._panResponder = PanResponder.create({
+        // Ask to be the responder:
+        onStartShouldSetPanResponder: (evt, gestureState) => true,
+        onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+        onMoveShouldSetPanResponder: (evt, gestureState) => true,
+        onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+
+        onPanResponderGrant: (evt, gestureState) => {
+            this.animatedValue.setOffset({ x: this.state.animatedValueX });
+            this.animatedValue.setValue({ x: 0, y: 0 }); //Initial value
+        },
+        onPanResponderMove: Animated.event([
+            null,
+            { dx: this.animatedValue.x, vx: this.state.animatedVelocity }
+        ]),
+        onPanResponderTerminationRequest: (evt, gestureState) => true,
+        onPanResponderRelease: (evt, gestureState) => {
+            Animated.sequence([
+                // Animated.decay(this.animatedValue.x, {
+                //     velocity:  gestureState.vx, // velocity from gesture release
+                //     deceleration: 0.997,
+                //     useNativeDriver: true
+                // }),
+                Animated.spring(this.animatedValue.x, {
+                    velocity: gestureState.vx,
+                    overshootClamping: true,
+                    toValue: this._stateHelper(parseInt(this.state.animatedValueX), parseFloat(gestureState.vx), parseFloat(gestureState.x0)),
+                    useNativeDriver: true,
+                    easing: Easing.linear
+                })
+            ]).start()
+            this.animatedValue.flattenOffset();
+        },
+        onPanResponderTerminate: (evt, gestureState) => {
+        },
+        onShouldBlockNativeResponder: (evt, gestureState) => {
+            return true;
+        },
+    });
+};
+componentWillUnmount() {
+    Dimensions.removeEventListener("change", this.handler);
+    this.animatedValue.x.removeAllListeners();
+}
+componentDidMount = async () => {
+    this.rightAnim.play()
+    this.leftAnim.play();
+    const intro = await AsyncStorage.getItem('appIntrox');
+    if (!intro) {
+        this.setState({
+            modalVisible: true
+        })
     }
-    componentDidMount = async () => {
-        this.rightAnim.play()
-        this.leftAnim.play();
-        const intro = await AsyncStorage.getItem('appIntro');
-        if (!intro) {
-            this.setState({
-                modalVisible: true
-            })
-        }
-        // this.setState({
-        //     modalVisible: true
-        // })
-    }
+    setTimeout(() => {
+        let appTourSequence = new AppTourSequence();
+        this.appTourTargets.forEach(appTourTarget => {
+            appTourSequence.add(appTourTarget);
+        });
+
+        // AppTour.ShowSequence(appTourSequence);
+    }, 1000);
+    // this.setState({
+    //     modalVisible: true
+    // })
+}
 }

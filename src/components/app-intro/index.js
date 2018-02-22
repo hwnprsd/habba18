@@ -58,22 +58,22 @@ _renderItem = props => (
 const slides = [
     {
         key: 'somethun',
-        title: 'Quick setup, good defaults',
-        text: 'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
+        title: 'Main Menu',
+        text: `Swipe left to open Events/Register menu${'\n'}Swipe right to open Misc menu`,
         image: require('../../images/intro1ios.gif'),
         colors: ['#63E2FF', '#B066FE'],
     },
     {
         key: 'somethun1',
-        title: 'Super customizable',
-        text: 'The component is also super customizable, so you can adapt it to cover your needs and wants.',
-        image: require('../../images/intro2ios.gif'),
+        title: 'Event Categories',
+        text: 'Swipe left/right to navigate through main categories',
+        image: require('../../images/intro2ios2.gif'),
         colors: ['#A3A1FF', '#3A3897'],
     },
     {
         key: 'somethun2',
-        title: 'No need to buy me beer',
-        text: 'Usage is all free',
+        title: 'Event Details',
+        text: 'Swipe left/right to navigate events. Scroll down to Register',
         image: require('../../images/intro3ios.gif'),
         colors: ['#29ABE2', '#4F00BC'],
     },
@@ -111,11 +111,14 @@ export default class extends Component {
                 renderDoneButton={this._renderDoneButton}
                 renderNextButton={this._renderNextButton}
                 renderItem={_renderItem}
-                onDone={() => {this.props.close()}}
+                onDone={this.props.close}
             />
         );
     }
     componentDidMount = async () => {
         await AsyncStorage.setItem('appIntro', 'yes')
+    }
+    componentWillUnmount() {
+        this.props.umount()
     }
 }
