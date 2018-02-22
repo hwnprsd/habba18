@@ -11,7 +11,9 @@ import {
     Dimensions,
     StatusBar,
     Easing,
-    Image
+    Image,
+    AsyncStorage,
+    Modal
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
@@ -19,6 +21,7 @@ import Swiper from 'react-native-swiper';
 import LottieView from 'lottie-react-native';
 
 import { fonts, backgroundImage } from '../../constants';
+import AppIntro from '../app-intro';
 import BG from '../../images/xred.jpg';
 import HabbaGif from './256-No-Dither.gif';
 import RightArrow from '../../utils/right.json'
@@ -49,7 +52,8 @@ export default class ResideMenu extends Component {
         animatedVelocity: 0,
         resideState: 0,
         height: Dimensions.get("window").height,
-        width: Dimensions.get("window").width
+        width: Dimensions.get("window").width,
+        modalVisible: false
     }
     handler = dims => this.setState(dims.window);
     List = () => {
@@ -118,7 +122,7 @@ export default class ResideMenu extends Component {
 
         return (
             <View style={{ flex: 1, flexDirection: 'row' }}>
-                <StatusBar barStyle="light-content"/>
+                <StatusBar barStyle="light-content" />
                 <View style={{ flex: 1, backgroundColor: '#e2e1e0' }}>
                     <this.List />
                 </View>
@@ -153,7 +157,7 @@ export default class ResideMenu extends Component {
                             loop
                         />
                     </View>
-                    <View style={{ position: 'absolute', left: 0, transform: [{ rotate: '180deg'}] }}>
+                    <View style={{ position: 'absolute', left: 0, transform: [{ rotate: '180deg' }] }}>
                         <LottieView
                             ref={animation => {
                                 this.leftAnim = animation;
@@ -164,6 +168,14 @@ export default class ResideMenu extends Component {
                         />
                     </View>
                 </Animated.View>
+                <Modal
+                    visible={this.state.modalVisible}
+                    animationType={'slide'}
+                    onRequestClose={() => { this.setState({ modalVisible: false }) }}
+                    animationType="fade"
+                >
+                    <AppIntro close={() => { this.setState({ modalVisible: false }) }} />
+                </Modal>
             </View>
         )
     }
@@ -193,9 +205,9 @@ export default class ResideMenu extends Component {
         }
         if (v === 0) {
             if (this.state.resideState === 0) {
-                if(g > 170)
+                if (g > 170)
                     return -300;
-                else 
+                else
                     return 300
             }
             else
@@ -210,7 +222,7 @@ export default class ResideMenu extends Component {
         });
         return resideState;
     }
-    componentWillMount = () => {
+    componentWillMount = async () => {
         Dimensions.addEventListener("change", this.handler);
         navigate = this.props.navigation.navigate
         this.animatedValue = new Animated.ValueXY();
@@ -259,8 +271,17 @@ export default class ResideMenu extends Component {
         Dimensions.removeEventListener("change", this.handler);
         this.animatedValue.x.removeAllListeners();
     }
-    componentDidMount() {
+    componentDidMount = async () => {
         this.rightAnim.play()
-        this.leftAnim.play()
+        this.leftAnim.play();
+        const intro = await AsyncStorage.getItem('appIntro');
+        if (!intro) {
+            this.setState({
+                modalVisible: true
+            })
+        }
+        // this.setState({
+        //     modalVisible: true
+        // })
     }
 }

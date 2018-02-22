@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { AsyncStorage } from 'react-native';
 import CategoryList from './components/category-list';
 import EventList from './components/event-list';
 import EventDetail from './components/event-detail';
@@ -13,7 +14,7 @@ import Dev from './components/dev'
 import AboutUs from './components/aboutus';
 import { StackNavigator } from 'react-navigation';
 
-const MainStack = StackNavigator({
+const routes = {
     ResideMenu: { screen: ResideMenu },
     Feed: { screen: Feed },
     Timeline: { screen: Timeline },
@@ -26,12 +27,15 @@ const MainStack = StackNavigator({
     Notification: { screen: Notification },
     Dev: { screen: Dev },
     AboutUs: { screen: AboutUs }
-}, {
-        headerMode: 'none'
-    })
+}
+
+const Stack = StackNavigator(routes, {
+    headerMode: 'none',
+    initialRouteName: 'ResideMenu',
+});
 
 export default class App extends Component {
     render() {
-        return <MainStack />
+        return <Stack />
     }
 }

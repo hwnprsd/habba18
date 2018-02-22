@@ -14,6 +14,7 @@ class FeedStore {
     @action fetchFeed = async () => {
         this.feedList = [];
         this.isFeedFetching = true;
+        this.errorPresent = false;
         try {
             const P1 = axios.get(FEED_API);
             const res = await Promise.resolve(P1);
