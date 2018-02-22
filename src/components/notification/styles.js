@@ -36,7 +36,7 @@ export default StyleSheet.create({
     },
 
     textName: {
-        fontSize: 18,
+        fontSize: 15,
         color: textColor,
         fontFamily: fonts.latoRegular
     },

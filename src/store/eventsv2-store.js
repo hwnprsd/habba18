@@ -61,7 +61,7 @@ class EventStore {
             }
             else {
                 const ver = await JSON.parse(cachedVersion);
-                if (this.versionArr[0].version !== ver[0].version || this.versionArr[2].version !== ver[2].version) {
+                if (this.versionArr[0].version !== ver[0].version || this.versionArr[1].version !== ver[1].version) {
                     await storage.setItem('APIVersion', JSON.stringify(this.versionArr));
                     this.fetchAllEvents();
                 }

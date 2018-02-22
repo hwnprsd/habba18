@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
 import FastImage from 'react-native-fast-image';
-import ViewMoreText from 'react-native-view-more-text';
 import Swiper from 'react-native-swiper';
 import openMap from 'react-native-open-maps';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -31,16 +30,7 @@ export default class EventDetails extends Component {
         // Important to stop updating state after unmount
         Dimensions.removeEventListener("change", this.handler);
     }
-    renderViewMore(onPress) {
-        return (
-            <Text style={styles.readMore} onPress={onPress}>View more</Text>
-        )
-    }
-    renderViewLess(onPress) {
-        return (
-            <Text style={styles.readMore} onPress={onPress}>View less</Text>
-        )
-    }
+
     _onRegisterPress = () => {
         this.props.eventsV2.setEventIndex(this.state.currIndex);
         this.props.closeModal();
@@ -71,25 +61,15 @@ export default class EventDetails extends Component {
                     <BlurView style={[styles.card]} blurType="light" >
                         <View style={styles.contain}>
                             <Text style={styles.titleText}>Description</Text>
-                            <ViewMoreText
-                                numberOfLines={4}
-                                renderViewMore={this.renderViewMore}
-                                renderViewLess={this.renderViewLess}
-                            >
+          
                                 <Text style={styles.contentText}>{description || ''}</Text>
-                            </ViewMoreText>
                         </View>
                         {/* </BlurView> */}
                         {/* <BlurView blurType="light" style={styles.card} > */}
                         <View style={styles.contain}>
                             <Text style={styles.titleText}>Rules & Regulations</Text>
-                            <ViewMoreText
-                                numberOfLines={4}
-                                renderViewMore={this.renderViewMore}
-                                renderViewLess={this.renderViewLess}
-                            >
+                           
                                 <Text style={styles.contentText}>{rules || ''}</Text>
-                            </ViewMoreText>
                         </View>
                         {/* </BlurView> */}
                         {/* <BlurView style={styles.card} blurType="light"> */}

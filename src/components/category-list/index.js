@@ -75,12 +75,12 @@ function stackAnimatedStyles(index, animatedValue, carouselProps) {
     };
 }
 
-@inject('eventsV2', 'appStore') @observer
+@inject('eventsV2') @observer
 export default class EventList extends Component {
 
     state = Dimensions.get("window");
     handler = dims => this.setState(dims.window);
-    
+
 
     componentWillMount() {
         Dimensions.addEventListener("change", this.handler);
@@ -94,10 +94,6 @@ export default class EventList extends Component {
     render() {
         const { width, height } = this.state;
         const { categoryList, isFetching, setCategory, error } = this.props.eventsV2;
-        const { isShown } = this.props.appStore;
-        if(isShown) {
-            this.props.navigation.navigate('AppIntro')
-        }
         if (isFetching)
             return (
                 <Loading />
@@ -111,13 +107,15 @@ export default class EventList extends Component {
         return (
             <ImageBackground source={BG} style={{ width, flex: 1 }}>
                 <StatusBar barStyle="light-content" />
-                <View style={{ height: '100%' }} >
+                <View style={{ position: 'absolute', bottom: 0, height: '100%', width: '100%', flex: 1 }} >
                     <Carousel
+                        layout="stack"
                         ref={(c) => { this._carousel = c; }}
                         layoutCardOffset={20}
                         style={{ height: '100%' }}
                         containerCustomStyle={{ height: '100%' }}
                         data={categoryList}
+                        hasParallaxImages={true}
                         // scrollInterpolator={stackScrollInterpolator}
                         // slideInterpolatedStyle={stackAnimatedStyles}
                         // useScrollView={true}

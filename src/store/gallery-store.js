@@ -3,7 +3,7 @@ import { persist, create } from 'mobx-persist';
 import { AsyncStorage as storage } from 'react-native';
 import axios from 'axios';
 
-const GALLERY_API = "http://acharyahabba.in/habba18/gallery.json";
+const GALLERY_API = "http://acharyahabba.in/habba18/gallery.php";
 
 class GalleryStore {
     @persist('list') @observable galleryList = [];

@@ -8,6 +8,7 @@ import { inject, observer } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Loading from '../loading';
+import Error from '../error';
 import styles from './styles';
 import BG from '../../images/xbg1.jpg'
 
@@ -20,7 +21,7 @@ export default class Notifs extends Component {
             <BlurView blurType='light' style={[styles.elevatedCard, { flex: 1 }]} >
                 <View style={{ padding: 10 }}>
                     <Text style={[styles.textName]}>
-                        {item.name}
+                        {item.title}
                     </Text>
                     <Text style={[styles.textMessage]}>
                         {item.message}

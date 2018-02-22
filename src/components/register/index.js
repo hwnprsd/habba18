@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { StatusBar, View, Text, ScrollView, ActionSheetIOS, TouchableOpacity, ImageBackground, Animated } from 'react-native';
+import {
+    StatusBar,
+    View,
+    Text,
+    ScrollView,
+    ActionSheetIOS,
+    TouchableOpacity,
+    ImageBackground,
+    Animated,
+    FlatList
+} from 'react-native';
 import { BlurView } from 'react-native-blur';
 import ElevatedView from 'react-native-elevated-view';
 import LinearGradient from 'react-native-linear-gradient';
@@ -80,7 +90,7 @@ export default class Register extends Component {
         if (isFetching)
             return <Loading />
         const interpolatedValue = this._animatedValue.interpolate({
-            inputRange: [0, 20, 30],
+            inputRange: [0, 20, 50],
             outputRange: [0, 0, 1],
             extrapolate: 'clamp'
         })
@@ -95,101 +105,107 @@ export default class Register extends Component {
             <ImageBackground style={{ flex: 1, width: '100%', height: '100%' }} source={BG}>
 
                 <StatusBar barStyle="light-content" />
-                <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView} onScroll={this.onScroll}>
+                <FlatList showsVerticalScrollIndicator={false} style={styles.scrollView} onScroll={this.onScroll}
+                    data={[1]}
+                    keyExtractor={() => 1}
+                    renderItem={() => (
+                        <View>
+                            <Text style={[{ textAlign: 'center' }, styles.text]}>Registration</Text>
 
-                    <Text style={[{ textAlign: 'center' }, styles.text]}>Registration</Text>
+                            <BlurView blurType='light' style={[styles.elevatedCard, { flex: 1 }]} >
+                                <View style={{ padding: 10 }}>
 
-                    <BlurView blurType='light' style={[styles.elevatedCard, { flex: 1 }]} >
-                        <View style={{ padding: 10 }}>
+                                    <Sae
+                                        onChangeText={userName => { this.setState({ userName }) }}
+                                        style={{ backgroundColor: 'rgba(0,0,0,0)', marginTop: 20, marginBottom: 5 }}
+                                        label={'Name'}
+                                        iconClass={MaterialsIcon}
+                                        iconName={'person'}
+                                        iconColor={iconColor}
+                                        labelStyle={styles.textLabel}
+                                        inputStyle={{ color: inpColor }}
+                                        defaultValue={_userName}
+                                    />
+                                    <Sae
+                                        onChangeText={collegeName => { this.setState({ collegeName }) }}
+                                        style={{ backgroundColor: 'rgba(0,0,0,0)', marginBottom: 5 }}
+                                        label={'College'}
+                                        iconClass={MaterialsIcon}
+                                        iconName={'school'}
+                                        iconColor={iconColor}
+                                        labelStyle={styles.textLabel}
+                                        inputStyle={{ color: inpColor }}
+                                        defaultValue={_collegeName}
+                                    />
+                                    <Sae
+                                        onChangeText={userEmail => { this.setState({ userEmail }) }}
+                                        style={{ backgroundColor: 'rgba(0,0,0,0)' }}
+                                        label={'Email'}
+                                        iconClass={MaterialsIcon}
+                                        iconName={'mail'}
+                                        iconColor={iconColor}
+                                        labelStyle={styles.textLabel}
+                                        inputStyle={{ color: inpColor }}
+                                        defaultValue={_userEmail}
+                                    />
+                                    <Sae
+                                        onChangeText={userMobile => { this.setState({ userMobile }) }}
+                                        style={{ backgroundColor: 'rgba(0,0,0,0)' }}
+                                        label={'Contact Info'}
+                                        iconClass={MaterialsIcon}
+                                        iconName={'call'}
+                                        iconColor={iconColor}
+                                        labelStyle={styles.textLabel}
+                                        inputStyle={{ color: inpColor }}
+                                        defaultValue={_userMobile}
+                                    />
+                                    <TouchableOpacity onPress={this._onCatActionPress} style={styles.touchable}>
+                                        <Text style={styles.textLabel}>
+                                            Select category
+                                        </Text>
+                                        <Text style={styles.textValue}>
+                                            {categoryList[selectedCategory.index].name || ''}
+                                        </Text>
 
-                            <Sae
-                                onChangeText={userName => { this.setState({ userName }) }}
-                                style={{ backgroundColor: 'rgba(0,0,0,0)', marginTop: 20, marginBottom: 5 }}
-                                label={'Name'}
-                                iconClass={MaterialsIcon}
-                                iconName={'person'}
-                                iconColor={iconColor}
-                                labelStyle={styles.textLabel}
-                                inputStyle={{ color: inpColor }}
-                                defaultValue={_userName}
-                            />
-                            <Sae
-                                onChangeText={collegeName => { this.setState({ collegeName }) }}
-                                style={{ backgroundColor: 'rgba(0,0,0,0)', marginBottom: 5 }}
-                                label={'College'}
-                                iconClass={MaterialsIcon}
-                                iconName={'school'}
-                                iconColor={iconColor}
-                                labelStyle={styles.textLabel}
-                                inputStyle={{ color: inpColor }}
-                                defaultValue={_collegeName}
-                            />
-                            <Sae
-                                onChangeText={userEmail => { this.setState({ userEmail }) }}
-                                style={{ backgroundColor: 'rgba(0,0,0,0)' }}
-                                label={'Email'}
-                                iconClass={MaterialsIcon}
-                                iconName={'mail'}
-                                iconColor={iconColor}
-                                labelStyle={styles.textLabel}
-                                inputStyle={{ color: inpColor }}
-                                defaultValue={_userEmail}
-                            />
-                            <Sae
-                                onChangeText={userMobile => { this.setState({ userMobile }) }}
-                                style={{ backgroundColor: 'rgba(0,0,0,0)' }}
-                                label={'Contact Info'}
-                                iconClass={MaterialsIcon}
-                                iconName={'call'}
-                                iconColor={iconColor}
-                                labelStyle={styles.textLabel}
-                                inputStyle={{ color: inpColor }}
-                                defaultValue={_userMobile}
-                            />
-                            <TouchableOpacity onPress={this._onCatActionPress} style={styles.touchable}>
-                                <Text style={styles.textLabel}>
-                                    Select category
-                                </Text>
-                                <Text style={styles.textValue}>
-                                    {categoryList[selectedCategory.index].name || ''}
-                                </Text>
-
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={this._onEventActionPress} style={styles.touchable}>
-                                <Text style={styles.textLabel}>
-                                    Select Event
-                                </Text>
-                                <Text style={styles.textValue}>
-                                    {eventsList[eventIndex] ? eventsList[eventIndex].name : 'N/A'}
-                                </Text>
-                            </TouchableOpacity>
-                            <View style={styles.touchable}>
-                                <Text style={styles.textLabel}>
-                                    Registration Amount
-                                </Text>
-                                <Text style={styles.textValue}>
-                                    {eventsList[eventIndex] ? eventsList[eventIndex].amount : 'N/A'}
-                                </Text>
-                            </View>
-                            <Button
-                                onPress={this._onRegisterPress.bind(this, eventsList[eventIndex].amount, eventsList[eventIndex].name)}
-                                title="Register"
-                                buttonStyle={{
-                                    backgroundColor: "white",
-                                    width: 150,
-                                    height: 45,
-                                    borderColor: "transparent",
-                                    borderWidth: 0,
-                                    borderRadius: 50,
-                                    alignSelf: 'center',
-                                    marginTop: 20
-                                }}
-                                textStyle={[styles.text, { fontSize: 20, color: '#4ecdc4' }]}
-                                containerStyle={{ marginTop: 20 }}
-                            />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={this._onEventActionPress} style={styles.touchable}>
+                                        <Text style={styles.textLabel}>
+                                            Select Event
+                                        </Text>
+                                        <Text style={styles.textValue}>
+                                            {eventsList[eventIndex] ? eventsList[eventIndex].name : 'N/A'}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <View style={styles.touchable}>
+                                        <Text style={styles.textLabel}>
+                                            Registration Amount
+                                        </Text>
+                                        <Text style={styles.textValue}>
+                                            {eventsList[eventIndex] ? eventsList[eventIndex].amount : 'N/A'}
+                                        </Text>
+                                    </View>
+                                    <Button
+                                        onPress={this._onRegisterPress.bind(this, eventsList[eventIndex].amount, eventsList[eventIndex].name)}
+                                        title="Register"
+                                        buttonStyle={{
+                                            backgroundColor: "white",
+                                            width: 150,
+                                            height: 45,
+                                            borderColor: "transparent",
+                                            borderWidth: 0,
+                                            borderRadius: 50,
+                                            alignSelf: 'center',
+                                            marginTop: 20
+                                        }}
+                                        textStyle={[styles.text, { fontSize: 20, color: '#4ecdc4' }]}
+                                        containerStyle={{ marginTop: 20 }}
+                                    />
+                                </View>
+                            </BlurView>
                         </View>
-                    </BlurView>
-                </ScrollView>
+                    )}
+
+                />
                 <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
                     <TouchableOpacity
                         onPress={() => { this.props.navigation.goBack() }}
@@ -220,7 +236,7 @@ export default class Register extends Component {
                         <View style={{ flex: 1 }} />
                     </BlurView>
                 </Animated.View>
-            </ImageBackground>
+            </ImageBackground >
         )
     }
 }
