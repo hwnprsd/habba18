@@ -36,7 +36,7 @@ export default class EventCard extends Component {
         return (
             <TouchableOpacity style={[styles.container, { width: _width, height: _height }]} activeOpacity={1} onPress={this._onCardPress} activeOpacity={0.7}>
                 <View elevation={10} style={styles.cardContainer}>
-                    <View style={{ transform: [{ rotate: '180deg' }] }}>
+                    <View>
                         <FastImage
                             source={{ uri: this.props.item.url || 'https://i.ytimg.com/vi/ScMzIvxBSi4/maxresdefault.jpg' }}
                             style={{ width: _width, height: _height }}
