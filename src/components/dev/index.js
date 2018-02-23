@@ -180,7 +180,7 @@ export default class Auth extends Component {
                 />
             </BlurView>
             <Text style={[{ textAlign: 'center' }, styles.text]}>Powered by React Native</Text>
-            <Text style={[{ textAlign: 'center' }, styles.text, styles.text2]}>Habba 2018 iOS 1.02</Text>
+            <Text style={[{ textAlign: 'center' }, styles.text, styles.text2]}>Habba 2018 iOS v3.1</Text>
         </View>
     )
 }
