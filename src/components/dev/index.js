@@ -1,5 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, Button, ImageBackground, ScrollView, FlatList, Image, Animated, TouchableOpacity } from 'react-native';
+import {
+    View,
+    Text,
+    Button,
+    ImageBackground,
+    ScrollView,
+    FlatList,
+    Image,
+    Animated,
+    TouchableOpacity,
+    Linking
+} from 'react-native';
 import LottieView from 'lottie-react-native';
 import { BlurView } from 'react-native-blur'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -30,49 +41,49 @@ const devs = [
         gmail: 'prateekhegde12@gmail.com',
         image: require('../../images/devs/Prateek.jpg'),
         phone: '12345',
-    },{
+    }, {
         name: 'Arjun M',
         branch: 'CSE',
         designation: 'Motion graphic designer',
         gmail: 'arjunptm@gmail.com',
         image: require('../../images/devs/Arjun.jpg'),
         phone: '12345',
-    },{
+    }, {
         name: 'Ashwin Prasad',
         branch: 'ISE',
         designation: 'React Native developer',
         gmail: 'd3fkonmusic@gmail.com',
         image: require('../../images/devs/Ashwin.jpg'),
         phone: '12345',
-    },{
+    }, {
         name: 'Ankur Vinekar',
         branch: 'CSE',
         designation: 'UI/UX developer',
         gmail: 'ankurvinekar@gmail.com',
         image: require('../../images/devs/Ankur.jpg'),
         phone: '12345',
-    },{
+    }, {
         name: 'Raghav CS',
         branch: 'ISE',
         designation: 'Android developer',
         gmail: 'csraghav7@gmail.com',
         image: require('../../images/devs/Raghav.jpg'),
         phone: '12345',
-    },{
+    }, {
         name: 'Rajat Porwal',
         branch: 'ISE',
         designation: 'Android developer',
         image: require('../../images/devs/Rajat.jpg'),
         gmail: 'rajat.beis.15@acharya.ac.in',
         phone: '12345',
-    },{
+    }, {
         name: 'Ananth N Bhat',
         branch: 'CSE',
         designation: 'Web developer',
         image: require('../../images/devs/Bhatta.jpg'),
         gmail: 'ananth.becs.14@acharya.ac.in',
         phone: '12345',
-    },{
+    }, {
         name: 'Prashanth P',
         branch: 'ISE',
         designation: 'Web developer',
@@ -94,6 +105,9 @@ export default class Auth extends Component {
                 <Text style={styles.text}>{item.designation}</Text>
                 <Text style={styles.text}>{item.branch}</Text>
             </View>
+            <TouchableOpacity onPress={() => { Linking.openURL(`mailto:${item.gmail}`) }} style={{flex: 1, justifyContent: 'center'}} >
+                <Icon name="ios-mail-outline" style={[styles.text, {textAlign: 'right', fontSize: 25}]}/>
+            </TouchableOpacity>
         </BlurView>
     )
     onScroll = Animated.event([{

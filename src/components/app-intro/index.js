@@ -118,7 +118,4 @@ export default class extends Component {
     componentDidMount = async () => {
         await AsyncStorage.setItem('appIntro', 'yes')
     }
-    componentWillUnmount() {
-        this.props.umount()
-    }
 }

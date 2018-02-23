@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { fonts } from '../../constants';
+textColor = '#424242';
 
 
 export default StyleSheet.create({

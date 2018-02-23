@@ -7,25 +7,28 @@ import {
     FlatList,
     TouchableOpacity,
     StatusBar,
-    Animated
+    Animated,
+    AsyncStorage
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { BlurView } from 'react-native-blur';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {
+    AppTour,
+    AppTourSequence,
+    AppTourView
+} from "react-native-material-showcase-ios";
 
 import BG from '../../images/xbg1.jpg'
 import styles from './styles';
-import Header from '../header'
+import Header from '../header';
+import { colors, fonts } from '../../constants';
 
 const { width, height } = Dimensions.get('window');
 const containerWidth = width / 1.1;
-const aboutUs = `
-
-`;
-const aboutHabba = `
-Acharya Habba is the annual techno-cultural fest organised by Acharya Institutes, Bangalore. Spanning over a duration of a month, it draws about 25,000+ students from more than 300 colleges across Karnataka
-`
+const aboutHabba = "Acharya Habba is the annual techno-cultural fest organised by Acharya Institutes, Bangalore. Spanning over a duration of a month, it draws about 25,000+ students from more than 300 colleges across Karnataka"
 export default class AboutUs extends Component {
+    appTourTargets = [];
     _animatedValue = new Animated.Value(0);
     _aboutAcharya = () => {
         return (
@@ -34,39 +37,51 @@ export default class AboutUs extends Component {
                 keyExtractor={() => 1}
                 renderItem={() => (
                     <View>
-                        <Text style={styles.heading}>About Acharya</Text>
+                        <Text
+                            ref={ref => {
+                                this.appTourTargets.push((AppTourView.for(
+                                    ref,
+                                    {
+                                        primaryText: "Want to know more?    〉〉〉",
+                                        secondaryText: `You can also swipe right to know more about Habba!${'\n'}(Tap to dismiss)`,
+                                        targetHolderColor: colors.primary,
+                                        targetTintColor: colors.primary,
+                                    }
+                                )))
+                            }}
+                            style={styles.heading}>About Acharya</Text>
                         <BlurView blurType="light" style={styles.card}>
                             <Text style={styles.text}>
-                            <Text style={styles.b}>" Nurturing Aspirations Supporting Growth "</Text>
-{'\n'}{'\n'}
-The Sanskrit word "Acharya", which means "TEACHER", epitomizes the quintessential values of our institution, where traditional respect for teachers is of paramount importance. At our 28th year, we at Acharya Institutes, Bangalore are proud to be the choice of students from around the world.
+                                <Text style={styles.b}>" Nurturing Aspirations Supporting Growth "</Text>
+                                {'\n'}{'\n'}
+                                The Sanskrit word "Acharya", which means "TEACHER", epitomizes the quintessential values of our institution, where traditional respect for teachers is of paramount importance. At our 28th year, we at Acharya Institutes, Bangalore are proud to be the choice of students from around the world.
 
 {'\n'}{'\n'}<Text style={styles.b}>Growing Stature of Acharya</Text>{'\n'}{'\n'}
 
-    120 acres of WiFi Campus{'\n'}
-    13 Educational Institutions{'\n'}
-    15 research centers{'\n'}
-    Nearly 100 programs in over 50 Academic Streams{'\n'}
-    Over 12,000 students for 70 countries{'\n'}
-    1000+ teaching, technical and administration staff{'\n'}
-    Affiliated to VTU, BU, RGUHS and KSLU{'\n'}
-    Approved by AICTE, Council of Architecture, KSNC, INC, NCTE, PCI and Bar Council of India
+                                120 acres of WiFi Campus{'\n'}
+                                13 Educational Institutions{'\n'}
+                                15 research centers{'\n'}
+                                Nearly 100 programs in over 50 Academic Streams{'\n'}
+                                Over 12,000 students for 70 countries{'\n'}
+                                1000+ teaching, technical and administration staff{'\n'}
+                                Affiliated to VTU, BU, RGUHS and KSLU{'\n'}
+                                Approved by AICTE, Council of Architecture, KSNC, INC, NCTE, PCI and Bar Council of India
     NBA, NAAC accredited{'\n'}
-    Technical and Academic association with leading industry and corporate{'\n'}
-    Collaboration with many academic and research organizations {'\n'}{'\n'}
+                                Technical and Academic association with leading industry and corporate{'\n'}
+                                Collaboration with many academic and research organizations {'\n'}{'\n'}
 
-<Text style={styles.b}>We are –</Text>{'\n'}
-A student centric campus that attracts over 4000 aspiring youth each year from across the globe.{'\n'}{'\n'}
-<Text style={styles.b}>We have –</Text>{'\n'}
-An atmosphere of academic excellence that draws best teaching faculty into it{'\n'}{'\n'}
-<Text style={styles.b}>We instill –</Text>{'\n'}
-Time tested values in grooming youth into responsible human beings{'\n'}{'\n'}
-<Text style={styles.b}>We create –</Text>{'\n'}
-An encouraging and competitive environment that enables academic growth{'\n'}{'\n'}
-<Text style={styles.b}>Our Motto -</Text>{'\n'}
-"Nurturing Aspirations Supporting Growth"{'\n'}{'\n'}
-<Text style={styles.b}>Our Vision -</Text>{'\n'}
-"Acharya Institutes, Committed to the cause of value-based education in all disciplines, envisions itself as a fountainhead of innovative human enterprise, with inspirational initiatives for Academic Excellence"
+                                <Text style={styles.b}>We are –</Text>{'\n'}
+                                A student centric campus that attracts over 4000 aspiring youth each year from across the globe.{'\n'}{'\n'}
+                                <Text style={styles.b}>We have –</Text>{'\n'}
+                                An atmosphere of academic excellence that draws best teaching faculty into it{'\n'}{'\n'}
+                                <Text style={styles.b}>We instill –</Text>{'\n'}
+                                Time tested values in grooming youth into responsible human beings{'\n'}{'\n'}
+                                <Text style={styles.b}>We create –</Text>{'\n'}
+                                An encouraging and competitive environment that enables academic growth{'\n'}{'\n'}
+                                <Text style={styles.b}>Our Motto -</Text>{'\n'}
+                                "Nurturing Aspirations Supporting Growth"{'\n'}{'\n'}
+                                <Text style={styles.b}>Our Vision -</Text>{'\n'}
+                                "Acharya Institutes, Committed to the cause of value-based education in all disciplines, envisions itself as a fountainhead of innovative human enterprise, with inspirational initiatives for Academic Excellence"
                             </Text>
                         </BlurView>
                     </View>
@@ -83,7 +98,7 @@ An encouraging and competitive environment that enables academic growth{'\n'}{'\
                     <View>
                         <Text style={styles.heading}>About Habba</Text>
                         <BlurView blurType="light" style={styles.card}>
-                            <Text style={styles.text}>
+                            <Text style={[styles.text, { marginBottom: 10 }]}>
                                 {aboutHabba}
                             </Text>
                         </BlurView>
@@ -111,7 +126,7 @@ An encouraging and competitive environment that enables academic growth{'\n'}{'\
 
                 <Carousel
                     ref={(c) => { this._carousel = c; }}
-                    layoutCardOffset={0}
+                    layoutCardOffset={1}
                     style={{ height: '50%' }}
                     containerCustomStyle={{}}
                     data={[this._aboutAcharya, this._aboutHabba]}
@@ -156,5 +171,16 @@ An encouraging and competitive environment that enables academic growth{'\n'}{'\
                 </Animated.View>
             </ImageBackground>
         )
+    }
+    componentDidMount = async () => {
+        const intro = await AsyncStorage.getItem('abouts');
+        if (!intro) {
+            setTimeout(() => {
+                let appTourSequence = new AppTourSequence();
+                appTourSequence.add(this.appTourTargets[0]);
+                AppTour.ShowSequence(appTourSequence);
+            }, 1000);
+            await AsyncStorage.setItem('abouts', 'done')
+        }
     }
 }

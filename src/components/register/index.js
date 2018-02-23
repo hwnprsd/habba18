@@ -19,6 +19,8 @@ import { inject, observer } from 'mobx-react/native';
 import { Sae } from 'react-native-textinput-effects';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DropdownAlert from 'react-native-dropdownalert';
+import qs from 'qs';
+import axios from 'axios';
 
 import BG from '../../images/xbg1.jpg'
 import Loading from '../loading';
@@ -29,7 +31,8 @@ export default class Register extends Component {
     state = {
         userName: this.props.eventsV2._userDetails.userName,
         userEmail: this.props.eventsV2._userDetails.userEmail,
-        collegeName: this.props.eventsV2._userDetails.collegeName
+        collegeName: this.props.eventsV2._userDetails.collegeName,
+        userMobile: this.props.eventsV2._userDetails.userMobile
     }
     _animatedValue = new Animated.Value(0);
     _onCatActionPress = () => {
@@ -69,7 +72,7 @@ export default class Register extends Component {
     onClose = () => {
         this.props.eventsV2.setPostMessage('')
     }
-    dropdown = {alertWithType: () => 1}
+    dropdown = { alertWithType: () => 1 }
     onMessage = () => {
         const { eventIndex, eventsList, postMessage, setPostMessage } = this.props.eventsV2;
         if (postMessage !== '') {
@@ -77,16 +80,38 @@ export default class Register extends Component {
             setPostMessage('')
         }
     }
-    _onRegisterPress = (amount, eventName) => {
+    _onRegisterPress = async(amount, eventName) => {
         const { userName, userEmail, userMobile, collegeName } = this.state;
-        const { eventIndex, eventsList, postMessage, setPostMessage } = this.props.eventsV2;
-        this.props.eventsV2.setUserDetails({
-            userName,
-            userEmail,
-            userMobile,
-            collegeName
-        });
-        this.props.eventsV2.registerForEvent(eventsList[eventIndex].name);
+        const empty = '';
+        const msg = 'Please retype your ';
+        switch (empty) {
+            case userName: this.dropdown.alertWithType('info', 'Alert', msg + 'name!');
+                return;
+            case userEmail: this.dropdown.alertWithType('info', 'Alert', msg + 'email!');
+                return;
+            case userMobile: this.dropdown.alertWithType('info', 'Alert', msg + 'contact number!');
+                return;
+            case collegeName: this.dropdown.alertWithType('info', 'Alert', msg + 'college name!');
+                return;
+
+        }
+        const details = {
+            name: userName,
+            clg: collegeName,
+            num: userMobile,
+            email: userEmail,
+            sub: eventName
+        }
+        let postMessage = '';
+        console.log(details)
+        try {
+            this.dropdown.alertWithType('info', 'Alert', 'Registering!');
+            const x = await axios.post('http://acharyahabba.in/habba18/register.php', qs.stringify(details))
+            postMessage = x.data;
+            this.dropdown.alertWithType('info', 'Alert', postMessage);
+        } catch (e) {
+            this.dropdown.alertWithType('error', 'Error', e.message);
+        }
 
     }
     onScroll = Animated.event([{
@@ -154,7 +179,7 @@ export default class Register extends Component {
                                     />
                                     <Sae
                                         onChangeText={userEmail => { this.setState({ userEmail }) }}
-                                        style={{ backgroundColor: 'rgba(0,0,0,0)' }}
+                                        style={{ backgroundColor: 'rgba(0,0,0,0)', marginBottom: 5 }}
                                         label={'Email'}
                                         iconClass={MaterialsIcon}
                                         iconName={'mail'}
@@ -251,7 +276,7 @@ export default class Register extends Component {
                         <View style={{ flex: 1 }} />
                     </BlurView>
                 </Animated.View>
-                <DropdownAlert ref={ref => this.dropdown = ref} onClose={data => this.onClose(data)} />
+                <DropdownAlert updateStatusBar={false} ref={ref => this.dropdown = ref} onClose={data => this.onClose(data)} />
             </ImageBackground >
         )
     }

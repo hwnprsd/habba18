@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, Dimensions } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StatusBar, 
+  Dimensions,
+  Linking,
+  TouchableOpacity
+} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { observer, inject } from 'mobx-react/native';
 import GTheme from './google-theme';
@@ -8,6 +15,7 @@ import { VibrancyView } from 'react-native-blur';
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ClusteredMapView from 'react-native-maps-super-cluster'
+
 
 // import styles from './styles';
 
@@ -36,7 +44,9 @@ export default class Maps extends Component {
       <View style={{ flex: 1 }}>
         <StatusBar barStyle="light-content" />
         <MapView
-          ref={r => { this.map = r }}
+          ref={r => {
+            this.map = r;
+          }}
           style={{ flex: 1 }}
           region={{
             latitude: this.state.lat,
@@ -53,10 +63,10 @@ export default class Maps extends Component {
         >
           {this.props.mapsStore.eventsList.filter(l => l.lat !== "" && l.lang !== "").map((l, i) => {
             return (
-              <Marker identifier={`${i}`} key={i} coordinate={{ latitude: parseFloat(l.lat), longitude: parseFloat(l.lang) }} style={{ width: 100, height: 100 }}>
-                <View style={{ backgroundColor: 'white', borderRadius: 3, padding: 5 }}>
+              <Marker identifier={`${i}`} key={i} coordinate={{ latitude: parseFloat(l.lat), longitude: parseFloat(l.lang) }} style={{ }}>
+                <TouchableOpacity onPress={() => {Linking.openURL(`http://maps.apple.com/?ll=${l.lat},${l.lang}`)}} style={{ backgroundColor: 'white', borderRadius: 3, padding: 2 }}>
                   <Text style={{ fontSize: 10, }}>{l.name}</Text>
-                </View>
+                </TouchableOpacity>
                 <Icon name="md-arrow-dropdown" style={{ textAlign: 'center', color: 'white', marginTop: -5 }} />
               </Marker>
             )
@@ -84,8 +94,8 @@ export default class Maps extends Component {
             itemWidth={width / 2}
           />
         </View>
-        <Text style={{position: 'absolute', bottom: 0, textAlign: 'center', color: 'white', fontSize: 10, alignSelf: 'center'}}>
-            Swipe to view the location of different events
+        <Text style={{ position: 'absolute', bottom: 0, textAlign: 'center', color: 'white', fontSize: 10, alignSelf: 'center' }}>
+          Swipe to view the location of different events
         </Text>
       </View>
     )

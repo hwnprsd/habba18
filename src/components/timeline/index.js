@@ -8,7 +8,9 @@ import {
     ImageBackground,
     Animated,
     FlatList,
-    StatusBar
+    StatusBar,
+    Modal,
+    AsyncStorage
 } from 'react-native';
 import Header from '../header';
 import { colors, fonts, height } from '../../constants';
@@ -19,7 +21,13 @@ import { Calendar } from 'react-native-calendars';
 import { UIActivityIndicator } from 'react-native-indicators'
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {
+    AppTour,
+    AppTourSequence,
+    AppTourView
+} from "react-native-material-showcase-ios";
 
+import EventDetail from '../event-detail';
 import Loading from '../loading';
 import BG from '../../images/xbg1.jpg'
 import styles from './styles';
@@ -27,8 +35,10 @@ import styles from './styles';
 @inject('eventsV2') @observer
 export default class Auth extends Component {
     state = {
-        selected: ''
+        selected: '',
+        modalVisible: false
     }
+    appTourTargets = [];
     _animatedValue = new Animated.Value(0);
     _onDayPress = day => {
         this.setState({
@@ -36,8 +46,17 @@ export default class Auth extends Component {
         })
         this.props.eventsV2.eventsFromDate(day.dateString)
     }
+    _closeModal = () => {
+        this.setState({
+            modalVisible: false
+        })
+    }
     _onCardPress = i => {
-        this.props.navigation.navigate('EventDetail', { eventsList: this.props.eventsV2.eventsFromDate(this.state.selected), index: i });
+        this.setState({
+            modalProps: { eventsList: this.props.eventsV2.eventsFromDate(this.state.selected), index: i },
+            modalVisible: true,
+        })
+        // this.props.navigation.navigate('EventDetail', {});
     }
     _renderDetail = (rowData) => {
         const i = this.props.eventsV2.eventsFromDate(this.state.selected).indexOf(rowData);
@@ -45,8 +64,8 @@ export default class Auth extends Component {
             <BlurView blurType="light" style={{ padding: 7, marginTop: -10, borderRadius: 3, backgroundColor: 'rgba(0,0,0,0)' }}>
                 <TouchableOpacity activeOpacity={0.7} onPress={() => this._onCardPress(i)}>
                     <View>
-                        <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7 }}>{rowData.name + ' at ' + rowData.venue}</Text>
-                        <Text style={{ fontFamily: fonts.latoRegular, fontSize: 12 }}>{rowData.date}</Text>
+                        <Text style={{ fontFamily: fonts.latoBold, fontSize: 15, marginBottom: 7, color: '#424242' }}>{rowData.name + ' at ' + rowData.venue}</Text>
+                        <Text style={{ fontFamily: fonts.latoRegular, fontSize: 12, color: '#424242' }}>{rowData.date}</Text>
                     </View>
                 </TouchableOpacity>
             </BlurView>
@@ -69,17 +88,33 @@ export default class Auth extends Component {
         return (
             <ImageBackground source={BG} style={{ width: '100%', height: '100%' }}>
                 <StatusBar barStyle="light-content" />
-                <FlatList style={{}} onScroll={this.onScroll}
+                <Modal
+                    visible={this.state.modalVisible || false}
+                    animationType={'slide'}
+                    onRequestClose={() => this._closeModal()}
+                    transparent
+                    animationType={'fade'}
+                >
+                    <View style={{ flex: 1 }}>
+                        <BlurView style={{ flex: 1 }} blurType='light' blurAmount={2} />
+                        <View style={{ flex: 1, position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}>
+                            <EventDetail {...this.state.modalProps} navigate={this.props.navigation.navigate} closeModal={this._closeModal} />
+                        </View>
+                    </View>
+                </Modal>
+                <FlatList style={{ paddingBottom: 100 }} onScroll={this.onScroll}
                     renderItem={() => (
                         <View>
-
                             <View style={{ paddingTop: 20, flexDirection: 'row', width: '100%', height: 70, justifyContent: 'center' }}>
+                                <View style={{ flex: 1 }} />
                                 <View style={{ flex: 5, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Text style={styles.eventName}>Timeline</Text>
                                 </View>
                                 <View style={{ flex: 1 }} />
                             </View>
                             <View
                                 style={{ margin: 10, borderRadius: 3, backgroundColor: '#fff', marginTop: 10 }}
+
                             >
 
                                 <Calendar
@@ -91,12 +126,25 @@ export default class Auth extends Component {
                                         selectedDayBackgroundColor: colors.primary,
                                         arrowColor: colors.primary
                                     }}
-
                                 />
                             </View>
                             {this.props.eventsV2.eventsFromDate(this.state.selected) && this.props.eventsV2.eventsFromDate(this.state.selected).length === 0 &&
-                                <BlurView blurType="light" style={{ margin: 10, borderRadius: 3 }}>
-                                    <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10 }}>Select Marked Dates on the Calendar to display events on that day!</Text>
+                                <BlurView
+                                    ref={ref => {
+                                        this.appTourTargets.push((AppTourView.for(
+                                            ref,
+                                            {
+                                                primaryText: "See what's up!",
+                                                secondaryText: `You can also click on the revealed events, to get details!${'\n'}(Tap to dismiss)`,
+                                                targetHolderColor: colors.primary,
+                                                targetTintColor: colors.primary,
+                                                primaryTextFont: fonts.latoRegular,
+                                                secondaryTextFont: fonts.latoRegular
+                                            }
+                                        )))
+                                    }}
+                                    blurType="light" style={{ margin: 10, borderRadius: 3 }} >
+                                    <Text style={{ textAlign: 'center', fontSize: 20, fontFamily: fonts.latoRegular, margin: 10, color: '#424242' }}>Select Marked Dates on the Calendar to display events on that day!</Text>
                                 </BlurView>
                             }
                             <Timeline
@@ -117,10 +165,10 @@ export default class Auth extends Component {
                                 }}
                             />
                         </View>
-                    )} 
+                    )}
                     data={['0']}
                     keyExtractor={() => 1}
-                    />
+                />
                 <View style={{ paddingTop: 20, flexDirection: 'row', position: 'absolute', top: 0, width: '100%', height: 70, justifyContent: 'center' }}>
                     <TouchableOpacity
                         onPress={() => { this.props.navigation.goBack() }}
@@ -153,4 +201,16 @@ export default class Auth extends Component {
             </ImageBackground>
         )
     }
+    componentDidMount = async() => {
+        const intro = await AsyncStorage.getItem('timeline');
+        if (!intro) {
+            setTimeout(() => {
+                let appTourSequence = new AppTourSequence();
+                appTourSequence.add(this.appTourTargets[0]);
+                AppTour.ShowSequence(appTourSequence);
+            }, 1000);
+            await AsyncStorage.setItem('timeline', 'done')
+        }
+    }
 }
+

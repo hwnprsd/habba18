@@ -49,9 +49,9 @@ export default class EventCard extends Component {
                         <Text style={styles.text}>
                             {this.props.item.name || ''}
                         </Text>
-                        <Text style={[styles.text, { fontSize: 15 }]}>
+                        {this.props.item.length !== 0 && <Text style={[styles.text, { fontSize: 15 }]}>
                             {this.props.item.length + ' Events' || ''}
-                        </Text>
+                        </Text>}
                     </VibrancyView>
                 </View>
             </TouchableOpacity>

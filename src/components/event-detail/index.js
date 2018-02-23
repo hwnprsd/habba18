@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
-import { StatusBar, View, Text, Dimensions, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { 
+    StatusBar, 
+    View, 
+    Text, 
+    Dimensions, 
+    ScrollView, 
+    TouchableOpacity, 
+    Animated,
+    Linking
+} from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import ElevatedView from 'react-native-elevated-view';
 import CollapsibleToolbar from 'react-native-collapsible-toolbar';
@@ -94,7 +103,11 @@ export default class EventDetails extends Component {
                         {/* </BlurView> */}
                         {/* <BlurView style={[styles.card, { marginBottom: 50 }]} blurType="light"> */}
                         <View style={styles.contain}>
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => { openMap({ latitude: lat, longitude: lang }) }}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => { 
+                                // openMap({ latitude: lat, longitude: lang }) 
+                                Linking.openURL(`http://maps.apple.com/?ll=${lat},${lang}`)
+                                
+                                }}>
                                 <Text style={styles.button}>Navigate to event</Text>
                             </TouchableOpacity>
                         </View>

@@ -1875,7 +1875,7 @@
 					"$(SRCROOT)/../node_modules/react-native-material-showcase-ios/ios/**",
 				);
 				INFOPLIST_FILE = prototype/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1919,7 +1919,7 @@
 					"$(SRCROOT)/../node_modules/react-native-material-showcase-ios/ios/**",
 				);
 				INFOPLIST_FILE = prototype/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -50,6 +50,7 @@ export default class EventList extends Component {
         const { _mainList } = this.props.eventsV2;
         const { width, height } = this.state;
         const eventsList = _mainList[index][item].slice();
+
         let oldList = [];
         let list = [];
         let counter = 0;
@@ -59,7 +60,21 @@ export default class EventList extends Component {
                 ...eventsList[i],
                 index: i
             }
-            if (eventsList.length === 2 && i === 0) {
+            if(eventsList.length === 3) {
+
+                if (i == 0) {
+                    list.push(curr)
+                }
+                if (i == 1) {
+                    oldList.push(curr)
+                }
+                if (i == 2) {
+                    oldList.push(curr);
+                    list.push(oldList);
+                    oldList = [];
+                }
+            }
+            else if (eventsList.length === 2 && i === 0) {
                 oldList.push(curr);
             }
             else if (eventsList.length === 2 && i == 1) {
@@ -93,7 +108,6 @@ export default class EventList extends Component {
             list.push(oldList);
             oldList = [];
         }
-
         return (
             <View style={[styles.gridView, { minHeight: height }]} >
                 <StatusBar translucent backgroundColor='rgba(0,0,0,0)' />

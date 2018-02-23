@@ -5,7 +5,7 @@ import {
     ImageBackground,
     Dimensions,
     TouchableOpacity,
-    StatusBar
+    StatusBar,
 } from 'react-native';
 import { itemWidth, sliderWidth } from '../../utils/global';
 import CategoryCard from '../category-card'
@@ -14,11 +14,13 @@ import Carousel, { getInputRangeFromIndexes } from 'react-native-snap-carousel';
 import LottieView from 'lottie-react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
 import Loading from '../loading';
 import Error from '../error';
 import Header from '../header'
 import styles from './styles';
 import BG from '../../images/xbg1.jpg'
+import { colors, fonts } from '../../constants';
 
 function stackScrollInterpolator(index, carouselProps) {
     const range = [1, 0, -1, -2, -3];
@@ -77,7 +79,6 @@ function stackAnimatedStyles(index, animatedValue, carouselProps) {
 
 @inject('eventsV2') @observer
 export default class EventList extends Component {
-
     state = Dimensions.get("window");
     handler = dims => this.setState(dims.window);
 
@@ -109,7 +110,9 @@ export default class EventList extends Component {
                 <StatusBar barStyle="light-content" />
                 <View style={{ position: 'absolute', bottom: 0, height: '100%', width: '100%', flex: 1 }} >
                     <Carousel
-                        ref={(c) => { this._carousel = c; }}
+                        ref={ref => {
+                            this._carousel = ref;
+                        }}
                         layoutCardOffset={20}
                         style={{ height: '100%' }}
                         containerCustomStyle={{ height: '100%' }}
